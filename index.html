@@ -6,6 +6,7 @@
 <title>Ahmed &amp; Amira · Engagement</title>
 <meta name="description" content="You are warmly invited to the engagement of Ahmed &amp; Amira — Thursday, 26 November 2026, 4G Hall, Medical Professions Club, New Minya.">
 <meta name="theme-color" content="#0a0907">
+<meta name="robots" content="noindex, nofollow">
 <!-- Link preview (WhatsApp). The image address must be the full public URL of og-image.jpg. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ahmed &amp; Amira — Our Engagement">
@@ -118,6 +119,28 @@ html[lang="ar"] .btn{font-size:14px}
 .loader-line{width:120px;height:1px;background:rgba(212,183,122,.18);overflow:hidden}
 .loader-line span{display:block;height:100%;width:40%;background:linear-gradient(90deg,transparent,var(--gold-hi),transparent);animation:sweep 1.6s var(--ease-io) infinite}
 .loader-txt{font-family:var(--sans);font-size:11px;letter-spacing:.4em;margin-right:-.4em;text-transform:uppercase;color:var(--text-soft)}
+
+/* ==========================================================================
+   Access screen (testing only; turned off with CONFIG.testAccess.enabled)
+   ========================================================================== */
+#gate{position:fixed;inset:0;z-index:110;display:grid;place-items:center;padding:24px var(--gutter);background:radial-gradient(90% 60% at 50% 0%,rgba(212,170,90,.16),transparent 70%),var(--ink);transition:opacity .9s ease,visibility .9s}
+#gate[hidden]{display:none}
+#gate.done{opacity:0;visibility:hidden}
+.gate-card{width:min(100%,420px);display:flex;flex-direction:column;align-items:center;text-align:center;padding:48px clamp(22px,7vw,44px) 40px;border:1px solid rgba(212,183,122,.35);background:linear-gradient(180deg,rgba(212,183,122,.06),transparent 60%)}
+.gate-seal{width:74px;height:74px;margin-bottom:22px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.6))}
+.gate-title{margin:12px 0 0;font-weight:300;font-style:italic;font-size:clamp(34px,9vw,44px);line-height:1.1}
+.gate-title-ar{margin-top:4px;font-family:"Aref Ruqaa",serif;font-size:clamp(28px,7.5vw,36px);line-height:1.5;color:var(--gold-hi)}
+.gate-note{max-width:30ch;margin-top:14px;font-size:17px;line-height:1.5;color:var(--text-soft)}
+.gate-note[lang="ar"]{margin-top:6px;font-family:"Amiri",serif;line-height:1.8}
+#gateForm{width:100%;margin-top:26px;display:flex;flex-direction:column;gap:14px}
+#gateCode{width:100%;padding:10px 4px 12px;border:0;border-bottom:1px solid rgba(212,183,122,.55);border-radius:0;background:transparent;color:var(--gold-hi);font-family:var(--sans);font-size:18px;letter-spacing:.14em;text-align:center;outline:0;-webkit-appearance:none;appearance:none;transition:border-color .4s,box-shadow .4s}
+#gateCode::placeholder{color:rgba(208,195,168,.5);letter-spacing:.06em}
+#gateCode:focus{border-bottom-color:var(--gold-hi);box-shadow:0 1px 0 0 var(--gold-hi)}
+.gate-err{min-height:1.5em;font-size:16px;color:#e7a3a3}
+.gate-card.shake{animation:shake .5s ease}
+.gate-request{margin-top:6px;font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.gate-request[hidden]{display:none}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 
 /* ==========================================================================
    Rose sprays (gold line art, drawn by script)
@@ -534,6 +557,25 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
 
 <canvas id="dust" aria-hidden="true"></canvas>
 
+<!-- Access screen (testing only) -->
+<div id="gate" hidden role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <svg class="gate-seal" viewBox="0 0 100 100" aria-hidden="true"><use href="#seal"/></svg>
+    <p class="eyebrow">Private preview · <span lang="ar">معاينة خاصة</span></p>
+    <h1 class="gate-title" id="gateTitle">Request access</h1>
+    <p class="gate-title-ar" lang="ar" dir="rtl">طلب الدخول</p>
+    <p class="gate-note">This invitation is still being prepared. Enter the access code you were given.</p>
+    <p class="gate-note" lang="ar" dir="rtl">الدعوة قيد التجهيز. أدخل رمز الدخول الذي وصلك.</p>
+    <form id="gateForm" novalidate>
+      <label class="sr-only" for="gateCode">Access code</label>
+      <input id="gateCode" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="60" placeholder="Access code · رمز الدخول">
+      <button class="btn btn-solid" type="submit">Enter · دخول</button>
+      <p class="gate-err" role="alert"></p>
+    </form>
+    <a class="gate-request" hidden target="_blank" rel="noopener">Request a code · اطلب الرمز</a>
+  </div>
+</div>
+
 <!-- Loading state -->
 <div id="loader" role="status">
   <div class="loader-inner">
@@ -826,7 +868,14 @@ const CONFIG = {
     },
     palette: [[{ en: 'Midnight', ar: 'أسود' }, '#0d0c0a'], [{ en: 'Champagne', ar: 'شمبانيا' }, '#d9c08c'], [{ en: 'Ivory', ar: 'عاجي' }, '#f5ecdc']]
   },
-  music: { src: '' }       // optional: an mp3 path or URL; leave empty for the built-in melody
+  music: { src: '' },      // optional: an mp3 path or URL; leave empty for the built-in melody
+  // Testing: visitors must enter an access code first. Set enabled to false when you go public.
+  // codeHash is the SHA-256 of the code in lower case (see README), so the code itself is not in this file.
+  testAccess: {
+    enabled: true,
+    codeHash: '393c78011ef5f5a5304822bfc47d567e10c0b77d5291753ac1693849ca165562',
+    requestWhatsApp: ''    // optional: your number (digits, with country code) for a "Request a code" button
+  }
 };
 
 /* ==========================================================================
@@ -1670,9 +1719,65 @@ function setupActions() {
 }
 
 /* ==========================================================================
+   Access screen (testing only)
+   ========================================================================== */
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function unlock() {
+  const A = CONFIG.testAccess;
+  if (!A || !A.enabled) return Promise.resolve();
+  const KEY = 'invite-access';
+  let saved = null;
+  try { saved = localStorage.getItem(KEY); } catch {}
+  if (saved === A.codeHash) return Promise.resolve();
+
+  const gate = $('#gate'), form = $('#gateForm'), input = $('#gateCode'), err = $('.gate-err'), card = $('.gate-card');
+  const check = async code => !!window.crypto?.subtle && code.trim() !== '' && (await sha256(code.trim().toLowerCase())) === A.codeHash;
+  const remember = () => { try { localStorage.setItem(KEY, A.codeHash); } catch {} };
+
+  return new Promise(async resolve => {
+    // A tester link ending in ?access=CODE opens straight in; the code is then removed from the address bar.
+    const fromLink = params.get('access');
+    if (fromLink) {
+      const u = new URL(location.href);
+      u.searchParams.delete('access');
+      history.replaceState(null, '', u);
+      if (await check(fromLink)) { remember(); resolve(); return; }
+    }
+    if (A.requestWhatsApp) {
+      const req = $('.gate-request');
+      req.href = `https://wa.me/${A.requestWhatsApp.replace(/\D/g, '')}?text=${encodeURIComponent('Hello! May I have the access code for the engagement invitation preview?')}`;
+      req.hidden = false;
+    }
+    gate.hidden = false;
+    setTimeout(() => input.focus(), 300);
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!window.crypto?.subtle) { err.textContent = 'Please open the invitation from its https:// link.'; return; }
+      if (await check(input.value)) {
+        remember();
+        err.textContent = '';
+        gate.classList.add('done');
+        setTimeout(() => gate.remove(), 1000);
+        resolve();
+      } else {
+        err.textContent = "That code isn't right · الرمز غير صحيح";
+        card.classList.remove('shake');
+        void card.offsetWidth;
+        card.classList.add('shake');
+        input.select();
+      }
+    });
+  });
+}
+
+/* ==========================================================================
    Boot
    ========================================================================== */
 async function boot() {
+  await unlock();
   buildOnce();
   applyLanguage();
   setupCalendar();

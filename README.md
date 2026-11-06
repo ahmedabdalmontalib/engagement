@@ -49,6 +49,23 @@ All details are at the top of the script in `index.html`:
 
 The countdown, calendar entries and all dates on the page update from `dateISO` automatically.
 
+## Testing mode (access code)
+
+While the invitation is being tested, visitors first see a **Request access** screen (in English and Arabic) and must enter an access code. A correct code is remembered on that phone, so testers only type it once. Codes are not case-sensitive.
+
+- **Give testers the code**, or send them a link ending in `?access=CODE`, which opens straight in and then removes the code from the address bar.
+- **The code is not stored in this repository.** `index.html` only holds its SHA-256 fingerprint (`CONFIG.testAccess.codeHash`), so someone reading the files cannot see it. The code itself is in `access-code.txt` on the computer that made it, which is kept out of Git.
+- **Change the code:** pick a new one and put its fingerprint in `codeHash`:
+
+  ```bash
+  python3 -c "import hashlib; print(hashlib.sha256('new-code'.lower().encode()).hexdigest())"
+  ```
+
+- **"Request a code" button:** put your WhatsApp number (digits with country code, e.g. `2010…`) in `CONFIG.testAccess.requestWhatsApp`. Visitors without a code can then message you from the access screen.
+- **Going public:** set `CONFIG.testAccess.enabled` to `false`. Everyone then goes straight to the envelope.
+
+This keeps casual visitors out while testing. It is not strong security: the page is a static file, so a determined person with technical skills could read the invitation's text from the page source.
+
 ## Previewing on your computer
 
 ```bash
