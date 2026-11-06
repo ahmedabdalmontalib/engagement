@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link preview image</title>
+<!-- Draws og-image.jpg (1200×630) for the WhatsApp link preview.
+     Open it through tools/serve.py; it saves the image next to index.html. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@400&family=Pinyon+Script&family=Aref+Ruqaa&display=swap">
+<style>
+  body{margin:0;background:#222;color:#ddd;font:14px system-ui;display:grid;gap:12px;justify-items:center;padding:16px}
+  canvas{width:min(100%,1200px);height:auto;box-shadow:0 10px 40px #000}
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<p id="status">Drawing…</p>
+<script>
+(async () => {
+'use strict';
+const W = 1200, H = 630;
+const cv = document.getElementById('c'), cx = cv.getContext('2d');
+const status = document.getElementById('status');
+
+// Same rose drawing as index.html, rendered to an SVG image.
+const NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.append(e); return e; }
+function rose(g, cx, cy, R, rot, seed) {
+  let sd = seed * 9301 + 49297;
+  const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+  const sq = .84, P = (a, r) => `${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a) * sq).toFixed(1)}`;
+  let heart = '';
+  for (let i = 0; i <= 48; i++) { const t = i / 48; heart += (i ? ' L' : 'M') + P(rot + t * Math.PI * 3, R * (.04 + .15 * t)); }
+  svgEl('path', { d: heart }, g);
+  [[3, .26, 1.5], [4, .42, 1.4], [5, .6, 1.32], [6, .8, 1.26]].forEach(([n, f, bulge], k) => {
+    const step = Math.PI * 2 / n, off = rot + k * 1.1 + rnd();
+    for (let j = 0; j < n; j++) {
+      const r = R * f * (.92 + rnd() * .16), span = step * (1.15 + rnd() * .25), b = bulge * (.94 + rnd() * .12), a = off + j * step + (rnd() - .5) * .3;
+      svgEl('path', { d: `M${P(a, r)} C${P(a + span * .08, r * b)} ${P(a + span * .4, r * b * 1.05)} ${P(a + span * .5, r * b * .97)} C${P(a + span * .6, r * b * 1.05)} ${P(a + span * .92, r * b)} ${P(a + span, r)}` }, g);
+      if (k >= 2) svgEl('path', { d: `M${P(a + span * .2, r * b * .93)} Q${P(a + span * .32, r * b)} ${P(a + span * .44, r * b * .9)}`, opacity: .55 }, g);
+      if (k > 0) svgEl('path', { d: `M${P(a + span * .5, r * b * .94)} L${P(a + span * .5 + (rnd() - .5) * .1, r * 1.02)}`, opacity: .4 }, g);
+    }
+  });
+}
+function leaf(g, x, y, len, deg) {
+  const w = svgEl('g', { transform: `translate(${x} ${y}) rotate(${deg})` }, g);
+  svgEl('path', { d: `M0 0C${len * .28} ${-len * .3} ${len * .72} ${-len * .26} ${len} 0C${len * .72} ${len * .26} ${len * .28} ${len * .3} 0 0Z` }, w);
+  svgEl('path', { d: `M${len * .04} 0L${len * .92} 0`, opacity: .7 }, w);
+  for (let i = 1; i < 4; i++) { const x0 = len * i * .22; svgEl('path', { d: `M${x0} 0L${x0 + len * .12} ${-len * .12}M${x0} 0L${x0 + len * .12} ${len * .12}`, opacity: .45 }, w); }
+}
+function sprayImage(color) {
+  const svg = svgEl('svg', { xmlns: NS, viewBox: '0 0 200 200', width: 400, height: 400 });
+  const g = svgEl('g', { fill: 'none', stroke: color, 'stroke-width': 1.1, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, svg);
+  leaf(g, 70, 86, 58, 52); leaf(g, 86, 64, 52, 18); leaf(g, 30, 92, 48, 96); leaf(g, 140, 30, 34, -14);
+  svgEl('path', { d: 'M58 96C52 122 60 146 52 176M56 128c8 4 12 10 12 18M54 152c-8 2-12 8-12 14' }, g);
+  svgEl('path', { d: 'M150 22c14-6 26-4 36 4M168 18c2-8 8-12 14-12' }, g);
+  [[52, 178], [68, 148], [42, 168], [188, 28], [183, 5]].forEach(([cx, cy]) => svgEl('circle', { cx, cy, r: 2.2 }, g));
+  rose(g, 48, 46, 44, .4, 3);
+  rose(g, 124, 24, 22, 1.3, 7);
+  return loadSvg(svg.outerHTML);
+}
+function sealImage() {
+  return loadSvg(`<svg xmlns="${NS}" viewBox="0 0 100 100" width="300" height="300">
+    <defs>
+      <radialGradient id="w" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#b24c5b"/><stop offset=".28" stop-color="#8b2b3b"/><stop offset=".66" stop-color="#651827"/><stop offset="1" stop-color="#360a13"/></radialGradient>
+      <radialGradient id="i" cx=".62" cy=".68" r=".72"><stop offset="0" stop-color="#4a101d"/><stop offset=".62" stop-color="#6e1e2f"/><stop offset="1" stop-color="#9c3a4b"/></radialGradient>
+    </defs>
+    <path d="M50 3c10-1 16 5 24 6 10 2 14 11 18 19 5 9 3 17 5 25 2 10-5 17-8 25-4 9-14 12-22 16-9 4-18 2-26 3-10 1-17-6-24-11-8-6-11-15-13-24-3-10 1-18 2-27 2-10 9-17 17-23 8-6 17-8 27-9z" fill="url(#w)"/>
+    <ellipse cx="34" cy="24" rx="15" ry="6" transform="rotate(-32 34 24)" fill="rgba(255,225,230,.16)"/>
+    <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(25,2,8,.55)" stroke-width="1.4" stroke-linecap="round" stroke-dasharray=".1 3.6"/>
+    <circle cx="50" cy="50" r="32" fill="url(#i)" stroke="rgba(30,4,10,.6)" stroke-width="1.1"/>
+    <circle cx="50" cy="50" r="28.5" fill="none" stroke="#d4b77a" stroke-opacity=".55" stroke-width=".7"/>
+  </svg>`);
+}
+function loadSvg(markup) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => res(img);
+    img.onerror = rej;
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markup);
+  });
+}
+function foil(x0, x1) {
+  const g = cx.createLinearGradient(x0, 0, x1, 0);
+  [['0', '#8d6c33'], ['.18', '#d4b77a'], ['.34', '#f6e7bf'], ['.5', '#c9a560'], ['.66', '#f2dfac'], ['.82', '#b38e48'], ['1', '#e9d39c']].forEach(([o, c]) => g.addColorStop(+o, c));
+  return g;
+}
+function centered(text, y, font, fill, spacing = 0) {
+  cx.font = font;
+  cx.letterSpacing = spacing + 'px';
+  cx.fillStyle = fill;
+  cx.textAlign = 'left';
+  const w = cx.measureText(text).width - spacing;
+  cx.fillText(text, (W - w) / 2, y);
+  cx.letterSpacing = '0px';
+}
+
+await document.fonts.load('130px "Pinyon Script"');
+await document.fonts.load('italic 300 60px "Cormorant Garamond"');
+await document.fonts.load('400 22px "Jost"');
+await document.fonts.load('40px "Aref Ruqaa"', 'أحمد');
+await document.fonts.ready;
+
+// Background: warm black, a gold bloom from above, fine rays, vignette.
+cx.fillStyle = '#0a0907';
+cx.fillRect(0, 0, W, H);
+let g = cx.createRadialGradient(600, -120, 0, 600, -120, 860);
+g.addColorStop(0, 'rgba(248,228,178,.30)'); g.addColorStop(.45, 'rgba(212,170,90,.10)'); g.addColorStop(1, 'rgba(212,170,90,0)');
+cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+cx.save();
+cx.strokeStyle = 'rgba(212,183,122,.07)'; cx.lineWidth = 1;
+for (let a = 20; a <= 160; a += 4) { const r = a * Math.PI / 180; cx.beginPath(); cx.moveTo(600, -40); cx.lineTo(600 + Math.cos(r) * 1400, -40 + Math.sin(r) * 1400); cx.stroke(); }
+cx.restore();
+g = cx.createRadialGradient(600, 315, 250, 600, 315, 760);
+g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.7)');
+cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+
+// Frame
+cx.strokeStyle = 'rgba(212,183,122,.45)'; cx.lineWidth = 1; cx.strokeRect(22.5, 22.5, W - 45, H - 45);
+cx.strokeStyle = 'rgba(212,183,122,.16)'; cx.strokeRect(30.5, 30.5, W - 61, H - 61);
+
+// Roses in two corners, as on the printed card
+const spray = await sprayImage('#d4b77a');
+cx.globalAlpha = .9;
+cx.drawImage(spray, 6, 6, 300, 300);
+cx.save(); cx.translate(W - 6, H - 6); cx.scale(-1, -1); cx.drawImage(spray, 0, 0, 300, 300); cx.restore();
+cx.globalAlpha = 1;
+
+// Wax seal with gold initials
+const seal = await sealImage();
+cx.save(); cx.shadowColor = 'rgba(0,0,0,.6)'; cx.shadowBlur = 18; cx.shadowOffsetY = 8;
+cx.drawImage(seal, 548, 52, 104, 104); cx.restore();
+cx.font = 'italic 300 30px "Cormorant Garamond"';
+const mono = 'A&A', mw = cx.measureText(mono).width;
+cx.fillStyle = 'rgba(20,0,6,.6)'; cx.fillText(mono, 600 - mw / 2 + 1, 114 + 1);
+cx.fillStyle = foil(600 - mw / 2, 600 + mw / 2); cx.fillText(mono, 600 - mw / 2, 114);
+
+// Announcement
+centered('THE ENGAGEMENT OF', 212, '400 21px "Jost"', '#d4b77a', 8);
+
+// Names: script, gold foil, with a light ampersand
+cx.font = '128px "Pinyon Script"';
+const n1 = 'Ahmed', n2 = 'Amira', w1 = cx.measureText(n1).width, w2 = cx.measureText(n2).width;
+cx.font = 'italic 300 64px "Cormorant Garamond"';
+const wa = cx.measureText('&').width, gap = 26, total = w1 + gap + wa + gap + w2, x0 = (W - total) / 2, base = 332;
+cx.font = '128px "Pinyon Script"';
+cx.fillStyle = foil(x0, x0 + total);
+cx.shadowColor = 'rgba(0,0,0,.5)'; cx.shadowBlur = 12;
+cx.fillText(n1, x0, base);
+cx.fillText(n2, x0 + w1 + gap + wa + gap, base);
+cx.shadowBlur = 0;
+cx.font = 'italic 300 64px "Cormorant Garamond"';
+cx.fillStyle = '#d4b77a';
+cx.fillText('&', x0 + w1 + gap, base - 6);
+
+// Divider
+cx.strokeStyle = 'rgba(212,183,122,.7)';
+[[420, 580], [620, 780]].forEach(([a, b]) => { cx.beginPath(); cx.moveTo(a, 392); cx.lineTo(b, 392); cx.stroke(); });
+cx.save(); cx.translate(600, 392); cx.rotate(Math.PI / 4); cx.strokeRect(-5, -5, 10, 10); cx.fillStyle = '#d4b77a'; cx.fillRect(-2.2, -2.2, 4.4, 4.4); cx.restore();
+
+// Details
+centered('THURSDAY  ·  26 NOVEMBER 2026  ·  7 PM', 450, '400 22px "Jost"', '#e6dbc3', 6);
+centered('4G Hall · Medical Professions Club · New Minya', 496, 'italic 400 30px "Cormorant Garamond"', '#efe6d4');
+cx.direction = 'rtl';
+centered('خطوبة أحمد وأميرة', 560, '36px "Aref Ruqaa"', '#f6e7bf');
+cx.direction = 'ltr';
+
+// Save next to index.html
+const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', .9));
+const res = await fetch('/save-og', { method: 'POST', body: blob });
+status.textContent = res.ok ? `Saved og-image.jpg (${Math.round(blob.size / 1024)} KB)` : `Save failed: ${res.status}`;
+document.title = status.textContent;
+})();
+</script>
+</body>
+</html>
