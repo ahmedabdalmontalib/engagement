@@ -70,16 +70,18 @@ body.intro-on main{visibility:hidden}
 html[lang="ar"] :is(.eyebrow,.btn,.chip,.lbl,.toast,.knock-hint,.sound-pref,.skip,.hero-date,.foot,.loader-txt,.cap-sub,.scroll-cue,.map-wait){letter-spacing:0;margin-right:0;text-transform:none}
 html[lang="ar"] .eyebrow{font-size:15px}
 html[lang="ar"] :is(.lede,.story-line,.cap-line,.count-done,.venue-sub,.wish-note,.finale-names){font-style:normal}
-.glow{text-shadow:0 0 22px rgba(255,214,140,.35),0 2px 14px rgba(5,10,30,.85)}
+.glow{text-shadow:0 0 22px rgba(255,214,140,.3),0 2px 14px rgba(5,10,30,.95),0 0 3px rgba(5,10,30,.7)}
 
 /* ==========================================================================
    The stage: the footage behind everything
    ========================================================================== */
 #stage{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--night)}
-.st-backdrop{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(30px) brightness(.38) saturate(1.15);display:none}
+/* On a computer the film stands in a framed window over a night backdrop with a faint star lattice */
+.st-backdrop{position:absolute;inset:0;display:none;background:radial-gradient(50% 60% at 50% 55%,rgba(255,200,120,.12),transparent 70%),radial-gradient(120% 90% at 50% 100%,#1b2a58,#0a1230 55%,#050918)}
+.st-backdrop::before{content:"";position:absolute;inset:0;opacity:.09;background-size:96px 96px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='%23ead7a8' stroke-width='1'%3E%3Cpath d='M48 18l9 21 21 9-21 9-9 21-9-21-21-9 21-9z'/%3E%3Crect x='27' y='27' width='42' height='42' transform='rotate(45 48 48)'/%3E%3Cpath d='M0 48h18M78 48h18M48 0v18M48 78v18'/%3E%3C/svg%3E");-webkit-mask-image:radial-gradient(70% 80% at 50% 50%,transparent 30%,#000 75%);mask-image:radial-gradient(70% 80% at 50% 50%,transparent 30%,#000 75%)}
 @media (min-aspect-ratio:3/4){.st-backdrop{display:block}}
 .st-frame{position:absolute;top:0;bottom:0;left:50%;width:var(--col);transform:translateX(-50%);overflow:hidden;background:var(--night)}
-@media (min-aspect-ratio:3/4){.st-frame{box-shadow:0 0 0 1px rgba(234,215,168,.25),0 0 120px rgba(0,0,0,.7)}}
+@media (min-aspect-ratio:3/4){.st-frame{box-shadow:0 0 0 1px rgba(234,215,168,.5),0 0 0 8px rgba(8,14,38,.92),0 0 0 9px rgba(234,215,168,.28),0 30px 140px rgba(0,0,0,.85),0 0 160px rgba(255,200,120,.12)}}
 .st-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(var(--zoom,1));transform-origin:50% 62%;transition:opacity 1.3s ease}
 #stage[data-scene="door"] #poster,
 #stage[data-scene="opening"] #poster{opacity:1;transition:none}
@@ -89,11 +91,19 @@ html[lang="ar"] :is(.lede,.story-line,.cap-line,.count-done,.venue-sub,.wish-not
 #stage[data-scene="walk"] #walkCv,
 #stage[data-scene="pavilion"] #vPavilion{opacity:1}
 #stage[data-scene="walk"] #walkCv{transition-duration:.7s}
+/* Leaving the opening, the film and the door stay until the garden has fully faded in over them */
+#stage[data-scene="garden"] #vOpen,#stage[data-scene="garden"] .st-frame:not(.zoomin) #poster{transition:opacity 0s linear 1.4s}
+/* The door rises out of the dark with a slow push-in when the loader lifts */
+.st-frame.arrive .st-media{transition:opacity 1.3s ease,transform 4.2s cubic-bezier(.2,.7,.2,1)}
+.st-frame::after{content:"";position:absolute;inset:0;background:#050918;opacity:0;pointer-events:none;transition:opacity 2.6s ease}
+.st-frame.dim::after{opacity:1;transition:none}
 /* If the opening film cannot play, the door zooms toward you while the garden fades in */
 .st-frame.zoomin #poster{opacity:1;transform:scale(1.45);transition:transform 1.8s var(--ease-io),opacity 1.6s ease .4s}
 #stage[data-scene="garden"] .st-frame.zoomin #poster{opacity:0}
-.st-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(6,11,32,.5) 0%,rgba(6,11,32,0) 26%,rgba(6,11,32,0) 58%,rgba(6,11,32,.72) 100%);transition:background-color 1s}
+.st-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 85% at 50% 45%,transparent 55%,rgba(4,8,24,.55) 100%),linear-gradient(180deg,rgba(6,11,32,.5) 0%,rgba(6,11,32,0) 26%,rgba(6,11,32,0) 58%,rgba(6,11,32,.72) 100%);transition:background-color 1.2s}
 body:not(.intro-on) .st-shade{background-color:rgba(6,11,32,.12)}
+/* The pavilion is bright marble: dim it so the text over it stays readable */
+body:not(.intro-on) #stage[data-scene="pavilion"] .st-shade{background-color:rgba(6,11,32,.46)}
 /* Light through the seam of the closed door */
 .seam{position:absolute;left:50%;top:21%;bottom:14%;width:2px;margin-left:-1px;background:linear-gradient(180deg,transparent,rgba(255,226,170,.95) 30%,rgba(255,214,140,.95) 70%,transparent);box-shadow:0 0 16px 3px rgba(255,200,120,.55);opacity:0;transition:opacity .6s}
 #stage[data-scene="door"] .seam{opacity:1;animation:seam 3.2s ease-in-out infinite}
@@ -153,8 +163,13 @@ html[lang="ar"] .btn{font-size:16px}
 .intro-ui{position:absolute;inset:0;transition:opacity .9s ease,transform 1.2s var(--ease-out)}
 #intro.opened .intro-ui{opacity:0;transform:scale(1.04);pointer-events:none}
 .intro-top{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(env(safe-area-inset-top) + 9vh);display:flex;flex-direction:column;align-items:center;text-align:center}
-.intro-top .eyebrow{opacity:0;animation:rise 1.4s var(--ease-out) .3s forwards}
-.guest{margin:4px 0 0;font-family:var(--script);font-size:clamp(46px,min(13vw,7vh),66px);line-height:1.25;color:var(--ivory);opacity:0;animation:rise 1.6s var(--ease-out) .6s forwards}
+.intro-top .eyebrow{opacity:0}
+#intro.ready .intro-top .eyebrow{animation:rise 1.4s var(--ease-out) .9s forwards}
+.guest{margin:4px 0 0;font-family:var(--script);font-size:clamp(46px,min(13vw,7vh),66px);line-height:1.25;color:var(--ivory);opacity:0;text-shadow:0 2px 18px rgba(5,10,30,.85)}
+#intro.ready .guest{animation:rise 1.8s var(--ease-out) 1.2s forwards}
+.knock,.intro-bottom{opacity:0}
+#intro.ready .knock{animation:fadeIn 1.4s ease 2s forwards}
+#intro.ready .intro-bottom{animation:rise 1.4s var(--ease-out) 2.3s forwards}
 html[lang="ar"] .guest{font-size:clamp(36px,min(10vw,5.6vh),52px);line-height:1.7}
 /* The knock: a ring of light around the door's brass rings */
 .knock{position:absolute;left:50%;top:54%;width:140px;height:140px;margin:-70px 0 0 -70px;border-radius:50%;display:grid;place-items:center}
@@ -216,11 +231,17 @@ html[dir="rtl"] .progress span{transform-origin:100% 50%}
    Sections
    ========================================================================== */
 .sec{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;width:var(--col);margin:0 auto;padding:clamp(90px,14vh,140px) var(--gutter)}
-.sec-hero{min-height:100vh;min-height:100svh;justify-content:flex-start;padding-top:calc(env(safe-area-inset-top) + 12vh)}
+.sec-hero{min-height:100vh;min-height:100svh;justify-content:flex-start;padding-top:calc(env(safe-area-inset-top) + 12vh);isolation:isolate}
+/* A soft pool of shade behind the names and the lines under them */
+.sec-hero::before{content:"";position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 5vh);width:150%;height:min(70vh,640px);transform:translateX(-50%);z-index:-1;background:radial-gradient(closest-side,rgba(6,11,32,.6),rgba(6,11,32,.3) 55%,transparent);opacity:0;transition:opacity 2.4s ease .6s;pointer-events:none}
+body.formed .sec-hero::before{opacity:1}
+.hero-orn{margin-top:20px;opacity:0;transition:opacity 1s ease 3.2s}
+body.formed .hero-orn{opacity:1}
+.hero-orn::before,.hero-orn::after{transition-delay:3.2s}
 .hero-eyebrow,.lede,.hero-date{opacity:0;transform:translateY(16px);transition:opacity 1.4s ease,transform 1.4s var(--ease-out)}
 body.formed .hero-eyebrow{opacity:1;transform:none;transition-delay:.2s}
 body.formed .lede{opacity:1;transform:none;transition-delay:2.6s}
-body.formed .hero-date{opacity:1;transform:none;transition-delay:3.1s}
+body.formed .hero-date{opacity:1;transform:none;transition-delay:3.5s}
 .names{margin:.12em 0 .05em;display:flex;flex-direction:column;align-items:center;font-weight:400;line-height:1}
 .names:focus{outline:none}
 .name-wrap{display:block;opacity:0}
@@ -230,9 +251,9 @@ html[lang="ar"] .name{font-size:clamp(54px,min(16vw,9vh),100px);line-height:1.6}
 .amp{font-family:var(--script);font-size:clamp(44px,min(12vw,6.4vh),66px);line-height:.9;color:var(--champ);opacity:0;transform:scale(.4) rotate(-12deg);transition:opacity 1.2s ease 1.3s,transform 1.6s cubic-bezier(.3,1.6,.5,1) 1.3s;text-shadow:0 2px 12px rgba(5,10,30,.8)}
 html[lang="ar"] .amp{font-family:"Aref Ruqaa",serif;font-size:clamp(34px,min(9vw,5vh),52px)}
 body.formed .amp{opacity:1;transform:none}
-.lede{max-width:22ch;margin:.5em 0 0;font-style:italic;font-weight:300;font-size:clamp(21px,min(5.4vw,3vh),27px);line-height:1.4}
+.lede{max-width:22ch;margin:.5em 0 0;font-style:italic;font-weight:400;font-size:clamp(21px,min(5.4vw,3vh),27px);line-height:1.4}
 html[lang="ar"] .lede{max-width:26ch;font-size:clamp(20px,min(5vw,2.8vh),25px)}
-.hero-date{margin:16px 0 0;font-family:var(--sans);font-size:12px;letter-spacing:.32em;margin-right:-.32em;text-transform:uppercase;color:var(--champ)}
+.hero-date{margin:14px 0 0;font-family:var(--sans);font-size:12.5px;font-weight:500;letter-spacing:.3em;margin-right:-.3em;text-transform:uppercase;color:var(--ivory);text-shadow:0 1px 10px rgba(5,10,30,.95),0 0 2px rgba(5,10,30,.8)}
 html[lang="ar"] .hero-date{font-size:16px}
 .scroll-cue{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom) + 22px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;min-width:44px;padding:6px;text-decoration:none;font-family:var(--sans);font-size:11px;letter-spacing:.36em;margin-right:-.36em;text-transform:uppercase;opacity:0;transition:opacity 1.6s ease 3.6s}
 html[lang="ar"] .scroll-cue{font-size:14px}
@@ -240,9 +261,19 @@ body.formed .scroll-cue{opacity:1}
 .cue-line{display:block;width:1px;height:46px;background:rgba(248,243,233,.25);overflow:hidden}
 .cue-line::after{content:"";display:block;width:100%;height:100%;background:linear-gradient(180deg,transparent,var(--candle));animation:cue 2.2s var(--ease-io) infinite}
 
+/* Gold divider: two lines and a diamond that draw outward */
+.orn{display:block;position:relative;width:132px;height:12px;margin:0 auto}
+.orn::before,.orn::after{content:"";position:absolute;top:50%;width:54px;height:1px;transition:transform 1.4s var(--ease-out) var(--d,0s)}
+.orn::before{right:50%;margin-right:12px;background:linear-gradient(270deg,var(--champ),transparent);transform-origin:100% 50%}
+.orn::after{left:50%;margin-left:12px;background:linear-gradient(90deg,var(--champ),transparent);transform-origin:0 50%}
+.orn i{position:absolute;left:50%;top:50%;width:7px;height:7px;margin:-3.5px 0 0 -3.5px;border:1px solid var(--champ);transform:rotate(45deg);box-shadow:0 0 10px rgba(255,214,140,.6)}
+.orn[data-reveal]{filter:none}
+.orn[data-reveal]::before,.orn[data-reveal]::after,body:not(.formed) .hero-orn::before,body:not(.formed) .hero-orn::after{transform:scaleX(0)}
+.orn[data-reveal].in::before,.orn[data-reveal].in::after{transform:none}
+.sec>.orn:first-child{margin-bottom:22px}
 /* Arch panel */
 .arch-wrap{width:100%}
-.arch{position:relative;width:100%;padding:clamp(86px,24vw,112px) clamp(22px,7vw,38px) clamp(36px,9vw,50px);background:var(--card);border-radius:50% 50% 18px 18px/32% 32% 18px 18px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.arch{position:relative;width:100%;padding:clamp(86px,24vw,112px) clamp(22px,7vw,38px) clamp(36px,9vw,50px);background:radial-gradient(70% 38% at 50% 0%,rgba(255,214,140,.14),transparent 72%),linear-gradient(180deg,rgba(10,18,46,.58),rgba(10,18,46,.78));border-radius:50% 50% 18px 18px/32% 32% 18px 18px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
 .arch::before{content:"";position:absolute;inset:9px;border:1px solid var(--line);border-radius:inherit;pointer-events:none}
 .arch-star{width:26px;height:26px;margin:0 auto 14px;color:var(--champ)}
 .story-lines{display:flex;flex-direction:column;gap:16px;margin-top:20px}
@@ -265,6 +296,11 @@ html[lang="ar"] .cap-script{font-size:clamp(38px,min(11vw,6vh),58px);line-height
 .cap-day{margin:0;font-family:var(--display);font-size:clamp(150px,min(46vw,26vh),240px);line-height:.95;background:linear-gradient(180deg,#fffaf0 15%,#ead7a8 60%,#c99d55);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 24px rgba(5,10,30,.7))}
 html[lang="ar"] .cap-day{line-height:1.25}
 .cap.on .cap-day{animation:dayIn 1.6s var(--ease-out)}
+.cap-time{margin:0;display:flex;align-items:flex-start;justify-content:center;gap:.08em;font-family:var(--display);font-size:clamp(120px,min(38vw,21vh),190px);line-height:1;background:linear-gradient(180deg,#fffaf0 15%,#ead7a8 60%,#c99d55);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 24px rgba(5,10,30,.7))}
+.cap-time small{margin-top:.2em;font-family:var(--sans);font-size:.2em;font-weight:500;letter-spacing:.2em}
+html[lang="ar"] .cap-time{line-height:1.3}
+html[lang="ar"] .cap-time small{font-size:.24em;letter-spacing:0;margin-top:.5em}
+.cap.on .cap-time{animation:dayIn 1.6s var(--ease-out)}
 .cap-sub{margin:4px 0 0;font-family:var(--sans);font-size:clamp(13px,3.4vw,15px);letter-spacing:.34em;margin-right:-.34em;text-transform:uppercase;color:var(--champ)}
 html[lang="ar"] .cap-sub{font-size:19px}
 .cap-line span{color:var(--candle)}
@@ -282,13 +318,13 @@ html[lang="ar"] :is(.cal-menu a,.cal-menu button){font-size:15px;letter-spacing:
 /* Countdown: four arched windows */
 .clock{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,2.6vw,16px);width:100%;margin-top:34px}
 .win{display:flex;flex-direction:column;align-items:center}
-.win-arch{position:relative;width:100%;aspect-ratio:3/4.2;display:grid;place-items:end center;padding-bottom:20%;border-radius:50% 50% 8px 8px/36% 36% 8px 8px;border:1px solid var(--line);background:radial-gradient(90% 70% at 50% 100%,rgba(255,214,140,.22),transparent 70%),rgba(10,18,46,.62);overflow:hidden;box-shadow:0 20px 40px -20px rgba(0,0,0,.8)}
+.win-arch{position:relative;width:100%;aspect-ratio:3/4.2;display:grid;place-items:end center;padding-bottom:20%;border-radius:50% 50% 8px 8px/36% 36% 8px 8px;border:1px solid var(--line);background:radial-gradient(90% 70% at 50% 100%,rgba(255,214,140,.24),transparent 70%),rgba(8,14,38,.8);overflow:hidden;box-shadow:0 20px 40px -20px rgba(0,0,0,.8)}
 /* a fine lattice in the top of each window */
 .win-arch::before{content:"";position:absolute;left:0;right:0;top:0;height:46%;background:repeating-linear-gradient(45deg,rgba(234,215,168,.16) 0 1px,transparent 1px 9px),repeating-linear-gradient(-45deg,rgba(234,215,168,.16) 0 1px,transparent 1px 9px);-webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
-.win-arch span{position:relative;font-family:var(--display);font-size:clamp(30px,9vw,46px);line-height:1;color:var(--ivory);font-variant-numeric:lining-nums tabular-nums;text-shadow:0 0 18px rgba(255,214,140,.5)}
+.win-arch span{position:relative;font-family:var(--display);font-size:clamp(34px,10.5vw,54px);line-height:1;color:var(--ivory);font-variant-numeric:lining-nums tabular-nums;text-shadow:0 0 18px rgba(255,214,140,.5)}
 .win-arch.tick span{animation:digit .7s var(--ease-out)}
 .win-arch.tick{animation:glowWin 1s ease-out}
-.lbl{margin-top:10px;font-family:var(--sans);font-size:clamp(9.5px,2.5vw,11px);letter-spacing:.22em;margin-right:-.22em;text-transform:uppercase;color:var(--champ)}
+.lbl{margin-top:10px;font-family:var(--sans);font-size:clamp(9.5px,2.5vw,11px);font-weight:500;letter-spacing:.22em;margin-right:-.22em;text-transform:uppercase;color:var(--champ);text-shadow:0 1px 8px rgba(5,10,30,.95)}
 html[lang="ar"] .lbl{font-size:clamp(13px,3.2vw,15px)}
 .count-title{margin:12px 0 0;font-family:var(--script);font-weight:400;font-size:clamp(44px,12vw,64px);line-height:1.2}
 html[lang="ar"] .count-title{font-size:clamp(32px,8.5vw,46px);line-height:1.7}
@@ -308,24 +344,28 @@ html[lang="ar"] .venue-name{line-height:1.5}
 .map.loaded .map-wait{display:none}
 
 /* Finale */
-.sec-finale{min-height:100vh;min-height:100svh;justify-content:flex-start;padding-top:calc(env(safe-area-inset-top) + 12vh);padding-bottom:calc(env(safe-area-inset-bottom) + 80px)}
+.sec-finale{min-height:100vh;min-height:100svh;justify-content:center;padding-top:calc(env(safe-area-inset-top) + 80px);padding-bottom:calc(env(safe-area-inset-bottom) + 80px)}
 .wish-note{min-height:1.6em;margin:14px 0 0;font-style:italic;font-size:clamp(19px,4.6vw,23px);color:var(--candle);opacity:0;transition:opacity .8s}
 .wish-note.show{opacity:1}
-.finale-title{margin:30px 0 0;font-family:var(--script);font-weight:400;font-size:clamp(54px,min(15vw,8vh),84px);line-height:1.15}
+.finale-title{margin:0;font-family:var(--script);font-weight:400;font-size:clamp(54px,min(15vw,8vh),84px);line-height:1.15}
 html[lang="ar"] .finale-title{font-size:clamp(40px,min(11vw,6vh),62px);line-height:1.7}
 .finale-names{margin:6px 0 0;font-style:italic;font-weight:300;font-size:clamp(22px,5.4vw,30px)}
-.finale-date{margin:8px 0 0;font-family:var(--sans);font-size:12.5px;letter-spacing:.4em;margin-right:-.4em;color:var(--champ)}
+.finale-date{margin:8px 0 0;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.4em;margin-right:-.4em;color:var(--champ);text-shadow:0 1px 10px rgba(5,10,30,.95)}
+.wish-eyebrow{margin-top:40px}
+.wish-btn{margin-top:16px}
 .foot{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 22px);margin:0;font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--soft)}
 html[lang="ar"] .foot{font-size:14px;letter-spacing:0}
 
 @media (max-width:600px){
   .sec{padding-top:72px;padding-bottom:72px}
+  #countdown,#venue{padding-top:110px;padding-bottom:110px}
 }
 
 /* ==========================================================================
    Keyframes
    ========================================================================== */
 @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{to{opacity:1}}
 @keyframes ring{0%{transform:scale(.55);opacity:0}25%{opacity:.9}100%{transform:scale(1.25);opacity:0}}
 @keyframes breathe{50%{opacity:.55}}
 @keyframes seam{50%{opacity:.55;box-shadow:0 0 26px 6px rgba(255,200,120,.75)}}
@@ -352,7 +392,7 @@ html.lite .name{animation:none;background-position:30% 0}
 
 <!-- The footage: closed door, the opening, the garden, the walk, the pavilion -->
 <div id="stage" data-scene="door" aria-hidden="true">
-  <img class="st-backdrop" src="media/garden.jpg" alt="" decoding="async">
+  <div class="st-backdrop"></div>
   <div class="st-frame">
     <img class="st-media" id="poster" src="media/door.jpg" alt="">
     <video class="st-media" id="vOpen" muted playsinline preload="auto" src="media/open.mp4"></video>
@@ -429,6 +469,7 @@ html.lite .name{animation:none;background-position:30% 0}
       <span class="name-wrap"><span class="name" data-c="p2"></span></span>
     </h1>
     <p class="lede glow" data-t="lede"></p>
+    <span class="orn hero-orn" aria-hidden="true"><i></i></span>
     <p class="hero-date"><span data-c="weekday"></span> · <span data-c="dayMonthYear"></span></p>
     <a class="scroll-cue" href="#story" data-ta="scrollAria"><span data-t="scroll"></span><span class="cue-line"></span></a>
   </section>
@@ -463,7 +504,8 @@ html.lite .name{animation:none;background-position:30% 0}
       </div>
       <div class="cap" data-from="0.58" data-to="0.78">
         <p class="eyebrow" style="--i:0" data-t="timeEyebrow"></p>
-        <p class="cap-line glow" style="--i:1" data-th="beginning"></p>
+        <p class="cap-time" style="--i:1"><span data-c="hourBig"></span><small data-c="ampm"></small></p>
+        <p class="cap-line glow" style="--i:2" data-th="beginning"></p>
       </div>
       <div class="cap" data-from="0.84" data-to="1.01">
         <p class="cap-script" style="--i:0" data-t="arrived"></p>
@@ -484,6 +526,7 @@ html.lite .name{animation:none;background-position:30% 0}
 
   <!-- Countdown -->
   <section id="countdown" class="sec">
+    <span class="orn" data-reveal aria-hidden="true"><i></i></span>
     <p class="eyebrow" data-reveal data-t="countEyebrow"></p>
     <h2 class="count-title glow" data-reveal style="--d:.15s" data-t="countTitle"></h2>
     <div class="clock" role="timer" aria-label="">
@@ -497,6 +540,7 @@ html.lite .name{animation:none;background-position:30% 0}
 
   <!-- Venue -->
   <section id="venue" class="sec">
+    <span class="orn" data-reveal aria-hidden="true"><i></i></span>
     <p class="eyebrow" data-reveal data-t="venueEyebrow"></p>
     <h2 class="venue-name glow" data-reveal style="--d:.15s" data-c="venueName"></h2>
     <p class="venue-sub glow" data-reveal style="--d:.3s" data-c="venueSub"></p>
@@ -517,13 +561,14 @@ html.lite .name{animation:none;background-position:30% 0}
 
   <!-- Finale at the pavilion -->
   <section id="finale" class="sec sec-finale">
-    <p class="eyebrow" data-reveal data-t="wishEyebrow"></p>
-    <button class="btn btn-gold wish-btn" type="button" data-reveal style="--d:.2s"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="translate(12 12)"><ellipse rx="3.2" ry="6.5" transform="translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(72) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(144) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(216) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(288) translate(0 -5)"/></g></svg><span data-t="toss"></span></button>
+    <span class="orn" data-reveal aria-hidden="true"><i></i></span>
+    <h2 class="finale-title glow" data-reveal style="--d:.15s" data-t="finaleTitle"></h2>
+    <p class="finale-names glow" data-reveal style="--d:.4s" data-c="couple"></p>
+    <p class="finale-date" data-reveal style="--d:.6s" data-c="dateDots"></p>
+    <p class="eyebrow wish-eyebrow" data-reveal style="--d:.8s" data-t="wishEyebrow"></p>
+    <button class="btn btn-gold wish-btn" type="button" data-reveal style="--d:.95s"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="translate(12 12)"><ellipse rx="3.2" ry="6.5" transform="translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(72) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(144) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(216) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(288) translate(0 -5)"/></g></svg><span data-t="toss"></span></button>
     <p class="wish-note" aria-live="polite"></p>
-    <h2 class="finale-title glow" data-reveal style="--d:.3s" data-t="finaleTitle"></h2>
-    <p class="finale-names glow" data-reveal style="--d:.55s" data-c="couple"></p>
-    <p class="finale-date" data-reveal style="--d:.75s" data-c="dateDots"></p>
-    <div class="btn-row" data-reveal style="--d:.95s">
+    <div class="btn-row" data-reveal style="--d:1.1s">
       <button class="btn" type="button" id="replayBtn" data-t="replay"></button>
       <button class="btn" type="button" id="shareBtn" data-t="share"></button>
     </div>
@@ -775,6 +820,9 @@ function buildC() {
     timeText: lang === 'ar'
       ? `الساعة ${HOURS_AR[h12]}${minute === 30 ? ' والنصف' : minute === 15 ? ' والربع' : minute ? ':' + num(minute, 2) : ''} ${hour < 12 ? 'صباحًا' : 'مساءً'}`
       : `${h12}${minute ? ':' + String(minute).padStart(2, '0') : " o'clock"} in the ${hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening'}`,
+    // English shows 7:00 (a lone thin 7 looks sparse); Arabic shows ٧ beside مساءً.
+    hourBig: num(h12) + (minute || lang === 'en' ? ':' + num(minute, 2) : ''),
+    ampm: lang === 'ar' ? (hour < 12 ? 'صباحًا' : 'مساءً') : (hour < 12 ? 'AM' : 'PM'),
     venueName: pick(CONFIG.venueName), venueLine1: pick(CONFIG.venueLine1), venueLine2: pick(CONFIG.venueLine2),
     guest: guestParam || T('guestDefault')
   };
@@ -865,6 +913,17 @@ const Stage = (() => {
     fb = setTimeout(() => { if (vOpen.currentTime < .05) zoom(); }, 1800);
     setTimeout(go, 9000);
   }
+  // The door comes up out of the dark with a slow push-in.
+  function arrive() {
+    frame.classList.remove('arrive');
+    frame.classList.add('dim');
+    zoom(reduce ? 1 : 1.08);
+    void frame.offsetWidth;
+    frame.classList.add('arrive');
+    frame.classList.remove('dim');
+    zoom(1);
+  }
+  function settle() { frame.classList.remove('arrive'); }
   function door() {
     frame.classList.remove('zoomin');
     st.classList.remove('bloom');
@@ -926,7 +985,7 @@ const Stage = (() => {
   let rt, lastW = innerWidth;
   addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== lastW || Math.abs(cv.height - frame.offsetHeight) > 150) { lastW = innerWidth; size(); } }, 150); });
   size();
-  return { set, open, door, walk, zoom, loadFrames, get scene() { return scene; } };
+  return { set, open, door, arrive, settle, walk, zoom, loadFrames, get scene() { return scene; } };
 })();
 
 /* ==========================================================================
@@ -936,7 +995,7 @@ const Air = (() => {
   const cv = $('#air'), cx = cv.getContext('2d');
   let W = 0, H = 0, raf = 0, last = 0, t = 0, dprCap = lite ? 1.25 : 1.5;
   let count = reduce ? 0 : small ? 22 : 40;
-  const flies = [], blooms = [];
+  const flies = [], blooms = [], motes = [];
   function sprite(size, draw) { const s = document.createElement('canvas'); s.width = s.height = size; draw(s.getContext('2d'), size); return s; }
   const GLOW = sprite(64, (g, n) => {
     const r = g.createRadialGradient(n / 2, n / 2, 0, n / 2, n / 2, n / 2);
@@ -984,6 +1043,17 @@ const Air = (() => {
       cx.globalAlpha = .15 + .85 * pulse * pulse;
       cx.drawImage(GLOW, f.x - f.s / 2, f.y - f.s / 2, f.s, f.s);
     }
+    // Light motes from the doorway: they drift outward and toward you, then fade.
+    for (let i = motes.length - 1; i >= 0; i--) {
+      const m = motes[i];
+      m.life += dt;
+      if (m.life >= m.max) { motes.splice(i, 1); continue; }
+      m.x += m.vx * dt; m.y += m.vy * dt;
+      m.vx *= Math.pow(1.012, dt); m.vy -= .006 * dt;
+      const k = m.life / m.max, sz = m.s * (1 + k * 1.6);
+      cx.globalAlpha = (k < .15 ? k / .15 : 1 - (k - .15) / .85) * .9;
+      cx.drawImage(GLOW, m.x - sz / 2, m.y - sz / 2, sz, sz);
+    }
     cx.globalCompositeOperation = 'source-over';
     for (let i = blooms.length - 1; i >= 0; i--) {
       const b = blooms[i];
@@ -1014,6 +1084,14 @@ const Air = (() => {
   return {
     start() { if (!raf) raf = requestAnimationFrame(frame); },
     toss(x, y, n) { if (reduce) return; for (let i = 0; i < n; i++) blooms.push(bloom(x, y, 4.5)); if (blooms.length > 160) blooms.splice(0, blooms.length - 160); },
+    sparks(n) {
+      if (reduce) return;
+      for (let i = 0; i < n; i++) {
+        const side = Math.random() < .5 ? -1 : 1, sp = .6 + Math.random() * 2.6;
+        motes.push({ x: W / 2 + side * Math.random() * 14, y: H * (.22 + Math.random() * .62), vx: side * sp, vy: (Math.random() - .6) * .8, s: 6 + Math.random() * 12, life: 0, max: 70 + Math.random() * 80 });
+      }
+      if (motes.length > 260) motes.splice(0, motes.length - 260);
+    },
     shower(n) { if (reduce) return; for (let i = 0; i < n; i++) { const b = bloom(Math.random() * W, -20 - Math.random() * H * .5, .4); b.vy = .4 + Math.random() * .6; b.max = 520; blooms.push(b); } }
   };
 })();
@@ -1208,8 +1286,10 @@ const Intro = (() => {
     $$('.name-wrap').forEach(w => w.getAnimations().forEach(a => a.cancel()));
     jumpTop();
     Stage.door();
+    Stage.arrive();
     el.hidden = false;
     el.className = '';
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('ready')));
     // After "Open the door again", move focus off the now-hidden page onto the door.
     if (document.activeElement && document.activeElement.closest && document.activeElement.closest('main')) setTimeout(() => $('.knock').focus({ preventScroll: true }), 200);
   }
@@ -1221,6 +1301,10 @@ const Intro = (() => {
     el.classList.add('opened');
     if (reduce) { Stage.set('garden'); later(finish, 300); return; }
     Stage.open(finish);
+    // Golden motes stream out through the doorway as it parts.
+    Air.sparks(small ? 30 : 50);
+    later(() => Air.sparks(small ? 40 : 70), 900);
+    later(() => Air.sparks(small ? 24 : 40), 1900);
   }
   function finish() {
     if (stage === 'done') return;
@@ -1228,6 +1312,7 @@ const Intro = (() => {
     stage = 'done';
     document.body.classList.remove('intro-on');
     document.body.classList.add('formed');
+    Stage.settle();
     writeNames();
     html.classList.remove('locked');
     el.classList.add('leaving');
