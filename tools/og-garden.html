@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link preview image (garden)</title>
+<!-- Draws garden/og-image.jpg (1200×630) for "The Garden Door" design: the closed door and the
+     garden in two arched windows, the names between them (safe for WhatsApp's square crop).
+     Open it through tools/serve.py; it saves the image into garden/. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Jost:wght@400;500&family=Aref+Ruqaa:wght@400&display=swap">
+<style>
+  body{margin:0;background:#222;color:#ddd;font:14px system-ui;display:grid;gap:12px;justify-items:center;padding:16px}
+  canvas{width:min(100%,1200px);height:auto;box-shadow:0 10px 40px #000}
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<p id="status">Drawing…</p>
+<script>
+(async () => {
+'use strict';
+const W = 1200, H = 630;
+const cv = document.getElementById('c'), cx = cv.getContext('2d');
+const status = document.getElementById('status');
+let sd = 7;
+const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+const img = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+const centered = (t, y, font, fill, spacing = 0, dir = 'ltr') => {
+  cx.font = font; cx.fillStyle = fill; cx.letterSpacing = spacing + 'px'; cx.direction = dir; cx.textAlign = 'center';
+  cx.fillText(t, W / 2, y); cx.letterSpacing = '0px';
+};
+
+await document.fonts.load('120px "Pinyon Script"');
+await document.fonts.load('500 18px "Jost"');
+await document.fonts.load('46px "Aref Ruqaa"', 'أحمد وأميرة');
+await document.fonts.ready;
+const [door, garden] = await Promise.all([img('../garden/media/door.jpg'), img('../garden/media/garden.jpg')]);
+
+// Night
+let g = cx.createRadialGradient(W / 2, H * 1.1, 40, W / 2, H * .6, W * .75);
+g.addColorStop(0, '#24356a'); g.addColorStop(.55, '#111d44'); g.addColorStop(1, '#070d26');
+cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+for (let i = 0; i < 110; i++) { cx.globalAlpha = .2 + rnd() * .6; cx.fillStyle = '#fff'; cx.beginPath(); cx.arc(rnd() * W, rnd() * H, .4 + rnd() * .9, 0, 6.28); cx.fill(); }
+// Fireflies
+for (let i = 0; i < 26; i++) {
+  const x = 380 + rnd() * 440, y = 330 + rnd() * 280, r = 6 + rnd() * 10;
+  const f = cx.createRadialGradient(x, y, 0, x, y, r);
+  f.addColorStop(0, 'rgba(255,240,190,.9)'); f.addColorStop(.3, 'rgba(255,214,140,.35)'); f.addColorStop(1, 'rgba(255,214,140,0)');
+  cx.globalAlpha = .4 + rnd() * .5; cx.fillStyle = f; cx.fillRect(x - r, y - r, r * 2, r * 2);
+}
+cx.globalAlpha = 1;
+
+// Two arched windows: the closed door and the garden behind it
+function arch(x, y, w, h) {
+  const r = w / 2;
+  cx.beginPath();
+  cx.moveTo(x, y + h);
+  cx.lineTo(x, y + r);
+  cx.arc(x + r, y + r, r, Math.PI, 0);
+  cx.lineTo(x + w, y + h);
+  cx.closePath();
+}
+function windowed(im, x, y, w, h, focus) {
+  cx.save();
+  arch(x, y, w, h);
+  cx.shadowColor = 'rgba(0,0,0,.6)'; cx.shadowBlur = 40;
+  cx.fillStyle = '#000'; cx.fill();
+  cx.shadowBlur = 0;
+  cx.clip();
+  const s = Math.max(w / im.naturalWidth, h / im.naturalHeight), iw = im.naturalWidth * s, ih = im.naturalHeight * s;
+  cx.drawImage(im, x + (w - iw) / 2, y + (h - ih) * focus, iw, ih);
+  cx.restore();
+  cx.save();
+  arch(x - 9, y - 9, w + 18, h + 18);
+  cx.strokeStyle = 'rgba(234,215,168,.65)'; cx.lineWidth = 1.5; cx.stroke();
+  cx.restore();
+}
+windowed(door, 64, 48, 290, 534, .5);
+windowed(garden, W - 64 - 290, 48, 290, 534, .55);
+
+// Names
+centered('THE GARDEN DOOR', 120, '500 15px "Jost"', '#ead7a8', 6);
+const ng = cx.createLinearGradient(0, 160, 0, 420);
+ng.addColorStop(0, '#fffaf0'); ng.addColorStop(1, '#e6c47e');
+cx.shadowColor = 'rgba(255,214,140,.35)'; cx.shadowBlur = 24;
+centered('Ahmed', 236, '108px "Pinyon Script"', ng);
+centered('&', 300, '58px "Pinyon Script"', '#ead7a8');
+centered('Amira', 392, '108px "Pinyon Script"', ng);
+cx.shadowBlur = 0;
+centered('أحمد وأميرة', 466, '44px "Aref Ruqaa"', '#ead7a8', 0, 'rtl');
+cx.fillStyle = 'rgba(234,215,168,.6)'; cx.fillRect(W / 2 - 40, 500, 80, 1);
+centered('THURSDAY · 26 NOVEMBER 2026 · 7 PM', 540, '500 16px "Jost"', '#f8f3e9', 4);
+
+const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', .9));
+const res = await fetch('/save-og?theme=garden', { method: 'POST', body: blob });
+status.textContent = res.ok ? 'Saved garden/og-image.jpg' : 'Could not save: ' + res.status;
+})();
+</script>
+</body>
+</html>

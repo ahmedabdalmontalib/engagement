@@ -1,0 +1,1474 @@
+<!doctype html>
+<html lang="en" class="locked">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>/* Phones get a lighter rendering path (see html.lite in the styles) */(function(){try{if(matchMedia('(pointer: coarse)').matches||matchMedia('(max-width: 760px)').matches)document.documentElement.classList.add('lite')}catch(e){}})()</script>
+<title>Ahmed &amp; Amira · The Garden Door</title>
+<meta name="description" content="Ahmed &amp; Amira are getting engaged — Thursday, 26 November 2026, 4G Hall, Medical Professions Club, New Minya.">
+<meta name="theme-color" content="#0a1230">
+<meta name="robots" content="noindex, nofollow">
+<!-- Link preview (WhatsApp). The image address must be the full public URL of og-image.jpg. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ahmed &amp; Amira — The Garden Door · خطوبة أحمد وأميرة">
+<meta property="og:description" content="Thursday 26 November 2026 · 7 PM · New Minya. Open the door to your invitation.">
+<meta property="og:url" content="https://ahmedabdalmontalib.github.io/engagement/garden/">
+<meta property="og:image" content="https://ahmedabdalmontalib.github.io/engagement/garden/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A carved garden door opening onto a candlelit night garden: the engagement of Ahmed and Amira">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1230'/%3E%3Cpath d='M18 54V30a14 14 0 0 1 28 0v24' fill='none' stroke='%23ead7a8' stroke-width='3'/%3E%3Cpath d='M32 22v32' stroke='%23ffd68c' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preload" as="image" href="media/door.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Italiana&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@400;500&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap">
+<style>
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+:root{
+  --night:#0a1230; --indigo:#14214a; --ivory:#f8f3e9; --champ:#ead7a8; --gold:#d8b46b; --candle:#ffd68c; --sage:#b9c6aa;
+  --text:#f8f3e9; --soft:rgba(248,243,233,.84);
+  --card:rgba(10,18,46,.62); --line:rgba(234,215,168,.55);
+  --script:"Pinyon Script","Snell Roundhand",cursive;
+  --display:"Italiana","Didot",Georgia,serif;
+  --serif:"Crimson Pro",Georgia,serif;
+  --sans:"Jost","Helvetica Neue",Arial,sans-serif;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.65,0,.35,1);
+  --gutter:clamp(18px,5vw,40px);
+  /* The footage is portrait: on a phone it fills the screen, on a computer it stands in a tall window */
+  --col:min(100vw,56.25vh);
+}
+html[lang="ar"]{
+  --script:"Aref Ruqaa","Amiri",serif;
+  --display:"Amiri",Georgia,serif;
+  --serif:"Amiri",Georgia,serif;
+  --sans:"Tajawal","Jost",sans-serif;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;background:var(--night)}
+html.locked,html.locked body{overflow:hidden}
+body{margin:0;min-height:100vh;color:var(--text);background:var(--night);font-family:var(--serif);font-size:clamp(19px,.4vw + 16px,21px);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+html[lang="ar"] body{line-height:1.9}
+svg{display:block}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
+::selection{background:var(--champ);color:var(--night)}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+main{position:relative;z-index:2}
+body.intro-on main{visibility:hidden}
+.eyebrow{margin:0;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.34em;margin-right:-.34em;text-transform:uppercase;color:var(--champ);text-shadow:0 1px 12px rgba(5,10,30,.8)}
+html[lang="ar"] :is(.eyebrow,.btn,.chip,.lbl,.toast,.knock-hint,.sound-pref,.skip,.hero-date,.foot,.loader-txt,.cap-sub,.scroll-cue,.map-wait){letter-spacing:0;margin-right:0;text-transform:none}
+html[lang="ar"] .eyebrow{font-size:15px}
+html[lang="ar"] :is(.lede,.story-line,.cap-line,.count-done,.venue-sub,.wish-note,.finale-names){font-style:normal}
+.glow{text-shadow:0 0 22px rgba(255,214,140,.35),0 2px 14px rgba(5,10,30,.85)}
+
+/* ==========================================================================
+   The stage: the footage behind everything
+   ========================================================================== */
+#stage{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--night)}
+.st-backdrop{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(30px) brightness(.38) saturate(1.15);display:none}
+@media (min-aspect-ratio:3/4){.st-backdrop{display:block}}
+.st-frame{position:absolute;top:0;bottom:0;left:50%;width:var(--col);transform:translateX(-50%);overflow:hidden;background:var(--night)}
+@media (min-aspect-ratio:3/4){.st-frame{box-shadow:0 0 0 1px rgba(234,215,168,.25),0 0 120px rgba(0,0,0,.7)}}
+.st-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(var(--zoom,1));transform-origin:50% 62%;transition:opacity 1.3s ease}
+#stage[data-scene="door"] #poster,
+#stage[data-scene="opening"] #poster{opacity:1;transition:none}
+#stage[data-scene="opening"] #vOpen{opacity:1;transition:none}
+#stage[data-scene="garden"] #vGarden,
+#stage[data-scene="walk"] #vGarden,
+#stage[data-scene="walk"] #walkCv,
+#stage[data-scene="pavilion"] #vPavilion{opacity:1}
+#stage[data-scene="walk"] #walkCv{transition-duration:.7s}
+/* If the opening film cannot play, the door zooms toward you while the garden fades in */
+.st-frame.zoomin #poster{opacity:1;transform:scale(1.45);transition:transform 1.8s var(--ease-io),opacity 1.6s ease .4s}
+#stage[data-scene="garden"] .st-frame.zoomin #poster{opacity:0}
+.st-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(6,11,32,.5) 0%,rgba(6,11,32,0) 26%,rgba(6,11,32,0) 58%,rgba(6,11,32,.72) 100%);transition:background-color 1s}
+body:not(.intro-on) .st-shade{background-color:rgba(6,11,32,.12)}
+/* Light through the seam of the closed door */
+.seam{position:absolute;left:50%;top:21%;bottom:14%;width:2px;margin-left:-1px;background:linear-gradient(180deg,transparent,rgba(255,226,170,.95) 30%,rgba(255,214,140,.95) 70%,transparent);box-shadow:0 0 16px 3px rgba(255,200,120,.55);opacity:0;transition:opacity .6s}
+#stage[data-scene="door"] .seam{opacity:1;animation:seam 3.2s ease-in-out infinite}
+.st-bloom{position:absolute;left:50%;top:52%;width:130vmax;height:130vmax;margin:-65vmax 0 0 -65vmax;border-radius:50%;background:radial-gradient(circle closest-side,rgba(255,236,190,.9) 0%,rgba(255,214,150,.5) 10%,rgba(255,196,120,.16) 30%,rgba(255,190,110,.04) 50%,transparent 68%);opacity:0;transform:scale(.12);pointer-events:none;mix-blend-mode:screen}
+#stage.bloom .st-bloom{animation:bloom 3.6s cubic-bezier(.2,.7,.3,1) forwards}
+#air{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+/* ==========================================================================
+   Buttons and chips
+   ========================================================================== */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;border:1px solid rgba(234,215,168,.65);background:rgba(10,18,46,.5);color:var(--ivory);font-family:var(--sans);font-size:12.5px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;overflow:hidden;isolation:isolate;transition:transform .5s var(--ease-out),box-shadow .5s,background-color .5s,border-color .5s}
+html[lang="ar"] .btn{font-size:16px}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 30%,rgba(255,236,190,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .9s var(--ease-out)}
+.btn:hover{box-shadow:0 0 28px rgba(255,214,140,.35);border-color:var(--champ)}
+.btn:hover::before{transform:translateX(120%)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:16px;height:16px;flex:none}
+.btn-gold{background:linear-gradient(135deg,#f6e3b4,#d8b46b 60%,#c79a4f);border-color:transparent;color:#1b1630}
+.btn-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 14px;border-radius:999px;background:rgba(10,18,46,.55);border:1px solid rgba(234,215,168,.35);font-family:"Tajawal",sans-serif;font-size:15px}
+.chip[lang="en"]{font-family:"Jost",sans-serif;font-size:12px;font-weight:500;letter-spacing:.16em}
+
+/* ==========================================================================
+   Access screen (testing only; turned off with CONFIG.testAccess.enabled)
+   ========================================================================== */
+#gate{position:fixed;inset:0;z-index:130;display:grid;place-items:center;padding:24px var(--gutter);background:radial-gradient(120% 80% at 50% 100%,#22325f,#0a1230 60%);transition:opacity .9s ease,visibility .9s}
+#gate.done{opacity:0;visibility:hidden}
+.gate-card{width:min(100%,420px);padding:clamp(70px,18vw,96px) clamp(24px,7vw,40px) 36px;text-align:center;background:rgba(10,18,46,.7);border:1px solid var(--line);border-radius:50% 50% 18px 18px/30% 30% 18px 18px}
+.gate-title{margin:10px 0 0;font-family:"Italiana",serif;font-weight:400;font-size:clamp(32px,9vw,42px)}
+.gate-title-ar{margin:0;font-family:"Aref Ruqaa",serif;font-size:clamp(28px,7.5vw,34px);color:var(--champ)}
+.gate-note{max-width:30ch;margin:12px auto 0;font-size:17px;line-height:1.5;color:var(--soft)}
+.gate-note[lang="ar"]{margin-top:6px;font-family:"Amiri",serif;line-height:1.8}
+#gateForm{margin-top:24px;display:flex;flex-direction:column;gap:14px}
+#gateCode{width:100%;padding:10px 4px 12px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;color:var(--text);font-family:"Jost",sans-serif;font-size:18px;letter-spacing:.14em;text-align:center;outline:0;-webkit-appearance:none;appearance:none}
+#gateCode::placeholder{color:rgba(248,243,233,.5);letter-spacing:.04em}
+#gateCode:focus{border-bottom-color:var(--candle);box-shadow:0 1px 0 0 var(--candle)}
+.gate-err{min-height:1.5em;margin:0;font-size:15px;color:#ffd9b0}
+.gate-card.shake{animation:shake .5s ease}
+.gate-request{display:inline-flex;align-items:center;min-height:44px;margin-top:4px;font-family:"Jost",sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--champ)}
+
+/* ==========================================================================
+   Loader: an arch draws itself
+   ========================================================================== */
+#loader{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--night);transition:opacity 1s ease,visibility 1s}
+#loader.done{opacity:0;visibility:hidden}
+.loader-inner{display:flex;flex-direction:column;align-items:center;gap:22px}
+.loader-arch{width:64px;height:90px;overflow:visible}
+.loader-arch path{fill:none;stroke:var(--champ);stroke-width:1.4;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.4s var(--ease-io) infinite}
+.loader-arch path+path{stroke:var(--candle);animation-delay:.3s}
+.loader-txt{margin:0;font-family:var(--sans);font-size:11px;letter-spacing:.38em;margin-right:-.38em;text-transform:uppercase;color:var(--soft)}
+
+/* ==========================================================================
+   Opening: knock on the garden door
+   ========================================================================== */
+#intro{position:fixed;inset:0;z-index:50;height:100vh;height:100dvh;overflow:hidden;transition:opacity 1.2s ease}
+#intro.leaving{opacity:0;pointer-events:none}
+.intro-ui{position:absolute;inset:0;transition:opacity .9s ease,transform 1.2s var(--ease-out)}
+#intro.opened .intro-ui{opacity:0;transform:scale(1.04);pointer-events:none}
+.intro-top{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(env(safe-area-inset-top) + 9vh);display:flex;flex-direction:column;align-items:center;text-align:center}
+.intro-top .eyebrow{opacity:0;animation:rise 1.4s var(--ease-out) .3s forwards}
+.guest{margin:4px 0 0;font-family:var(--script);font-size:clamp(46px,min(13vw,7vh),66px);line-height:1.25;color:var(--ivory);opacity:0;animation:rise 1.6s var(--ease-out) .6s forwards}
+html[lang="ar"] .guest{font-size:clamp(36px,min(10vw,5.6vh),52px);line-height:1.7}
+/* The knock: a ring of light around the door's brass rings */
+.knock{position:absolute;left:50%;top:54%;width:140px;height:140px;margin:-70px 0 0 -70px;border-radius:50%;display:grid;place-items:center}
+.knock::before,.knock::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,226,170,.85);animation:ring 2.8s ease-out infinite}
+.knock::after{animation-delay:1.4s}
+.knock-core{width:58%;height:58%;border-radius:50%;background:radial-gradient(circle,rgba(255,226,170,.28),rgba(255,214,140,.06) 60%,transparent 72%);box-shadow:inset 0 0 0 1px rgba(255,236,200,.5);transition:transform .4s var(--ease-out)}
+.knock:hover .knock-core{transform:scale(1.08)}
+.knock:active .knock-core{transform:scale(.92)}
+.intro-bottom{position:absolute;left:var(--gutter);right:var(--gutter);bottom:calc(env(safe-area-inset-bottom) + 76px);display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.knock-hint{margin:0;font-family:var(--sans);font-size:12.5px;letter-spacing:.3em;margin-right:-.3em;text-transform:uppercase;color:var(--ivory);text-shadow:0 1px 12px rgba(5,10,30,.9);animation:breathe 3.2s ease-in-out infinite}
+html[lang="ar"] .knock-hint{font-size:17px}
+.sound-pref{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px;font-family:var(--sans);font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;border:1px solid rgba(234,215,168,.45);border-radius:999px;background:rgba(10,18,46,.5)}
+html[lang="ar"] .sound-pref{font-size:15px}
+.intro-lang{position:absolute;z-index:4;top:calc(env(safe-area-inset-top) + 12px);right:calc(var(--gutter) - 6px)}
+html[dir="rtl"] .intro-lang{right:auto;left:calc(var(--gutter) - 6px)}
+.skip{position:absolute;z-index:3;right:calc(var(--gutter) - 8px);bottom:calc(env(safe-area-inset-bottom) + 14px);min-height:44px;padding:0 10px;font-family:var(--sans);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--soft)}
+html[dir="rtl"] .skip{right:auto;left:calc(var(--gutter) - 8px)}
+html[lang="ar"] .skip{font-size:15px}
+
+/* Equalizer bars (music) */
+.bars{display:inline-flex;align-items:flex-end;gap:2px;height:14px}
+.bars i{display:block;width:2px;height:3px;background:currentColor;border-radius:1px}
+.playing .bars i{animation:eq .9s ease-in-out infinite alternate}
+.playing .bars i:nth-child(2){animation-delay:-.3s}
+.playing .bars i:nth-child(3){animation-delay:-.6s}
+.playing .bars i:nth-child(4){animation-delay:-.15s}
+
+/* ==========================================================================
+   Top bar, progress, toast
+   ========================================================================== */
+.topbar{position:fixed;z-index:20;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 10px) var(--gutter) 10px;isolation:isolate;transition:opacity 1s ease .6s}
+.topbar::before{content:"";position:absolute;inset:0 0 -34px;z-index:-1;background:linear-gradient(180deg,rgba(6,11,32,.82),rgba(6,11,32,.45) 55%,transparent);pointer-events:none}
+body.intro-on .topbar{opacity:0;pointer-events:none;visibility:hidden}
+.brand{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-family:"Italiana",serif;font-size:22px;letter-spacing:.12em;text-decoration:none;direction:ltr;text-shadow:0 1px 10px rgba(5,10,30,.8)}
+.brand i{width:1px;height:20px;background:var(--champ);transform:rotate(20deg)}
+.top-actions{display:flex;gap:8px}
+.music-btn .note{width:18px;height:18px}
+.music-btn .bars,.music-btn.playing .note{display:none}
+.music-btn.playing .bars{display:inline-flex}
+.progress{position:fixed;z-index:21;left:0;right:0;top:0;height:2px;pointer-events:none}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,#f6e3b4,#d8b46b);transform-origin:0 50%;transform:scaleX(0);box-shadow:0 0 10px rgba(255,214,140,.7)}
+html[dir="rtl"] .progress span{transform-origin:100% 50%}
+.toast{position:fixed;z-index:95;left:50%;bottom:calc(env(safe-area-inset-bottom) + 26px);transform:translate(-50%,16px);padding:13px 22px;border-radius:999px;background:rgba(10,18,46,.92);border:1px solid var(--line);font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .5s,transform .6s var(--ease-out);white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ==========================================================================
+   Reveal
+   ========================================================================== */
+[data-reveal]{opacity:0;transform:translateY(30px);filter:blur(6px);transition:opacity 1.3s var(--ease-out) var(--d,0s),transform 1.5s var(--ease-out) var(--d,0s),filter 1.3s ease var(--d,0s)}
+[data-reveal].in{opacity:1;transform:none;filter:none}
+/* Arch panels rise open from the bottom like a doorway */
+[data-reveal="arch"]{opacity:1;transform:none;filter:none}
+[data-reveal="arch"] .arch{clip-path:circle(0% at 50% 100%);transition:clip-path 1.8s var(--ease-io)}
+[data-reveal="arch"].in .arch{clip-path:circle(150% at 50% 100%)}
+[data-reveal="arch"] .arch::before{opacity:0;transition:opacity 1.2s ease 1.1s}
+[data-reveal="arch"].in .arch::before{opacity:1}
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+.sec{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;width:var(--col);margin:0 auto;padding:clamp(90px,14vh,140px) var(--gutter)}
+.sec-hero{min-height:100vh;min-height:100svh;justify-content:flex-start;padding-top:calc(env(safe-area-inset-top) + 12vh)}
+.hero-eyebrow,.lede,.hero-date{opacity:0;transform:translateY(16px);transition:opacity 1.4s ease,transform 1.4s var(--ease-out)}
+body.formed .hero-eyebrow{opacity:1;transform:none;transition-delay:.2s}
+body.formed .lede{opacity:1;transform:none;transition-delay:2.6s}
+body.formed .hero-date{opacity:1;transform:none;transition-delay:3.1s}
+.names{margin:.12em 0 .05em;display:flex;flex-direction:column;align-items:center;font-weight:400;line-height:1}
+.names:focus{outline:none}
+.name-wrap{display:block;opacity:0}
+body.formed .name-wrap{opacity:1}
+.name{display:block;padding:0 .14em;font-family:var(--script);font-weight:400;font-size:clamp(70px,min(21vw,11.5vh),126px);line-height:1.18;background:linear-gradient(100deg,#f0dcaa 0%,#fffaf0 35%,#e2bd73 50%,#fffaf0 65%,#f0dcaa 100%);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 16px rgba(5,10,30,.8));animation:sheen 8s linear infinite}
+html[lang="ar"] .name{font-size:clamp(54px,min(16vw,9vh),100px);line-height:1.6}
+.amp{font-family:var(--script);font-size:clamp(44px,min(12vw,6.4vh),66px);line-height:.9;color:var(--champ);opacity:0;transform:scale(.4) rotate(-12deg);transition:opacity 1.2s ease 1.3s,transform 1.6s cubic-bezier(.3,1.6,.5,1) 1.3s;text-shadow:0 2px 12px rgba(5,10,30,.8)}
+html[lang="ar"] .amp{font-family:"Aref Ruqaa",serif;font-size:clamp(34px,min(9vw,5vh),52px)}
+body.formed .amp{opacity:1;transform:none}
+.lede{max-width:22ch;margin:.5em 0 0;font-style:italic;font-weight:300;font-size:clamp(21px,min(5.4vw,3vh),27px);line-height:1.4}
+html[lang="ar"] .lede{max-width:26ch;font-size:clamp(20px,min(5vw,2.8vh),25px)}
+.hero-date{margin:16px 0 0;font-family:var(--sans);font-size:12px;letter-spacing:.32em;margin-right:-.32em;text-transform:uppercase;color:var(--champ)}
+html[lang="ar"] .hero-date{font-size:16px}
+.scroll-cue{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom) + 22px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;min-width:44px;padding:6px;text-decoration:none;font-family:var(--sans);font-size:11px;letter-spacing:.36em;margin-right:-.36em;text-transform:uppercase;opacity:0;transition:opacity 1.6s ease 3.6s}
+html[lang="ar"] .scroll-cue{font-size:14px}
+body.formed .scroll-cue{opacity:1}
+.cue-line{display:block;width:1px;height:46px;background:rgba(248,243,233,.25);overflow:hidden}
+.cue-line::after{content:"";display:block;width:100%;height:100%;background:linear-gradient(180deg,transparent,var(--candle));animation:cue 2.2s var(--ease-io) infinite}
+
+/* Arch panel */
+.arch-wrap{width:100%}
+.arch{position:relative;width:100%;padding:clamp(86px,24vw,112px) clamp(22px,7vw,38px) clamp(36px,9vw,50px);background:var(--card);border-radius:50% 50% 18px 18px/32% 32% 18px 18px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.arch::before{content:"";position:absolute;inset:9px;border:1px solid var(--line);border-radius:inherit;pointer-events:none}
+.arch-star{width:26px;height:26px;margin:0 auto 14px;color:var(--champ)}
+.story-lines{display:flex;flex-direction:column;gap:16px;margin-top:20px}
+.story-line{margin:0;font-style:italic;font-weight:300;font-size:clamp(21px,5vw,26px);line-height:1.45}
+.story-line.big{font-family:var(--script);font-style:normal;font-size:clamp(44px,12vw,62px);line-height:1.15;color:var(--champ)}
+html[lang="ar"] .story-line.big{font-size:clamp(32px,8.5vw,44px);line-height:1.7}
+
+/* The walk down the garden: the scroll drives the camera */
+.walk{position:relative;height:440vh}
+.walk-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.cap{position:absolute;left:50%;top:50%;width:var(--col);padding:0 var(--gutter);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none}
+.cap::before{content:"";position:absolute;left:50%;top:50%;width:150%;height:140%;transform:translate(-50%,-50%);z-index:-1;background:radial-gradient(closest-side,rgba(6,11,32,.62),rgba(6,11,32,.28) 55%,transparent);opacity:0;transition:opacity 1s}
+.cap>*{opacity:0;transform:translateY(26px);transition:opacity .9s ease calc(var(--i,0) * .14s),transform 1.2s var(--ease-out) calc(var(--i,0) * .14s)}
+.cap.on{pointer-events:auto}
+.cap.on::before{opacity:1}
+.cap.on>*{opacity:1;transform:none}
+.cap-line{margin:10px 0 0;font-style:italic;font-weight:300;font-size:clamp(24px,min(6.4vw,3.4vh),32px);line-height:1.4}
+.cap-script{margin:0;font-family:var(--script);font-size:clamp(52px,min(15vw,8vh),78px);line-height:1.2;color:var(--champ)}
+html[lang="ar"] .cap-script{font-size:clamp(38px,min(11vw,6vh),58px);line-height:1.7}
+.cap-day{margin:0;font-family:var(--display);font-size:clamp(150px,min(46vw,26vh),240px);line-height:.95;background:linear-gradient(180deg,#fffaf0 15%,#ead7a8 60%,#c99d55);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 24px rgba(5,10,30,.7))}
+html[lang="ar"] .cap-day{line-height:1.25}
+.cap.on .cap-day{animation:dayIn 1.6s var(--ease-out)}
+.cap-sub{margin:4px 0 0;font-family:var(--sans);font-size:clamp(13px,3.4vw,15px);letter-spacing:.34em;margin-right:-.34em;text-transform:uppercase;color:var(--champ)}
+html[lang="ar"] .cap-sub{font-size:19px}
+.cap-line span{color:var(--candle)}
+.walk-meter{position:absolute;top:32%;height:36%;width:1px;right:calc((100vw - var(--col)) / 2 + 16px);background:rgba(248,243,233,.2);opacity:0;transition:opacity .6s}
+html[dir="rtl"] .walk-meter{right:auto;left:calc((100vw - var(--col)) / 2 + 16px)}
+.walk-meter span{position:absolute;inset:0;background:linear-gradient(180deg,var(--champ),var(--candle));transform-origin:50% 0;transform:scaleY(0);box-shadow:0 0 8px rgba(255,214,140,.7)}
+.walk-meter::after{content:"";position:absolute;left:-3px;top:var(--p,0%);width:7px;height:7px;margin-top:-3px;border-radius:50%;background:var(--candle);box-shadow:0 0 12px 3px rgba(255,214,140,.8)}
+.walk.pinned .walk-meter{opacity:1}
+.cal{position:relative;margin-top:22px}
+.cal-menu{position:absolute;left:50%;top:calc(100% + 10px);z-index:5;min-width:250px;transform:translateX(-50%);display:flex;flex-direction:column;padding:8px;border-radius:22px;background:rgba(10,18,46,.96);border:1px solid var(--line);box-shadow:0 30px 60px -20px rgba(0,0,0,.8)}
+.cal-menu a,.cal-menu button{display:flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:16px;font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+html[lang="ar"] :is(.cal-menu a,.cal-menu button){font-size:15px;letter-spacing:0}
+.cal-menu a:hover,.cal-menu button:hover{background:rgba(234,215,168,.14)}
+
+/* Countdown: four arched windows */
+.clock{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,2.6vw,16px);width:100%;margin-top:34px}
+.win{display:flex;flex-direction:column;align-items:center}
+.win-arch{position:relative;width:100%;aspect-ratio:3/4.2;display:grid;place-items:end center;padding-bottom:20%;border-radius:50% 50% 8px 8px/36% 36% 8px 8px;border:1px solid var(--line);background:radial-gradient(90% 70% at 50% 100%,rgba(255,214,140,.22),transparent 70%),rgba(10,18,46,.62);overflow:hidden;box-shadow:0 20px 40px -20px rgba(0,0,0,.8)}
+/* a fine lattice in the top of each window */
+.win-arch::before{content:"";position:absolute;left:0;right:0;top:0;height:46%;background:repeating-linear-gradient(45deg,rgba(234,215,168,.16) 0 1px,transparent 1px 9px),repeating-linear-gradient(-45deg,rgba(234,215,168,.16) 0 1px,transparent 1px 9px);-webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
+.win-arch span{position:relative;font-family:var(--display);font-size:clamp(30px,9vw,46px);line-height:1;color:var(--ivory);font-variant-numeric:lining-nums tabular-nums;text-shadow:0 0 18px rgba(255,214,140,.5)}
+.win-arch.tick span{animation:digit .7s var(--ease-out)}
+.win-arch.tick{animation:glowWin 1s ease-out}
+.lbl{margin-top:10px;font-family:var(--sans);font-size:clamp(9.5px,2.5vw,11px);letter-spacing:.22em;margin-right:-.22em;text-transform:uppercase;color:var(--champ)}
+html[lang="ar"] .lbl{font-size:clamp(13px,3.2vw,15px)}
+.count-title{margin:12px 0 0;font-family:var(--script);font-weight:400;font-size:clamp(44px,12vw,64px);line-height:1.2}
+html[lang="ar"] .count-title{font-size:clamp(32px,8.5vw,46px);line-height:1.7}
+.count-done{margin-top:24px;font-style:italic;font-size:clamp(22px,5vw,27px)}
+
+/* Venue */
+.venue-name{margin:14px 0 0;font-family:var(--display);font-weight:400;font-size:clamp(48px,14vw,76px);line-height:1.1}
+html[lang="ar"] .venue-name{line-height:1.5}
+.venue-sub{margin:4px 0 0;font-style:italic;font-weight:300;font-size:clamp(20px,5vw,24px);color:var(--soft)}
+.map-wrap{width:100%;margin-top:26px}
+.map{position:relative;width:100%;aspect-ratio:4/5;border-radius:50% 50% 16px 16px/30% 30% 16px 16px;overflow:hidden;isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(white,black);background:rgba(10,18,46,.6);border:1px solid var(--line);clip-path:inset(100% 0 0 0 round 16px);transition:clip-path 1.8s var(--ease-io) .2s}
+.map-wrap.in .map{clip-path:inset(0 0 0 0 round 0)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;filter:invert(.9) hue-rotate(190deg) saturate(.55) brightness(.92) contrast(.92);transition:opacity 1.2s}
+.map.loaded iframe{opacity:1}
+.map::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 50px rgba(6,11,32,.55);border-radius:inherit}
+.map-wait{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase}
+.map.loaded .map-wait{display:none}
+
+/* Finale */
+.sec-finale{min-height:100vh;min-height:100svh;justify-content:flex-start;padding-top:calc(env(safe-area-inset-top) + 12vh);padding-bottom:calc(env(safe-area-inset-bottom) + 80px)}
+.wish-note{min-height:1.6em;margin:14px 0 0;font-style:italic;font-size:clamp(19px,4.6vw,23px);color:var(--candle);opacity:0;transition:opacity .8s}
+.wish-note.show{opacity:1}
+.finale-title{margin:30px 0 0;font-family:var(--script);font-weight:400;font-size:clamp(54px,min(15vw,8vh),84px);line-height:1.15}
+html[lang="ar"] .finale-title{font-size:clamp(40px,min(11vw,6vh),62px);line-height:1.7}
+.finale-names{margin:6px 0 0;font-style:italic;font-weight:300;font-size:clamp(22px,5.4vw,30px)}
+.finale-date{margin:8px 0 0;font-family:var(--sans);font-size:12.5px;letter-spacing:.4em;margin-right:-.4em;color:var(--champ)}
+.foot{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 22px);margin:0;font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--soft)}
+html[lang="ar"] .foot{font-size:14px;letter-spacing:0}
+
+@media (max-width:600px){
+  .sec{padding-top:72px;padding-bottom:72px}
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes ring{0%{transform:scale(.55);opacity:0}25%{opacity:.9}100%{transform:scale(1.25);opacity:0}}
+@keyframes breathe{50%{opacity:.55}}
+@keyframes seam{50%{opacity:.55;box-shadow:0 0 26px 6px rgba(255,200,120,.75)}}
+@keyframes bloom{0%{opacity:0;transform:scale(.12)}22%{opacity:1;transform:scale(.55)}100%{opacity:0;transform:scale(1.5)}}
+@keyframes sheen{from{background-position:100% 0}to{background-position:-160% 0}}
+@keyframes draw{0%{stroke-dashoffset:1}55%,70%{stroke-dashoffset:0}100%{stroke-dashoffset:-1}}
+@keyframes eq{from{height:3px}to{height:14px}}
+@keyframes cue{from{transform:translateY(-100%)}to{transform:translateY(100%)}}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes dayIn{from{transform:scale(1.35);letter-spacing:.12em}to{transform:none;letter-spacing:0}}
+@keyframes digit{from{transform:translateY(55%);opacity:0}to{transform:none;opacity:1}}
+@keyframes glowWin{0%{box-shadow:0 0 40px 4px rgba(255,214,140,.45)}100%{box-shadow:0 20px 40px -20px rgba(0,0,0,.8)}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;animation-delay:0s!important;transition-delay:0s!important}
+}
+/* Phones: the same motion without the GPU-heavy blurs and blend modes */
+html.lite [data-reveal]:not(.in){filter:none}
+html.lite .st-bloom{mix-blend-mode:normal}
+html.lite .name{animation:none;background-position:30% 0}
+</style>
+</head>
+<body class="intro-on">
+
+<!-- The footage: closed door, the opening, the garden, the walk, the pavilion -->
+<div id="stage" data-scene="door" aria-hidden="true">
+  <img class="st-backdrop" src="media/garden.jpg" alt="" decoding="async">
+  <div class="st-frame">
+    <img class="st-media" id="poster" src="media/door.jpg" alt="">
+    <video class="st-media" id="vOpen" muted playsinline preload="auto" src="media/open.mp4"></video>
+    <video class="st-media" id="vGarden" muted playsinline loop preload="auto" poster="media/garden.jpg" src="media/garden.mp4"></video>
+    <canvas class="st-media" id="walkCv"></canvas>
+    <video class="st-media" id="vPavilion" muted playsinline loop preload="metadata" poster="media/pavilion.jpg" src="media/pavilion.mp4"></video>
+    <div class="seam"></div>
+    <div class="st-shade"></div>
+    <div class="st-bloom"></div>
+  </div>
+  <canvas id="air"></canvas>
+</div>
+
+<!-- Access screen (testing only) -->
+<div id="gate" hidden role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <p class="eyebrow">Private preview · <span lang="ar">معاينة خاصة</span></p>
+    <h1 class="gate-title" id="gateTitle">Request access</h1>
+    <p class="gate-title-ar" lang="ar" dir="rtl">طلب الدخول</p>
+    <p class="gate-note">This invitation is still being prepared. Enter the access code you were given.</p>
+    <p class="gate-note" lang="ar" dir="rtl">الدعوة قيد التجهيز. أدخل رمز الدخول الذي وصلك.</p>
+    <form id="gateForm" novalidate>
+      <label class="sr-only" for="gateCode">Access code</label>
+      <input id="gateCode" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="60" placeholder="Access code · رمز الدخول">
+      <button class="btn btn-gold" type="submit">Enter · دخول</button>
+      <p class="gate-err" role="alert"></p>
+    </form>
+    <a class="gate-request" hidden target="_blank" rel="noopener">Request a code · اطلب الرمز</a>
+  </div>
+</div>
+
+<!-- Loading state -->
+<div id="loader" role="status">
+  <div class="loader-inner">
+    <svg class="loader-arch" viewBox="0 0 64 90" aria-hidden="true"><path pathLength="1" d="M4 88V34a28 28 0 0 1 56 0v54"/><path pathLength="1" d="M32 20v68"/></svg>
+    <p class="loader-txt" data-t="loading">Opening the garden</p>
+  </div>
+</div>
+
+<!-- Opening: knock on the door -->
+<section id="intro" aria-label="Invitation opening">
+  <div class="intro-ui">
+    <div class="intro-lang"><button class="chip lang-btn" type="button"></button></div>
+    <div class="intro-top">
+      <p class="eyebrow" data-t="forGuest"></p>
+      <p class="guest" data-c="guest"></p>
+    </div>
+    <button class="knock" type="button" data-ta="openAria"><span class="knock-core"></span></button>
+    <div class="intro-bottom">
+      <p class="knock-hint" data-t="openHint"></p>
+      <button class="sound-pref playing" type="button" aria-pressed="true"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="sp-label"></span></button>
+    </div>
+    <button class="skip" type="button" data-t="skip"></button>
+  </div>
+</section>
+
+<!-- Persistent chrome -->
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a class="brand" href="#hero" data-ta="backTop"><span data-c="i1"></span><i></i><span data-c="i2"></span></a>
+  <div class="top-actions">
+    <button class="chip lang-btn" type="button"></button>
+    <button class="chip music-btn" type="button" aria-pressed="false"><svg class="note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.8" cy="17.6" r="2.3"/><circle cx="16.8" cy="15.6" r="2.3"/><path d="M9 9.5l10-2"/></svg><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero: the names over the garden sky -->
+  <section id="hero" class="sec sec-hero">
+    <p class="eyebrow hero-eyebrow" data-t="heroEyebrow"></p>
+    <h1 class="names" tabindex="-1">
+      <span class="name-wrap"><span class="name" data-c="p1"></span></span>
+      <span class="amp" data-t="amp"></span>
+      <span class="name-wrap"><span class="name" data-c="p2"></span></span>
+    </h1>
+    <p class="lede glow" data-t="lede"></p>
+    <p class="hero-date"><span data-c="weekday"></span> · <span data-c="dayMonthYear"></span></p>
+    <a class="scroll-cue" href="#story" data-ta="scrollAria"><span data-t="scroll"></span><span class="cue-line"></span></a>
+  </section>
+
+  <!-- Story -->
+  <section id="story" class="sec">
+    <div class="arch-wrap" data-reveal="arch">
+      <div class="arch">
+        <svg class="arch-star" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M13 1l3.2 8.2L25 13l-8.8 3.8L13 25l-3.2-8.2L1 13l8.8-3.8z"/><path d="M13 7l1.6 4.4L19 13l-4.4 1.6L13 19l-1.6-4.4L7 13l4.4-1.6z"/></svg>
+        <p class="eyebrow" data-t="storyEyebrow"></p>
+        <div class="story-lines">
+          <p class="story-line" data-reveal style="--d:1s" data-t="story1"></p>
+          <p class="story-line big" data-reveal style="--d:1.4s" data-t="story2"></p>
+          <p class="story-line" data-reveal style="--d:1.8s" data-t="story3"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The walk: scrolling moves the camera down the garden to the pavilion -->
+  <section id="walk" class="walk" aria-label="">
+    <div class="walk-pin">
+      <div class="cap" data-from="0.03" data-to="0.24">
+        <p class="eyebrow" style="--i:0" data-t="walkEyebrow"></p>
+        <p class="cap-script" style="--i:1" data-t="walkTitle"></p>
+        <p class="cap-line glow" style="--i:2" data-t="walkLine"></p>
+      </div>
+      <div class="cap" data-from="0.30" data-to="0.54">
+        <p class="eyebrow" style="--i:0" data-t="dateEyebrow"></p>
+        <p class="cap-day" style="--i:1" data-c="day"></p>
+        <p class="cap-sub" style="--i:2"><span data-c="weekday"></span> · <span data-c="month"></span> <span data-c="year"></span></p>
+      </div>
+      <div class="cap" data-from="0.58" data-to="0.78">
+        <p class="eyebrow" style="--i:0" data-t="timeEyebrow"></p>
+        <p class="cap-line glow" style="--i:1" data-th="beginning"></p>
+      </div>
+      <div class="cap" data-from="0.84" data-to="1.01">
+        <p class="cap-script" style="--i:0" data-t="arrived"></p>
+        <div class="cal" style="--i:1">
+          <button class="btn btn-gold" type="button" id="calBtn" aria-expanded="false" aria-controls="calMenu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+            <span data-t="addCal"></span>
+          </button>
+          <div class="cal-menu" id="calMenu" hidden>
+            <a id="gcalLink" href="#" target="_blank" rel="noopener" data-t="gcal"></a>
+            <button type="button" id="icsBtn" data-t="ics"></button>
+          </div>
+        </div>
+      </div>
+      <div class="walk-meter" aria-hidden="true"><span></span></div>
+    </div>
+  </section>
+
+  <!-- Countdown -->
+  <section id="countdown" class="sec">
+    <p class="eyebrow" data-reveal data-t="countEyebrow"></p>
+    <h2 class="count-title glow" data-reveal style="--d:.15s" data-t="countTitle"></h2>
+    <div class="clock" role="timer" aria-label="">
+      <div class="win" data-reveal style="--d:.1s"><div class="win-arch"><span data-u="d"></span></div><span class="lbl" data-t="days"></span></div>
+      <div class="win" data-reveal style="--d:.25s"><div class="win-arch"><span data-u="h"></span></div><span class="lbl" data-t="hours"></span></div>
+      <div class="win" data-reveal style="--d:.4s"><div class="win-arch"><span data-u="m"></span></div><span class="lbl" data-t="minutes"></span></div>
+      <div class="win" data-reveal style="--d:.55s"><div class="win-arch"><span data-u="s"></span></div><span class="lbl" data-t="seconds"></span></div>
+    </div>
+    <p class="count-done glow" hidden data-t="countDone"></p>
+  </section>
+
+  <!-- Venue -->
+  <section id="venue" class="sec">
+    <p class="eyebrow" data-reveal data-t="venueEyebrow"></p>
+    <h2 class="venue-name glow" data-reveal style="--d:.15s" data-c="venueName"></h2>
+    <p class="venue-sub glow" data-reveal style="--d:.3s" data-c="venueSub"></p>
+    <div class="map-wrap" data-reveal style="--d:.2s">
+      <div class="map">
+        <div class="map-wait" data-t="mapLoading"></div>
+        <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen data-tt="mapTitle"></iframe>
+      </div>
+    </div>
+    <div class="btn-row" data-reveal style="--d:.4s">
+      <a class="btn btn-gold" id="dirLink" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2l9 9-9 11-9-11z"/><path d="M12 8v7M9 11l3-3 3 3"/></svg>
+        <span data-t="directions"></span>
+      </a>
+      <button class="btn" type="button" id="copyAddr" data-t="copyAddr"></button>
+    </div>
+  </section>
+
+  <!-- Finale at the pavilion -->
+  <section id="finale" class="sec sec-finale">
+    <p class="eyebrow" data-reveal data-t="wishEyebrow"></p>
+    <button class="btn btn-gold wish-btn" type="button" data-reveal style="--d:.2s"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="translate(12 12)"><ellipse rx="3.2" ry="6.5" transform="translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(72) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(144) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(216) translate(0 -5)"/><ellipse rx="3.2" ry="6.5" transform="rotate(288) translate(0 -5)"/></g></svg><span data-t="toss"></span></button>
+    <p class="wish-note" aria-live="polite"></p>
+    <h2 class="finale-title glow" data-reveal style="--d:.3s" data-t="finaleTitle"></h2>
+    <p class="finale-names glow" data-reveal style="--d:.55s" data-c="couple"></p>
+    <p class="finale-date" data-reveal style="--d:.75s" data-c="dateDots"></p>
+    <div class="btn-row" data-reveal style="--d:.95s">
+      <button class="btn" type="button" id="replayBtn" data-t="replay"></button>
+      <button class="btn" type="button" id="shareBtn" data-t="share"></button>
+    </div>
+    <p class="foot" data-t="foot"></p>
+  </section>
+</main>
+
+<div class="toast" role="status" aria-live="polite"></div>
+<noscript><p style="position:fixed;inset:auto 0 40px;z-index:200;text-align:center;color:#fff">Please enable JavaScript to open this invitation.</p></noscript>
+
+<script>
+// If the main script cannot run on this phone, show the essentials instead of an endless loading screen.
+setTimeout(function () {
+  if (window.__inviteReady) return;
+  document.documentElement.className = '';
+  document.body.className = '';
+  document.body.innerHTML = '<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:32px 20px;text-align:center;background:#0a1230;color:#f8f3e9;font:18px/1.6 Georgia,serif">'
+    + '<p style="margin:0;font-size:34px">Ahmed &amp; Amira</p><p style="margin:0;font-size:30px" dir="rtl">أحمد وأميرة</p>'
+    + '<p style="margin:12px 0 0">Thursday 26 November 2026 · 7 PM</p><p style="margin:0" dir="rtl">الخميس ٢٦ نوفمبر ٢٠٢٦ · الساعة السابعة مساءً</p>'
+    + '<p style="margin:12px 0 0">4G Hall, Medical Professions Club, New Minya</p><p style="margin:0" dir="rtl">قاعة 4G، نادي المهن الطبية، المنيا الجديدة</p>'
+    + '<a style="margin-top:18px;color:#ead7a8" href="https://www.google.com/maps/search/?api=1&amp;query=Medical%20Professions%20Club%2C%20New%20Minya%2C%20Egypt">Directions · الاتجاهات</a></div>';
+}, 9000);
+</script>
+<script>
+(() => {
+'use strict';
+window.__inviteReady = true;
+
+/* ==========================================================================
+   Your details — edit everything here
+   ========================================================================== */
+const CONFIG = {
+  partner1: { en: 'Ahmed', ar: 'أحمد' },
+  partner2: { en: 'Amira', ar: 'أميرة' },
+  // Start of the celebration, with Egypt's UTC offset (+02:00 in November).
+  dateISO: '2026-11-26T19:00:00+02:00',
+  timeZone: 'Africa/Cairo',
+  durationHours: 4,
+  icsFile: '../engagement.ics',        // the calendar file (made by tools/make_ics.py)
+  venueName: { en: '4G Hall', ar: 'قاعة 4G' },
+  venueLine1: { en: 'Medical Professions Club', ar: 'نادي المهن الطبية' },
+  venueLine2: { en: 'New Minya', ar: 'المنيا الجديدة' },
+  mapsQuery: 'Medical Professions Club, New Minya, Egypt',
+  mapsLink: '',            // optional: paste the venue's exact Google Maps share link
+  // Language shown first: 'auto' follows the guest's phone, or force 'en' / 'ar'.
+  // A link ending in ?lang=ar or ?lang=en also chooses it.
+  defaultLanguage: 'auto',
+  music: { src: '' },      // optional: an mp3 path or URL; leave empty for the built-in garden waltz
+  walkFrames: 60,          // frames in media/walk (made by tools/make_garden_media.py)
+  // Testing: visitors must enter an access code first. Set enabled to false when you go public.
+  // codeHash is the SHA-256 of the code in lower case (see README); same code as the other designs.
+  testAccess: {
+    enabled: true,
+    codeHash: '9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0',
+    requestWhatsApp: ''
+  }
+};
+
+/* ==========================================================================
+   Wording in both languages
+   ========================================================================== */
+const TEXT = {
+  en: {
+    langSwitch: 'عربي', langSwitchCode: 'ar', langAria: 'اقرأ الدعوة بالعربية',
+    amp: '&',
+    loading: 'Opening the garden',
+    forGuest: 'A personal invitation for',
+    guestDefault: 'Our Dearest Guest',
+    openAria: 'Open the garden door',
+    openHint: 'Touch the door to open it',
+    withMusic: 'With music', inSilence: 'In silence',
+    skip: 'Skip',
+    playMusic: 'Play music', pauseMusic: 'Pause music', backTop: 'Back to the top',
+    heroEyebrow: 'Welcome to our garden',
+    lede: 'are getting engaged, and the garden is lit for you.',
+    scroll: 'Walk in', scrollAria: 'Scroll to continue',
+    storyEyebrow: 'Our story',
+    story1: 'Some doors open only once in a lifetime.',
+    story2: 'Ours opened onto each other.',
+    story3: 'Now we would love you to walk in with us and stay for the evening.',
+    walkAria: 'A walk down the garden with the date and time',
+    walkEyebrow: 'Walk with us',
+    walkTitle: 'Down the candlelit path',
+    walkLine: 'Every light along the way is for you.',
+    dateEyebrow: 'Save the date',
+    timeEyebrow: 'The evening',
+    beginning: t => `Beginning at <span>${t}</span>`,
+    arrived: "We'll be waiting",
+    addCal: 'Add to calendar', gcal: 'Google Calendar', ics: 'Apple · Outlook (.ics)',
+    countEyebrow: 'The garden opens in',
+    countTitle: 'Until our forever begins',
+    days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds',
+    countLeft: (d, h, m) => `${enCount(d, 'day')}, ${enCount(h, 'hour')} and ${enCount(m, 'minute')} to go`,
+    countDone: 'The celebration has begun. Thank you for being part of our story.',
+    venueEyebrow: 'Where we will meet', mapLoading: 'Loading map', mapTitle: 'Map showing the venue',
+    directions: 'Get directions', copyAddr: 'Copy address', addrCopied: 'Address copied',
+    wishEyebrow: 'Leave us a wish',
+    toss: 'Toss jasmine',
+    wishNotes: ['Your jasmine is on its way to us.', 'The garden smells sweeter already.', 'One more blossom for our story.'],
+    finaleTitle: 'We cannot wait to see you',
+    replay: 'Open the door again', share: 'Share the invitation', linkCopied: 'Invitation link copied',
+    foot: 'Together in every line · forever in life',
+    title: (a, b) => `${a} & ${b} · The Garden Door`,
+    eventTitle: (a, b) => `${a} & ${b} — Engagement`,
+    eventText: (a, b) => `With love, ${a} & ${b} invite you to celebrate their engagement.`,
+    shareText: (a, b, d) => `You're invited to the engagement of ${a} & ${b} · ${d}`
+  },
+  ar: {
+    langSwitch: 'EN', langSwitchCode: 'en', langAria: 'Read the invitation in English',
+    amp: 'و',
+    loading: 'نفتح أبواب الحديقة',
+    forGuest: 'دعوة خاصة إلى',
+    guestDefault: 'ضيفنا العزيز',
+    openAria: 'افتح باب الحديقة',
+    openHint: 'المس الباب لتفتحه',
+    withMusic: 'مع الموسيقى', inSilence: 'بدون موسيقى',
+    skip: 'تخطَّ',
+    playMusic: 'تشغيل الموسيقى', pauseMusic: 'إيقاف الموسيقى', backTop: 'العودة إلى الأعلى',
+    heroEyebrow: 'أهلًا بكم في حديقتنا',
+    lede: 'يحتفلان بخطوبتهما، والحديقة أُضيئت من أجلكم.',
+    scroll: 'ادخل', scrollAria: 'مرّر للمتابعة',
+    storyEyebrow: 'حكايتنا',
+    story1: 'بعض الأبواب لا تُفتح إلا مرة في العمر.',
+    story2: 'وبابنا انفتح على قلبين.',
+    story3: 'ويسعدنا أن تدخلوا معنا وتبقوا معنا طوال الأمسية.',
+    walkAria: 'جولة في الحديقة مع موعد الحفل',
+    walkEyebrow: 'امشِ معنا',
+    walkTitle: 'على درب الشموع',
+    walkLine: 'كل نور على الطريق من أجلك.',
+    dateEyebrow: 'احفظ الموعد',
+    timeEyebrow: 'الأمسية',
+    beginning: t => `في تمام <span>${t}</span>`,
+    arrived: 'في انتظاركم',
+    addCal: 'أضِف إلى التقويم', gcal: 'تقويم Google', ics: 'Apple · Outlook (‎.ics)',
+    countEyebrow: 'تُفتح الحديقة بعد',
+    countTitle: 'حتى يبدأ عمرنا معًا',
+    days: 'أيام', hours: 'ساعات', minutes: 'دقائق', seconds: 'ثوانٍ',
+    countLeft: (d, h, m) => `باقٍ ${arCount(d, 'day')} و${arCount(h, 'hour')} و${arCount(m, 'minute')}`,
+    countDone: 'بدأ الحفل. شكرًا لأنكم جزء من حكايتنا.',
+    venueEyebrow: 'حيث نلتقي', mapLoading: 'جارٍ تحميل الخريطة', mapTitle: 'خريطة توضح مكان الحفل',
+    directions: 'الاتجاهات', copyAddr: 'نسخ العنوان', addrCopied: 'تم نسخ العنوان',
+    wishEyebrow: 'اترك لنا أمنية',
+    toss: 'انثر الياسمين',
+    wishNotes: ['ياسمينتك في طريقها إلينا.', 'الحديقة صارت أطيب عطرًا.', 'زهرة أخرى في حكايتنا.'],
+    finaleTitle: 'ننتظركم بكل الحب',
+    replay: 'افتح الباب من جديد', share: 'شارك الدعوة', linkCopied: 'تم نسخ رابط الدعوة',
+    foot: 'معًا في كل سطر · وإلى الأبد في الحياة',
+    title: (a, b) => `خطوبة ${a} و${b}`,
+    eventTitle: (a, b) => `حفل خطوبة ${a} و${b}`,
+    eventText: (a, b) => `بكل الحب، يتشرف ${a} و${b} بدعوتكم لحضور حفل خطوبتهما.`,
+    shareText: (a, b, d) => `دعوة لحضور حفل خطوبة ${a} و${b} · ${d}`
+  }
+};
+
+/* ==========================================================================
+   Helpers
+   ========================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const html = document.documentElement;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+const small = Math.min(innerWidth, innerHeight) < 600;
+const lite = html.classList.contains('lite');
+// Watches frame times; when the phone cannot keep up, calls drop() once to lighten the scene.
+function governor(drop) {
+  let n = 0, slow = 0, done = false;
+  return ms => {
+    if (done || ms > 120) return;   // a pause (tab switch, scroll lock), not a slow frame
+    n++;
+    if (ms > 26) slow++;
+    if (n >= 90) { if (slow > 30) { done = true; drop(); } n = slow = 0; }
+  };
+}
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, k) => a + (b - a) * k;
+// Jump to the top without smooth scrolling (and without the 'instant' keyword older phones reject).
+function jumpTop() { const s = html.style.scrollBehavior; html.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); html.style.scrollBehavior = s; }
+// Start a video and ignore the refusal some phones give (Low Power Mode): its poster still shows.
+function playSafe(v) { try { const p = v.play(); if (p && p.catch) p.catch(() => {}); return p; } catch (e) { return null; } }
+
+const params = new URLSearchParams(location.search);
+let lang = (() => {
+  const want = (params.get('lang') || CONFIG.defaultLanguage || 'auto').toLowerCase();
+  if (want === 'ar' || want === 'en') return want;
+  return (navigator.languages || [navigator.language || 'en']).some(l => /^ar\b/i.test(l)) ? 'ar' : 'en';
+})();
+const T = key => TEXT[lang][key];
+const pick = v => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[lang] != null ? v[lang] : v.en) : v;
+
+let toastTimer;
+function toast(msg) {
+  const t = $('.toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+async function copy(text, msg) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;opacity:0;top:0';
+    document.body.append(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch {}
+    ta.remove();
+  }
+  toast(msg);
+}
+
+/* ==========================================================================
+   Content derived from CONFIG, per language
+   ========================================================================== */
+const when = new Date(CONFIG.dateISO);
+const enDt = o => new Intl.DateTimeFormat('en-GB', { timeZone: CONFIG.timeZone, ...o }).format(when);
+const monthNum = +enDt({ month: 'numeric' });
+const dayNum = +enDt({ day: 'numeric' });
+const yearNum = +enDt({ year: 'numeric' });
+const hour = +enDt({ hour: 'numeric', hourCycle: 'h23' });
+const minute = +enDt({ minute: 'numeric' });
+const HOURS_AR = ['', 'الواحدة', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 'السادسة', 'السابعة', 'الثامنة', 'التاسعة', 'العاشرة', 'الحادية عشرة', 'الثانية عشرة'];
+const h12 = hour % 12 || 12;
+const guestParam = (params.get('to') || '').trim().slice(0, 60);
+const initials = [CONFIG.partner1.en.charAt(0).toUpperCase(), CONFIG.partner2.en.charAt(0).toUpperCase()];
+
+let C = {};
+const num = (n, pad = 1) => n.toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-GB', { minimumIntegerDigits: pad, useGrouping: false });
+// Arabic number agreement for the countdown's spoken summary.
+const AR_FORMS = { day: ['يوم واحد', 'يومان', 'أيام', 'يومًا'], hour: ['ساعة واحدة', 'ساعتان', 'ساعات', 'ساعة'], minute: ['دقيقة واحدة', 'دقيقتان', 'دقائق', 'دقيقة'] };
+const arCount = (n, unit) => { const f = AR_FORMS[unit]; return n === 1 ? f[0] : n === 2 ? f[1] : `${num(n)} ${n >= 3 && n <= 10 ? f[2] : f[3]}`; };
+const enCount = (n, unit) => `${num(n)} ${unit}${n === 1 ? '' : 's'}`;
+function buildC() {
+  const loc = lang === 'ar' ? 'ar-EG' : 'en-GB';
+  const dt = o => new Intl.DateTimeFormat(loc, { timeZone: CONFIG.timeZone, ...o }).format(when);
+  C = {
+    p1: pick(CONFIG.partner1), p2: pick(CONFIG.partner2),
+    i1: initials[0], i2: initials[1],
+    weekday: dt({ weekday: 'long' }),
+    day: num(dayNum),
+    month: dt({ month: 'long' }),
+    year: num(yearNum),
+    dayMonthYear: `${num(dayNum)} ${dt({ month: 'long' })} ${num(yearNum)}`,
+    dateDots: `${num(dayNum, 2)} · ${num(monthNum, 2)} · ${num(yearNum)}`,
+    timeText: lang === 'ar'
+      ? `الساعة ${HOURS_AR[h12]}${minute === 30 ? ' والنصف' : minute === 15 ? ' والربع' : minute ? ':' + num(minute, 2) : ''} ${hour < 12 ? 'صباحًا' : 'مساءً'}`
+      : `${h12}${minute ? ':' + String(minute).padStart(2, '0') : " o'clock"} in the ${hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening'}`,
+    venueName: pick(CONFIG.venueName), venueLine1: pick(CONFIG.venueLine1), venueLine2: pick(CONFIG.venueLine2),
+    guest: guestParam || T('guestDefault')
+  };
+  C.dateLong = `${C.weekday}${lang === 'ar' ? '،' : ','} ${C.dayMonthYear}`;
+  C.address = [C.venueName, C.venueLine1, C.venueLine2].join(lang === 'ar' ? '، ' : ', ');
+  // In Arabic "و" joins the second name: أحمد وأميرة
+  C.couple = lang === 'ar' ? `${C.p1} و${C.p2}` : `${C.p1} & ${C.p2}`;
+  C.venueSub = [C.venueLine1, C.venueLine2].join(lang === 'ar' ? '، ' : ', ');
+}
+
+function applyLanguage() {
+  buildC();
+  html.lang = lang;
+  html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.title = T('title')(C.p1, C.p2);
+  $$('[data-c]').forEach(el => { const v = C[el.dataset.c]; if (v != null) el.textContent = v; });
+  $$('[data-t]').forEach(el => { el.textContent = T(el.dataset.t); });
+  $$('[data-th]').forEach(el => { const v = T(el.dataset.th); el.innerHTML = typeof v === 'function' ? v(C.timeText) : v; });
+  $$('[data-ta]').forEach(el => el.setAttribute('aria-label', T(el.dataset.ta)));
+  $$('[data-tt]').forEach(el => el.setAttribute('title', T(el.dataset.tt)));
+  $('#walk').setAttribute('aria-label', T('walkAria'));
+  $$('.lang-btn').forEach(b => {
+    b.textContent = T('langSwitch');
+    b.setAttribute('lang', T('langSwitchCode'));
+    b.setAttribute('aria-label', T('langAria'));
+  });
+  $('.sp-label').textContent = T(soundPref ? 'withMusic' : 'inSilence');
+  syncMusicUI(Music.on);
+  setupCalendarLinks();
+  Countdown.refresh();
+}
+function setLanguage(next) {
+  if (next === lang) return;
+  lang = next;
+  applyLanguage();
+}
+
+/* ==========================================================================
+   The stage: the Higgsfield footage. The door, its opening film, the garden
+   loop, the walk (a frame sequence the scroll plays) and the pavilion loop.
+   ========================================================================== */
+const Stage = (() => {
+  const st = $('#stage'), frame = $('.st-frame');
+  const poster = $('#poster'), vOpen = $('#vOpen'), vGarden = $('#vGarden'), vPav = $('#vPavilion');
+  const cv = $('#walkCv'), cx = cv.getContext('2d');
+  const N = CONFIG.walkFrames, frames = new Array(N);
+  let scene = 'door', target = 0, cur = 0, raf = 0, drawn = null, loading = false;
+
+  function set(s) {
+    if (s === scene) return;
+    scene = s;
+    st.dataset.scene = s;
+    if (s === 'garden' || s === 'walk') playSafe(vGarden); else vGarden.pause();
+    if (s === 'pavilion') playSafe(vPav); else vPav.pause();
+    if (s !== 'opening' && s !== 'door') vOpen.pause();
+    if (s === 'walk') { drawn = null; kick(); }
+  }
+  // An iPhone lets a video start later only if it was started once inside a tap; do that in the knock.
+  function unlockVideos() {
+    [vGarden, vPav].forEach(v => {
+      if (v.preload !== 'auto') v.preload = 'auto';
+      const p = playSafe(v);
+      const keep = () => (v === vGarden ? scene === 'garden' || scene === 'walk' : scene === 'pavilion');
+      if (p && p.then) p.then(() => { if (!keep()) v.pause(); }, () => {});
+    });
+  }
+  function open(done) {
+    let finished = false, fb = 0;
+    const go = () => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(fb);
+      vOpen.removeEventListener('timeupdate', near);
+      set('garden');
+      done();
+    };
+    const near = () => { if (vOpen.duration && vOpen.currentTime >= vOpen.duration - .4) go(); };
+    // Without the film (not loaded, or refused), the door zooms toward you and the garden fades in.
+    const zoom = () => { if (finished) return; frame.classList.add('zoomin'); setTimeout(go, 1300); };
+    unlockVideos();
+    st.classList.remove('bloom'); void st.offsetWidth; st.classList.add('bloom');
+    set('opening');
+    try { vOpen.currentTime = 0; } catch {}
+    const p = playSafe(vOpen);
+    if (p && p.then) p.then(null, zoom);
+    vOpen.addEventListener('timeupdate', near);
+    vOpen.addEventListener('ended', go, { once: true });
+    fb = setTimeout(() => { if (vOpen.currentTime < .05) zoom(); }, 1800);
+    setTimeout(go, 9000);
+  }
+  function door() {
+    frame.classList.remove('zoomin');
+    st.classList.remove('bloom');
+    vOpen.pause();
+    try { vOpen.currentTime = 0; } catch {}
+    set('door');
+  }
+
+  // The walk: frames load in a coarse-to-fine order so scrubbing works early.
+  const src = i => `media/walk/${String(i + 1).padStart(3, '0')}.jpg`;
+  function loadFrames() {
+    if (loading) return;
+    loading = true;
+    const order = [], seen = new Set();
+    [8, 4, 2, 1].forEach(step => { for (let i = 0; i < N; i += step) if (!seen.has(i)) { seen.add(i); order.push(i); } });
+    if (!seen.has(N - 1)) order.splice(1, 0, N - 1);
+    let k = 0;
+    const next = () => {
+      if (k >= order.length) return;
+      const i = order[k++], im = new Image();
+      im.decoding = 'async';
+      im.onload = () => { frames[i] = im; if (scene === 'walk') { drawn = null; kick(); } next(); };
+      im.onerror = next;
+      im.src = src(i);
+    };
+    for (let n = 0; n < 3; n++) next();
+  }
+  function nearest(i) {
+    for (let d = 0; d < N; d++) { if (frames[i - d]) return frames[i - d]; if (frames[i + d]) return frames[i + d]; }
+    return null;
+  }
+  function size() {
+    const r = frame.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, lite ? 1 : 1.5);
+    cv.width = Math.round(r.width * d);
+    cv.height = Math.round(r.height * d);
+    drawn = null;
+    if (scene === 'walk') kick();
+  }
+  function draw() {
+    const im = nearest(Math.round(cur * (N - 1)));
+    if (!im || im === drawn) return;
+    drawn = im;
+    const cw = cv.width, ch = cv.height, s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+    const w = im.naturalWidth * s, h = im.naturalHeight * s;
+    cx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+  }
+  // Ease toward the scroll position so the camera glides instead of stepping.
+  function tick() {
+    raf = 0;
+    cur = reduce ? target : lerp(cur, target, .18);
+    if (Math.abs(cur - target) < .0008) cur = target;
+    draw();
+    if (scene === 'walk' && cur !== target) raf = requestAnimationFrame(tick);
+  }
+  function kick() { if (!raf) raf = requestAnimationFrame(tick); }
+  function walk(p) { target = clamp(p, 0, 1); if (scene === 'walk') kick(); }
+  function zoom(z) { frame.style.setProperty('--zoom', z.toFixed(4)); }
+
+  let rt, lastW = innerWidth;
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== lastW || Math.abs(cv.height - frame.offsetHeight) > 150) { lastW = innerWidth; size(); } }, 150); });
+  size();
+  return { set, open, door, walk, zoom, loadFrames, get scene() { return scene; } };
+})();
+
+/* ==========================================================================
+   Air: fireflies over the garden, and jasmine blossoms that can be tossed
+   ========================================================================== */
+const Air = (() => {
+  const cv = $('#air'), cx = cv.getContext('2d');
+  let W = 0, H = 0, raf = 0, last = 0, t = 0, dprCap = lite ? 1.25 : 1.5;
+  let count = reduce ? 0 : small ? 22 : 40;
+  const flies = [], blooms = [];
+  function sprite(size, draw) { const s = document.createElement('canvas'); s.width = s.height = size; draw(s.getContext('2d'), size); return s; }
+  const GLOW = sprite(64, (g, n) => {
+    const r = g.createRadialGradient(n / 2, n / 2, 0, n / 2, n / 2, n / 2);
+    r.addColorStop(0, 'rgba(255,250,220,1)'); r.addColorStop(.12, 'rgba(255,226,140,.9)'); r.addColorStop(.4, 'rgba(230,210,110,.25)'); r.addColorStop(1, 'rgba(200,190,90,0)');
+    g.fillStyle = r; g.fillRect(0, 0, n, n);
+  });
+  const JASMINE = sprite(64, (g, n) => {
+    g.translate(n / 2, n / 2);
+    for (let i = 0; i < 5; i++) {
+      g.save(); g.rotate(i * Math.PI * 2 / 5);
+      const pg = g.createLinearGradient(0, 0, 0, -n * .46);
+      pg.addColorStop(0, '#f3ead2'); pg.addColorStop(1, '#ffffff');
+      g.fillStyle = pg;
+      g.beginPath(); g.ellipse(0, -n * .22, n * .11, n * .24, 0, 0, Math.PI * 2); g.fill();
+      g.restore();
+    }
+    g.fillStyle = '#f2c86b'; g.beginPath(); g.arc(0, 0, n * .06, 0, Math.PI * 2); g.fill();
+  });
+  function fly() {
+    return { x: Math.random() * W, y: H * (.3 + Math.random() * .7), a: Math.random() * 6.28, sp: .25 + Math.random() * .45, ph: Math.random() * 6.28, rate: .02 + Math.random() * .03, s: 10 + Math.random() * 16 };
+  }
+  function size() {
+    const d = Math.min(devicePixelRatio || 1, dprCap);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * d | 0; cv.height = H * d | 0;
+    cx.setTransform(d, 0, 0, d, 0, 0);
+  }
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    if (last) gov(now - last);
+    const dt = last ? clamp((now - last) / 16.67, .25, 3) : 1;
+    last = now;
+    t += dt;
+    cx.clearRect(0, 0, W, H);
+    while (flies.length < count) flies.push(fly());
+    if (flies.length > count) flies.length = count;
+    cx.globalCompositeOperation = 'lighter';
+    for (const f of flies) {
+      f.a += (Math.sin(t * .013 + f.ph) * .05 + (Math.random() - .5) * .08) * dt;
+      f.x += Math.cos(f.a) * f.sp * dt;
+      f.y += Math.sin(f.a) * f.sp * .6 * dt - .04 * dt;
+      if (f.x < -30) f.x = W + 30; else if (f.x > W + 30) f.x = -30;
+      if (f.y < H * .12) f.y = H + 20; else if (f.y > H + 30) f.y = H * .3;
+      const pulse = Math.max(0, Math.sin(t * f.rate + f.ph));
+      cx.globalAlpha = .15 + .85 * pulse * pulse;
+      cx.drawImage(GLOW, f.x - f.s / 2, f.y - f.s / 2, f.s, f.s);
+    }
+    cx.globalCompositeOperation = 'source-over';
+    for (let i = blooms.length - 1; i >= 0; i--) {
+      const b = blooms[i];
+      b.life += dt;
+      if (b.life >= b.max || b.y > H + 40) { blooms.splice(i, 1); continue; }
+      const drag = Math.pow(.975, dt);
+      b.vx *= drag; b.vy = b.vy * drag + .035 * dt;
+      b.vy = Math.min(b.vy, 1.4);
+      b.x += (b.vx + Math.sin(b.life * .04 + b.ph) * .5) * dt;
+      b.y += b.vy * dt;
+      b.rot += b.vr * dt;
+      const k = b.life / b.max;
+      cx.globalAlpha = k < .08 ? k / .08 : k > .8 ? (1 - k) / .2 : 1;
+      cx.save(); cx.translate(b.x, b.y); cx.rotate(b.rot); cx.scale(1, .75 + .25 * Math.cos(b.life * .05 + b.ph));
+      cx.drawImage(JASMINE, -b.s / 2, -b.s / 2, b.s, b.s);
+      cx.restore();
+    }
+    cx.globalAlpha = 1;
+  }
+  const gov = governor(() => { dprCap = 1; size(); count = Math.round(count * .55); });
+  function bloom(x, y, power) {
+    const a = -Math.PI / 2 + (Math.random() - .5) * 2.2, sp = power * (.5 + Math.random());
+    return { x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .06, ph: Math.random() * 6.28, s: 16 + Math.random() * 14, life: 0, max: 260 + Math.random() * 160 };
+  }
+  let rt;
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== W || Math.abs(innerHeight - H) > 150) size(); }, 150); });
+  size();
+  return {
+    start() { if (!raf) raf = requestAnimationFrame(frame); },
+    toss(x, y, n) { if (reduce) return; for (let i = 0; i < n; i++) blooms.push(bloom(x, y, 4.5)); if (blooms.length > 160) blooms.splice(0, blooms.length - 160); },
+    shower(n) { if (reduce) return; for (let i = 0; i < n; i++) { const b = bloom(Math.random() * W, -20 - Math.random() * H * .5, .4); b.vy = .4 + Math.random() * .6; b.max = 520; blooms.push(b); } }
+  };
+})();
+
+/* ==========================================================================
+   Music — a slow garden waltz: a harp in 3/4 over warm strings, with a bell
+   melody now and then; or an optional audio file
+   ========================================================================== */
+const Music = (() => {
+  let ac, out, bus, padBus, timer = 0, next = 0, step = 0, on = false, el = null, fadeT;
+  const listeners = [];
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+  const EIGHTH = .27;            // six eighths to a bar of 3/4
+  const BARS = [
+    { bass: 50, ch: [62, 66, 69], top: [74, 73, 71] },   // D
+    { bass: 47, ch: [59, 62, 66], top: [71, 69, 66] },   // Bm
+    { bass: 43, ch: [59, 62, 67], top: [67, 71, 74] },   // G
+    { bass: 45, ch: [61, 64, 69], top: [73, 76, 73] }    // A
+  ];
+  const ARP = [0, 1, 2, 3, 2, 1];  // index into chord (3 = the root an octave up)
+  function build() {
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    out = ac.createGain(); out.gain.value = 0;
+    const comp = ac.createDynamicsCompressor();
+    comp.threshold.value = -18; comp.ratio.value = 3;
+    out.connect(comp).connect(ac.destination);
+    const len = ac.sampleRate * 2.6, ir = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = ir.getChannelData(ch);
+      for (let i = 0, e = 1, k = Math.pow(.001, 1 / len); i < len; i++, e *= k) d[i] = (Math.random() * 2 - 1) * e;
+    }
+    const verb = ac.createConvolver(); verb.buffer = ir;
+    const wet = ac.createGain(); wet.gain.value = .55;
+    verb.connect(wet).connect(out);
+    bus = ac.createGain(); bus.gain.value = .8;
+    bus.connect(out); bus.connect(verb);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.Q.value = .3;
+    padBus = ac.createGain(); padBus.gain.value = 1;
+    padBus.connect(lp).connect(bus);
+  }
+  // A harp-like pluck: a triangle and a soft octave, fast attack, long decay.
+  function harp(t, m, v, dec = 1.8) {
+    const g = ac.createGain(), f = ac.createBiquadFilter();
+    f.type = 'lowpass'; f.frequency.value = 3200;
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(v, t + .005);
+    g.gain.exponentialRampToValueAtTime(.0001, t + dec);
+    g.connect(f).connect(bus);
+    [[1, 'triangle', 1], [2, 'sine', .35]].forEach(([mult, type, lvl]) => {
+      const o = ac.createOscillator(), og = ac.createGain();
+      o.type = type; o.frequency.value = mtof(m) * mult; og.gain.value = lvl;
+      o.connect(og).connect(g);
+      o.start(t); o.stop(t + dec + .05);
+    });
+  }
+  function bell(t, m, v) {
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(v, t + .01);
+    g.gain.exponentialRampToValueAtTime(.0001, t + 2.8);
+    g.connect(bus);
+    [[1, 1], [2.76, .25], [5.4, .08]].forEach(([mult, lvl]) => {
+      const o = ac.createOscillator(), og = ac.createGain();
+      o.type = 'sine'; o.frequency.value = mtof(m) * mult; og.gain.value = lvl;
+      o.connect(og).connect(g);
+      o.start(t); o.stop(t + 2.9);
+    });
+  }
+  function pad(t, notes, dur) {
+    notes.forEach(m => [-6, 6].forEach(cents => {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = 'sawtooth'; o.frequency.value = mtof(m - 12); o.detune.value = cents;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(.011, t + .7);
+      g.gain.setValueAtTime(.011, t + dur - .3);
+      g.gain.linearRampToValueAtTime(0, t + dur + .9);
+      o.connect(g).connect(padBus);
+      o.start(t); o.stop(t + dur + 1);
+    }));
+  }
+  function schedule() {
+    while (next < ac.currentTime + .35) {
+      const bar = Math.floor(step / 6), i = step % 6, B = BARS[bar % 4];
+      if (i === 0) { harp(next, B.bass, .3, 2.6); pad(next, B.ch, EIGHTH * 6); }
+      if (i === 2 || i === 4) harp(next, B.bass + 12, .12, 1.2);
+      const k = ARP[i], m = k === 3 ? B.ch[0] + 12 : B.ch[k];
+      harp(next + Math.random() * .008, m, i % 2 ? .1 : .14);
+      // A bell melody on every other bar
+      if (bar % 2 === 1 && (i === 0 || i === 2 || i === 4)) bell(next, B.top[i / 2] + 12, .055);
+      next += EIGHTH; step++;
+    }
+  }
+  function notify() { listeners.forEach(fn => fn(on)); }
+  async function play() {
+    if (on) return;
+    on = true; notify();
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
+    if (CONFIG.music.src) {
+      if (!el) { el = new Audio(CONFIG.music.src); el.loop = true; el.volume = 0; }
+      clearInterval(fadeT);
+      try { await el.play(); } catch { on = false; notify(); return; }
+      fadeT = setInterval(() => { el.volume = Math.min(.8, el.volume + .04); if (el.volume >= .8) clearInterval(fadeT); }, 80);
+      return;
+    }
+    if (!ac) build();
+    try { await ac.resume(); } catch {}
+    const now = ac.currentTime;
+    out.gain.cancelScheduledValues(now);
+    out.gain.setValueAtTime(out.gain.value, now);
+    out.gain.linearRampToValueAtTime(.85, now + 2.5);
+    if (!timer) { next = now + .12; schedule(); timer = setInterval(schedule, 60); }
+  }
+  function pause() {
+    if (!on) return;
+    on = false; notify();
+    if (el) {
+      clearInterval(fadeT);
+      fadeT = setInterval(() => { el.volume = Math.max(0, el.volume - .05); if (el.volume <= 0) { clearInterval(fadeT); if (!on) el.pause(); } }, 60);
+      return;
+    }
+    if (!ac) return;
+    const now = ac.currentTime;
+    out.gain.cancelScheduledValues(now);
+    out.gain.setValueAtTime(out.gain.value, now);
+    out.gain.linearRampToValueAtTime(0, now + .8);
+    setTimeout(() => { if (!on) { clearInterval(timer); timer = 0; ac.suspend(); } }, 900);
+  }
+  let resumeOnShow = false;
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { resumeOnShow = on; pause(); }
+    else if (resumeOnShow) { resumeOnShow = false; play(); }
+  });
+  // Setting up the synth (audio device, reverb) costs a noticeable moment on a phone. Do it quietly
+  // while the guest is still on the opening screen, so the tap only has to press play. The context
+  // waits suspended until play() resumes it inside the tap.
+  function prepare() {
+    if (ac || CONFIG.music.src || !(window.AudioContext || window.webkitAudioContext)) return;
+    try { build(); } catch (e) { ac = null; }
+  }
+  const idle = window.requestIdleCallback || (f => setTimeout(f, 1500));
+  if (document.readyState === 'complete') idle(prepare, { timeout: 4000 });
+  else addEventListener('load', () => idle(prepare, { timeout: 4000 }));
+  return { play, pause, toggle: () => (on ? pause() : play()), get on() { return on; }, onChange: fn => listeners.push(fn) };
+})();
+let soundPref = true;
+function setSoundPref(on) {
+  soundPref = on;
+  const b = $('.sound-pref');
+  b.setAttribute('aria-pressed', on);
+  b.classList.toggle('playing', on);
+  $('.sp-label', b).textContent = T(on ? 'withMusic' : 'inSilence');
+}
+function syncMusicUI(on) {
+  const b = $('.music-btn');
+  b.classList.toggle('playing', on);
+  b.setAttribute('aria-pressed', on);
+  b.setAttribute('aria-label', T(on ? 'pauseMusic' : 'playMusic'));
+}
+Music.onChange(syncMusicUI);
+
+/* ==========================================================================
+   Opening: knock → the doors open on film → the garden → the names write in
+   ========================================================================== */
+// Each name writes itself in like handwriting (right to left in Arabic). Driven by the Web Animations
+// API on a plain wrapper, because Safari skips mask transitions on gradient-clipped text.
+function writeNames() {
+  if (reduce) return;
+  const rtl = html.dir === 'rtl', from = rtl ? '0% 0%' : '100% 0%', to = rtl ? '100% 0%' : '0% 0%';
+  const mask = `linear-gradient(${rtl ? 260 : 100}deg,#000 42%,transparent 58%)`;
+  $$('.names .name-wrap').forEach((w, i) => {
+    w.style.webkitMaskImage = w.style.maskImage = mask;
+    w.style.webkitMaskSize = w.style.maskSize = '300% 100%';
+    w.style.webkitMaskRepeat = w.style.maskRepeat = 'no-repeat';
+    w.animate([
+      { opacity: 0, transform: 'translateY(10px)', webkitMaskPosition: from, maskPosition: from },
+      { opacity: 1, offset: .1 },
+      { opacity: 1, transform: 'none', webkitMaskPosition: to, maskPosition: to }
+    ], { duration: 2400, delay: 300 + i * 1100, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'both' });
+  });
+}
+const Intro = (() => {
+  const el = $('#intro');
+  let timers = [], stage = 'idle';
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const clear = () => { timers.forEach(clearTimeout); timers = []; };
+  function start() {
+    clear();
+    stage = 'ready';
+    html.classList.add('locked');
+    document.body.classList.add('intro-on');
+    document.body.classList.remove('formed');
+    $$('.name-wrap').forEach(w => w.getAnimations().forEach(a => a.cancel()));
+    jumpTop();
+    Stage.door();
+    el.hidden = false;
+    el.className = '';
+    // After "Open the door again", move focus off the now-hidden page onto the door.
+    if (document.activeElement && document.activeElement.closest && document.activeElement.closest('main')) setTimeout(() => $('.knock').focus({ preventScroll: true }), 200);
+  }
+  function open() {
+    if (stage !== 'ready') return;
+    stage = 'opening';
+    if (soundPref) Music.play();
+    try { navigator.vibrate && navigator.vibrate(14); } catch {}
+    el.classList.add('opened');
+    if (reduce) { Stage.set('garden'); later(finish, 300); return; }
+    Stage.open(finish);
+  }
+  function finish() {
+    if (stage === 'done') return;
+    clear();
+    stage = 'done';
+    document.body.classList.remove('intro-on');
+    document.body.classList.add('formed');
+    writeNames();
+    html.classList.remove('locked');
+    el.classList.add('leaving');
+    Page.start();
+    later(() => Air.shower(small ? 14 : 22), 600);
+    later(() => { el.hidden = true; el.className = ''; }, 1300);
+  }
+  function skip() { if (stage === 'done') return; Stage.set('garden'); finish(); }
+  $('.knock').addEventListener('click', open);
+  $('.skip').addEventListener('click', skip);
+  $('.sound-pref').addEventListener('click', () => setSoundPref(!soundPref));
+  return { start };
+})();
+
+/* ==========================================================================
+   Page: reveals, which scene the scroll is in, the walk and its captions
+   ========================================================================== */
+const Page = (() => {
+  let started = false, ticking = false;
+  const reveal = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target); }
+  }), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+  const bar = $('.progress span'), walkEl = $('#walk'), caps = $$('.cap'), meter = $('.walk-meter'), meterFill = $('.walk-meter span');
+  const range = caps.map(c => [+c.dataset.from, +c.dataset.to]);
+  function update() {
+    ticking = false;
+    // Read every position first, then write.
+    const vh = innerHeight, y = scrollY, max = html.scrollHeight - vh;
+    const r = walkEl.getBoundingClientRect();
+    const wp = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
+    const pinned = r.top <= 1 && r.bottom >= vh - 1;
+    const scene = r.top > vh * .3 ? 'garden' : r.bottom < vh * .55 ? 'pavilion' : 'walk';
+
+    // While the opening shows (also on "Open the door again"), the door owns the stage.
+    if (document.body.classList.contains('intro-on')) return;
+    Stage.set(scene);
+    Stage.walk(wp);
+    Stage.zoom(scene === 'garden' ? 1 + clamp(y / vh, 0, 1.5) * .05 : scene === 'pavilion' ? 1.02 + clamp(-r.bottom / vh, 0, 1.5) * .03 : 1);
+    walkEl.classList.toggle('pinned', pinned);
+    caps.forEach((c, i) => c.classList.toggle('on', pinned && wp >= range[i][0] && wp < range[i][1]));
+    meterFill.style.transform = `scaleY(${wp.toFixed(4)})`;
+    meter.style.setProperty('--p', (wp * 100).toFixed(2) + '%');
+    bar.style.transform = `scaleX(${max > 0 ? clamp(y / max, 0, 1) : 0})`;
+  }
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  function start() {
+    if (!started) {
+      started = true;
+      $$('[data-reveal]').forEach(el => reveal.observe(el));
+      addEventListener('scroll', onScroll, { passive: true });
+      addEventListener('resize', onScroll);
+      // Fetch the walk's frames once the opening has played.
+      setTimeout(() => Stage.loadFrames(), 1500);
+      const fin = new IntersectionObserver(([e]) => { if (e.isIntersecting) { Air.shower(small ? 16 : 26); fin.disconnect(); } }, { threshold: .4 });
+      fin.observe($('#finale'));
+    }
+    update();
+    setTimeout(() => $('.names').focus({ preventScroll: true }), 600);
+  }
+  return { start };
+})();
+
+/* ==========================================================================
+   Countdown windows
+   ========================================================================== */
+const Countdown = (() => {
+  const units = Object.fromEntries($$('.win-arch span').map(s => [s.dataset.u, s]));
+  const box = $('.clock');
+  let timer = 0, lastLabel = '';
+  function set(u, v) {
+    const s = units[u], str = num(v, 2);
+    if (s.textContent === str) return;
+    const first = !s.textContent;
+    s.textContent = str;
+    if (!first && !reduce) { const b = s.parentElement; b.classList.remove('tick'); void b.offsetWidth; b.classList.add('tick'); }
+  }
+  function tick() {
+    clearTimeout(timer);
+    const diff = when.getTime() - Date.now();
+    if (diff <= 0) {
+      box.hidden = true;
+      $('.count-done').hidden = false;
+      box.closest('section').querySelectorAll('.eyebrow,.count-title').forEach(e => { e.hidden = true; });
+      return;
+    }
+    const d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60, s = Math.floor(diff / 1e3) % 60;
+    set('d', d); set('h', h); set('m', m); set('s', s);
+    const label = T('countLeft')(d, h, m);
+    if (label !== lastLabel) { box.setAttribute('aria-label', label); lastLabel = label; }
+    timer = setTimeout(tick, 1000 - (Date.now() % 1000) + 10);
+  }
+  return { refresh() { Object.values(units).forEach(s => { s.textContent = ''; }); lastLabel = ''; tick(); } };
+})();
+
+/* ==========================================================================
+   Calendar, map, wishes, sharing
+   ========================================================================== */
+function utc(d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+const ends = new Date(when.getTime() + CONFIG.durationHours * 36e5);
+function setupCalendarLinks() {
+  const g = new URL('https://calendar.google.com/calendar/render');
+  g.searchParams.set('action', 'TEMPLATE');
+  g.searchParams.set('text', T('eventTitle')(C.p1, C.p2));
+  g.searchParams.set('dates', `${utc(when)}/${utc(ends)}`);
+  g.searchParams.set('details', T('eventText')(C.p1, C.p2));
+  g.searchParams.set('location', C.address);
+  $('#gcalLink').href = g.toString();
+}
+function setupCalendar() {
+  const btn = $('#calBtn'), menu = $('#calMenu');
+  const close = () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    menu.hidden = !menu.hidden;
+    btn.setAttribute('aria-expanded', String(!menu.hidden));
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('.cal')) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  $('#gcalLink').addEventListener('click', close);
+  // A real file next to the page: iPhones and WhatsApp's browser then offer "Add to Calendar".
+  $('#icsBtn').addEventListener('click', () => {
+    close();
+    location.href = new URL(CONFIG.icsFile, location.href).href;
+  });
+}
+function setupVenue() {
+  const q = encodeURIComponent(CONFIG.mapsQuery);
+  $('#dirLink').href = CONFIG.mapsLink || `https://www.google.com/maps/search/?api=1&query=${q}`;
+  $('#copyAddr').addEventListener('click', () => copy(C.address, T('addrCopied')));
+  const map = $('.map'), frame = $('iframe', map);
+  frame.addEventListener('load', () => { if (frame.src) map.classList.add('loaded'); });
+  const io = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    frame.src = `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
+    io.disconnect();
+  }, { rootMargin: '600px 0px' });
+  io.observe($('.map-wrap'));
+}
+function setupActions() {
+  let wishes = 0;
+  $('.wish-btn').addEventListener('click', e => {
+    const r = e.currentTarget.getBoundingClientRect();
+    Air.toss(r.left + r.width / 2, r.top + r.height / 2, small ? 14 : 20);
+    const note = $('.wish-note');
+    note.textContent = T('wishNotes')[wishes++ % 3];
+    note.classList.add('show');
+    try { navigator.vibrate && navigator.vibrate(10); } catch {}
+  });
+  $('#shareBtn').addEventListener('click', async () => {
+    const url = location.href.split(/[?#]/)[0];
+    const data = { title: T('eventTitle')(C.p1, C.p2), text: T('shareText')(C.p1, C.p2, C.dateLong), url };
+    if (navigator.share) { try { await navigator.share(data); } catch {} }
+    else copy(url, T('linkCopied'));
+  });
+  $('#replayBtn').addEventListener('click', () => Intro.start());
+  // Pausing from the top bar also means "in silence" if the opening is replayed.
+  $('.music-btn').addEventListener('click', () => { Music.toggle(); setSoundPref(Music.on); });
+  $$('.lang-btn').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); setLanguage(T('langSwitchCode')); }));
+}
+
+/* ==========================================================================
+   Access screen (testing only)
+   ========================================================================== */
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function unlock() {
+  const A = CONFIG.testAccess;
+  if (!A || !A.enabled) return Promise.resolve();
+  const KEY = 'invite-access';
+  let saved = null;
+  try { saved = localStorage.getItem(KEY); } catch {}
+  if (saved === A.codeHash) return Promise.resolve();
+
+  const gate = $('#gate'), form = $('#gateForm'), input = $('#gateCode'), err = $('.gate-err'), card = $('.gate-card');
+  const check = async code => !!(window.crypto && window.crypto.subtle) && code.trim() !== '' && (await sha256(code.trim().toLowerCase())) === A.codeHash;
+  const remember = () => { try { localStorage.setItem(KEY, A.codeHash); } catch {} };
+
+  return new Promise(async resolve => {
+    // A tester link ending in ?access=CODE opens straight in; the code is then removed from the address bar.
+    const fromLink = params.get('access');
+    if (fromLink) {
+      const u = new URL(location.href);
+      u.searchParams.delete('access');
+      history.replaceState(null, '', u);
+      if (await check(fromLink)) { remember(); resolve(); return; }
+    }
+    if (A.requestWhatsApp) {
+      const req = $('.gate-request');
+      req.href = `https://wa.me/${A.requestWhatsApp.replace(/\D/g, '')}?text=${encodeURIComponent('Hello! May I have the access code for the engagement invitation preview?')}`;
+      req.hidden = false;
+    }
+    gate.hidden = false;
+    setTimeout(() => input.focus(), 300);
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!(window.crypto && window.crypto.subtle)) { err.textContent = 'Please open the invitation from its https:// link.'; return; }
+      if (await check(input.value)) {
+        remember();
+        err.textContent = '';
+        gate.classList.add('done');
+        setTimeout(() => gate.remove(), 1000);
+        resolve();
+      } else {
+        err.textContent = "That code isn't right · الرمز غير صحيح";
+        card.classList.remove('shake');
+        void card.offsetWidth;
+        card.classList.add('shake');
+        input.select();
+      }
+    });
+  });
+}
+
+/* ==========================================================================
+   Boot
+   ========================================================================== */
+// Touching the garden (not a button) scatters a little jasmine from that spot.
+if (!reduce) addEventListener('click', e => {
+  if (e.target.closest('a,button,input,iframe,.arch,.map,.clock') || document.body.classList.contains('intro-on')) return;
+  Air.toss(e.clientX, e.clientY, 5);
+});
+
+async function boot() {
+  await unlock();
+  Air.start();
+  applyLanguage();
+  setupCalendar();
+  setupVenue();
+  setupActions();
+  // Wait for the fonts and the door photo, but never long.
+  const doorReady = new Promise(r => { const p = $('#poster'); if (p.complete) r(); else { p.onload = r; p.onerror = r; } });
+  try { await Promise.race([Promise.all([document.fonts.ready, doorReady]), wait(3000)]); } catch {}
+  await wait(reduce ? 150 : 500);
+  $('#loader').classList.add('done');
+  setTimeout(() => $('#loader').remove(), 1100);
+  Intro.start();
+}
+boot();
+})();
+</script>
+</body>
+</html>
