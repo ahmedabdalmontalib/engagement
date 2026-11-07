@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>/* Phones get a lighter rendering path (see html.lite in the styles) */(function(){try{if(matchMedia('(pointer: coarse)').matches||matchMedia('(max-width: 760px)').matches)document.documentElement.classList.add('lite')}catch(e){}})()</script>
 <title>Ahmed &amp; Amira · The Engagement Issue</title>
 <meta name="description" content="Ahmed &amp; Amira are engaged — Thursday, 26 November 2026, 4G Hall, Medical Professions Club, New Minya.">
 <meta name="theme-color" content="#f2ece2">
@@ -351,6 +352,8 @@ html[dir="rtl"] .finale .badge{right:auto;left:var(--gutter)}
   .portal{height:100vh}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;animation-delay:0s!important;transition-delay:0s!important}
 }
+/* Phones: plain grain instead of a full-screen blend layer redrawn on every scroll frame */
+html.lite body::after{mix-blend-mode:normal;opacity:.06}
 </style>
 </head>
 <body>
@@ -970,6 +973,9 @@ const Scroll = (() => {
     drawnY = y; resized = false;
 
     const vh = innerHeight, dir = html.dir === 'rtl' ? -1 : 1;
+    // Read every position first, then write, so the browser lays the page out once per frame.
+    const sp = progress(story), pp = progress(portal), cp = progress(chapters);
+    const g = ghost.parentElement.getBoundingClientRect(), max = html.scrollHeight - vh;
     if (!reduce) {
       // Cover: the names drift apart as the page scrolls away.
       const c = clamp(y / vh, 0, 1.2);
@@ -980,13 +986,11 @@ const Scroll = (() => {
 
     // Story: light the words one by one (all at once with Reduce Motion).
     if (!words || !words.length || !words[0].isConnected) words = story.querySelectorAll('.story-text .w');
-    const sp = progress(story);
     const lit = reduce ? words.length : Math.floor(clamp(sp / .85, 0, 1) * words.length + .001);
     words.forEach((w, i) => w.classList.toggle('on', i < lit));
     story.classList.toggle('done', lit >= words.length);
 
     // Portal: zoom into the "&" until wine fills the screen. It is covered by then, so 25× is plenty.
-    const pp = progress(portal);
     if (!reduce) {
       amp.style.transform = `scale(${(1 + Math.pow(pp, 2.6) * 25).toFixed(3)}) rotate(${(pp * -12).toFixed(2)}deg)`;
       note.style.opacity = (1 - pp * 3).toFixed(3);
@@ -994,15 +998,12 @@ const Scroll = (() => {
     fill.style.clipPath = `circle(${(clamp((pp - .55) / .4, 0, 1) * 150).toFixed(2)}% at 50% 50%)`;
 
     // Chapters: vertical scroll slides the strip sideways.
-    const cp = progress(chapters);
     const x = dir > 0 ? -cp * stripDist : -(1 - cp) * stripDist;
     strip.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
     nos.forEach((n, i) => { n.style.transform = `translate3d(${((cp - i / 4) * 60 * dir).toFixed(1)}px,0,0)`; });
 
-    const g = ghost.parentElement.getBoundingClientRect();
     if (!reduce) ghost.style.transform = `translate3d(0,${((g.top + g.height / 2 - vh / 2) * -.25).toFixed(1)}px,0) rotate(${(g.top * .02).toFixed(2)}deg)`;
 
-    const max = html.scrollHeight - vh;
     bar.style.transform = `scaleX(${max > 0 ? clamp(y / max, 0, 1) : 0})`;
   }
   // Rebuild only when the width changes: the address bar showing and hiding must not resize the page mid-scroll.
@@ -1131,6 +1132,16 @@ const Music = (() => {
     if (document.hidden) { resumeOnShow = on; pause(); }
     else if (resumeOnShow) { resumeOnShow = false; play(); }
   });
+  // Setting up the synth (audio device, reverb) costs a noticeable moment on a phone. Do it quietly
+  // while the guest is still on the opening screen, so the tap only has to press play. The context
+  // waits suspended until play() resumes it inside the tap.
+  function prepare() {
+    if (ac || CONFIG.music.src || !(window.AudioContext || window.webkitAudioContext)) return;
+    try { build(); } catch (e) { ac = null; }
+  }
+  const idle = window.requestIdleCallback || (f => setTimeout(f, 1500));
+  if (document.readyState === 'complete') idle(prepare, { timeout: 4000 });
+  else addEventListener('load', () => idle(prepare, { timeout: 4000 }));
   return { play, pause, toggle: () => (on ? pause() : play()), get on() { return on; }, onChange: fn => listeners.push(fn) };
 })();
 function syncMusicUI(on) {

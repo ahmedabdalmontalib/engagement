@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>/* Phones get a lighter rendering path (see html.lite in the styles) */(function(){try{if(matchMedia('(pointer: coarse)').matches||matchMedia('(max-width: 760px)').matches)document.documentElement.classList.add('lite')}catch(e){}})()</script>
 <title>Ahmed &amp; Amira · Engagement</title>
 <meta name="description" content="You are warmly invited to the engagement of Ahmed &amp; Amira — Thursday, 26 November 2026, 4G Hall, Medical Professions Club, New Minya.">
 <meta name="theme-color" content="#0a0907">
@@ -564,6 +565,9 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;animation-delay:0s!important;transition-delay:0s!important}
 }
+/* Phones: the same motion without the GPU-heavy blurs */
+html.lite [data-reveal]:not(.in){filter:none}
+html.lite #intro.to-envelope .scene-announce,html.lite #intro.flash .env-card{filter:none}
 </style>
 </head>
 <body class="intro-on">
@@ -1054,6 +1058,17 @@ const html = document.documentElement;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const small = Math.min(innerWidth, innerHeight) < 600;
+const lite = document.documentElement.classList.contains('lite');
+// Watches frame times; when the phone cannot keep up, calls drop() once to lighten the scene.
+function governor(drop) {
+  let n = 0, slow = 0, done = false;
+  return ms => {
+    if (done || ms > 120) return;   // a pause (tab switch, scroll lock), not a slow frame
+    n++;
+    if (ms > 26) slow++;
+    if (n >= 90) { if (slow > 30) { done = true; drop(); } n = slow = 0; }
+  };
+}
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 // Jump to the top without smooth scrolling (and without the 'instant' keyword older phones reject).
@@ -1339,8 +1354,9 @@ const Dust = (() => {
   }
   const PETALS = [petalSprite('#a83a4c', '#4e1220'), petalSprite('#c25a6a', '#6e1e2f'), petalSprite('#f6e7bf', '#b38e48')];
 
+  let dprCap = lite ? 1.25 : 1.5;   // canvas pixels per CSS pixel; glows stay soft at this size
   function size() {
-    const d = Math.min(devicePixelRatio || 1, 1.5);
+    const d = Math.min(devicePixelRatio || 1, dprCap);
     W = innerWidth; H = innerHeight;
     cv.width = W * d | 0; cv.height = H * d | 0;
     cx.setTransform(d, 0, 0, d, 0, 0);
@@ -1382,6 +1398,7 @@ const Dust = (() => {
     raf = 0;
     const now = performance.now();
     // Motion is measured in 60 fps frames, so 90/120 Hz screens move at the same speed.
+    if (last) gov(now - last);
     const dt = last ? clamp((now - last) / 16.67, .25, 3) : 1;
     last = now;
     t += dt;
@@ -1483,6 +1500,7 @@ const Dust = (() => {
   let rt;
   // Ignore the small height changes from the address bar showing and hiding while scrolling.
   addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== W || Math.abs(innerHeight - H) > 150) size(); }, 150); });
+  const gov = governor(() => { dprCap = 1; size(); });
   size();
   return {
     density(n) { want = reduce ? Math.min(n, 12) : Math.round(n * (small ? .7 : 1)); kick(); },
@@ -1628,6 +1646,16 @@ const Music = (() => {
     if (document.hidden) { resumeOnShow = on; pause(); }
     else if (resumeOnShow) { resumeOnShow = false; play(); }
   });
+  // Setting up the synth (audio device, reverb) costs a noticeable moment on a phone. Do it quietly
+  // while the guest is still on the opening screen, so the tap only has to press play. The context
+  // waits suspended until play() resumes it inside the tap.
+  function prepare() {
+    if (ac || CONFIG.music.src || !(window.AudioContext || window.webkitAudioContext)) return;
+    try { build(); } catch (e) { ac = null; }
+  }
+  const idle = window.requestIdleCallback || (f => setTimeout(f, 1500));
+  if (document.readyState === 'complete') idle(prepare, { timeout: 4000 });
+  else addEventListener('load', () => idle(prepare, { timeout: 4000 }));
   return { play, pause, toggle: () => (on ? pause() : play()), get on() { return on; }, onChange: fn => listeners.push(fn) };
 })();
 
