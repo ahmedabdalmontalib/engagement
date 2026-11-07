@@ -167,8 +167,21 @@ html[lang="ar"] .begin-hint{font-size:16px}
 .skip{position:absolute;z-index:3;right:calc(var(--gutter) - 8px);bottom:calc(env(safe-area-inset-bottom) + 14px);min-height:44px;padding:0 10px;font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);transition:color .3s}
 html[dir="rtl"] .skip{right:auto;left:calc(var(--gutter) - 8px)}
 .skip:hover{color:var(--moon)}
-.intro-flash{position:absolute;inset:0;z-index:5;background:radial-gradient(55% 45% at 50% 50%,rgba(255,255,255,.95),rgba(220,230,255,.55) 40%,rgba(255,183,201,.15) 65%,transparent 85%);opacity:0;pointer-events:none}
-#intro.flash .intro-flash{animation:flash 1.5s ease forwards}
+/* The light when the two stars meet: a white-hot core, a round glow that fades from gold
+   through rose to blue, a thin lens-flare streak and fine rays. Every layer is a circle sized
+   in vmin/vmax so it stays round on tall phones. */
+.intro-flash{position:absolute;inset:0;z-index:5;overflow:hidden;pointer-events:none}
+.intro-flash i{position:absolute;left:50%;top:50%;opacity:0;mix-blend-mode:screen}
+.fl-bloom{width:140vmax;height:140vmax;margin:-70vmax 0 0 -70vmax;border-radius:50%;background:radial-gradient(circle closest-side,rgba(255,250,240,.9) 0%,rgba(255,234,205,.62) 4%,rgba(255,206,214,.34) 11%,rgba(196,212,255,.17) 22%,rgba(156,176,255,.07) 38%,rgba(130,150,255,.02) 55%,rgba(120,140,255,0) 70%)}
+.fl-core{width:18vmin;height:18vmin;margin:-9vmin 0 0 -9vmin;border-radius:50%;background:radial-gradient(circle closest-side,#fff 0%,#fff 22%,rgba(255,244,228,.75) 45%,rgba(255,226,236,.25) 72%,rgba(255,226,236,0) 100%)}
+.fl-streak{width:200vw;height:2px;margin:-1px 0 0 -100vw;background:linear-gradient(90deg,transparent,rgba(156,199,255,.55) 32%,#fff 50%,rgba(255,183,201,.55) 68%,transparent);box-shadow:0 0 14px 3px rgba(210,220,255,.35)}
+.fl-streak.v{width:1.5px;height:70vh;margin:-35vh 0 0 -.75px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.75) 50%,transparent);box-shadow:none}
+.fl-rays{width:110vmax;height:110vmax;margin:-55vmax 0 0 -55vmax;border-radius:50%;background:repeating-conic-gradient(rgba(255,255,255,.2) 0deg .8deg,transparent .8deg 7deg);-webkit-mask-image:radial-gradient(circle closest-side,#000 4%,transparent 55%);mask-image:radial-gradient(circle closest-side,#000 4%,transparent 55%)}
+#intro.flash .fl-bloom{animation:flBloom 1.9s cubic-bezier(.2,.7,.3,1) forwards}
+#intro.flash .fl-core{animation:flCore 1.3s cubic-bezier(.2,.7,.3,1) forwards}
+#intro.flash .fl-streak{animation:flStreak 1.4s cubic-bezier(.2,.8,.3,1) forwards}
+#intro.flash .fl-streak.v{animation-name:flStreakV;animation-duration:1.1s}
+#intro.flash .fl-rays{animation:flRays 2s ease-out forwards}
 
 /* Equalizer bars (music) */
 .bars{display:inline-flex;align-items:flex-end;gap:2px;height:14px}
@@ -232,16 +245,19 @@ html[dir="rtl"] .moon{right:auto;left:clamp(18px,10vw,140px);transform:translate
 body.formed .moon{opacity:1;transform:rotate(-20deg)}
 html[dir="rtl"] body.formed .moon{transform:rotate(20deg) scaleX(-1)}
 .hero-inner{position:relative;display:flex;flex-direction:column;align-items:center}
-.hero-eyebrow{opacity:0;transform:translateY(16px);transition:opacity 1.4s ease .3s,transform 1.4s var(--ease-out) .3s}
+.hero-eyebrow{opacity:0;transform:translateY(16px);transition:opacity 1.4s ease 2.8s,transform 1.4s var(--ease-out) 2.8s}
 body.formed .hero-eyebrow{opacity:1;transform:none}
 .names{margin:.25em 0 .2em;display:flex;flex-direction:column;align-items:center;line-height:1}
 .names:focus{outline:none}
-.name{font-family:var(--script);font-size:clamp(60px,min(22vw,20vh),190px);line-height:1.15;opacity:0;transition:opacity 1.2s ease}
+.name{font-family:var(--script);font-size:clamp(60px,min(22vw,20vh),190px);line-height:1.15;opacity:0;transform:scale(1.06);-webkit-mask-image:var(--write-mask);mask-image:var(--write-mask);-webkit-mask-size:300% 100%;mask-size:300% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:var(--write-from);mask-position:var(--write-from);transition:opacity .5s ease,filter 2.4s ease,transform 2.6s var(--ease-out),-webkit-mask-position 2.4s var(--ease-io),mask-position 2.4s var(--ease-io)}
+body.formed .name{-webkit-mask-position:var(--write-to);mask-position:var(--write-to)}
+.names .name:last-child{transition-delay:1s}
 html[lang="ar"] .name{font-size:clamp(54px,min(19vw,17vh),160px);line-height:1.5}
-.amp{font-family:var(--display);font-size:clamp(26px,5vw,44px);color:var(--silver);opacity:0;transition:opacity 1.2s ease .2s}
+.amp{font-family:var(--display);font-size:clamp(26px,5vw,44px);color:var(--silver);opacity:0;transform:scale(.4) rotate(-20deg);transition:opacity 1.2s ease .3s,transform 1.6s cubic-bezier(.3,1.6,.5,1) .3s}
 html[lang="ar"] .amp{font-family:var(--script);font-size:clamp(36px,7vw,60px)}
-body.formed .name,body.formed .amp{opacity:1}
-.name.shine-text{text-shadow:none;filter:drop-shadow(0 0 18px rgba(156,199,255,.35))}
+body.formed .name,body.formed .amp{opacity:1;transform:none}
+.name.shine-text{text-shadow:none;filter:blur(12px) drop-shadow(0 0 30px rgba(230,236,255,.95))}
+body.formed .name.shine-text{filter:blur(0) drop-shadow(0 0 18px rgba(156,199,255,.35))}
 .lede{max-width:26ch;font-style:italic;font-size:clamp(21px,2.8vw,28px);line-height:1.45;color:var(--moon)}
 html[lang="ar"] .lede{max-width:30ch}
 .hero-date span{white-space:nowrap}
@@ -368,7 +384,11 @@ html[lang="ar"] .finale-names{letter-spacing:0;margin-right:0;font-size:clamp(20
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.5);opacity:0}}
 @keyframes corePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
-@keyframes flash{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+@keyframes flBloom{0%{opacity:0;transform:scale(.12)}16%{opacity:1}100%{opacity:0;transform:scale(1)}}
+@keyframes flCore{0%{opacity:0;transform:scale(.2)}10%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+@keyframes flStreak{0%{opacity:0;transform:scaleX(0)}14%{opacity:1}100%{opacity:0;transform:scaleX(1)}}
+@keyframes flStreakV{0%{opacity:0;transform:scaleY(0)}14%{opacity:.9}100%{opacity:0;transform:scaleY(1)}}
+@keyframes flRays{0%{opacity:0;transform:scale(.25) rotate(0)}18%{opacity:.85}100%{opacity:0;transform:scale(1) rotate(22deg)}}
 @keyframes eq{from{height:3px}to{height:14px}}
 @keyframes cue{from{transform:translateY(-100%)}to{transform:translateY(100%)}}
 @keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
@@ -439,7 +459,7 @@ html[lang="ar"] .finale-names{letter-spacing:0;margin-right:0;font-size:clamp(20
   <p class="caption" data-n="1" data-t="caption1"></p>
   <p class="caption" data-n="2" data-t="caption2"></p>
   <button class="skip" type="button" data-t="skip"></button>
-  <div class="intro-flash"></div>
+  <div class="intro-flash" aria-hidden="true"><i class="fl-bloom"></i><i class="fl-rays"></i><i class="fl-streak"></i><i class="fl-streak v"></i><i class="fl-core"></i></div>
 </section>
 
 <!-- Persistent chrome -->
@@ -465,8 +485,8 @@ html[lang="ar"] .finale-names{letter-spacing:0;margin-right:0;font-size:clamp(20
         <span class="amp" data-t="amp"></span>
         <span class="name shine-text" data-c="p2"></span>
       </h1>
-      <p class="lede" data-reveal="words" style="--d:.2s" data-t="lede"></p>
-      <p class="hero-date" data-reveal style="--d:.8s"><span data-c="weekday"></span> <b>✦</b> <span data-c="dayMonthYear"></span></p>
+      <p class="lede" data-reveal="words" style="--d:3.2s" data-t="lede"></p>
+      <p class="hero-date" data-reveal style="--d:3.8s"><span data-c="weekday"></span> <b>✦</b> <span data-c="dayMonthYear"></span></p>
     </div>
     <a class="scroll-cue" href="#story" data-ta="scrollAria"><span data-t="scroll"></span><span class="cue-line"></span></a>
   </section>
@@ -1292,7 +1312,7 @@ const Intro = (() => {
     Sky.shock(innerWidth / 2, innerHeight / 2);
     Sky.burst(innerWidth / 2, innerHeight / 2, small ? 70 : 120);
     fontsReady.then(() => { if (stage === 'story') Sky.form(namePoints(), innerWidth / 2, innerHeight / 2); });
-    later(finish, 2300);
+    later(finish, 3100);
   }
   // Screen positions of the hero names, sampled from an offscreen drawing of the same text.
   function namePoints() {
@@ -1328,9 +1348,9 @@ const Intro = (() => {
     document.body.classList.add('formed');
     html.classList.remove('locked');
     el.classList.add('leaving');
-    later(() => Sky.dissolve(), 700);
+    later(() => Sky.dissolve(), 2600);
     Page.start();
-    later(() => { el.hidden = true; el.className = ''; }, 1500);
+    later(() => { el.hidden = true; el.className = ''; }, 2800);
   }
   function skip() {
     if (stage === 'done') return;
