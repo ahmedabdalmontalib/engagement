@@ -9,7 +9,7 @@ The four clips were generated with Higgsfield (Seedance 2.5, 720x1280, 24 fps, 5
 usage: python3 tools/make_garden_media.py RAW_DIR FFMPEG
 RAW_DIR holds open_raw.mp4, garden_raw.mp4, walk_raw.mp4, pavilion_raw.mp4.
 Writes garden/media/{open,garden,pavilion}.mp4, the matching posters (each video's own first
-frame, so swapping a poster for its video never jumps) and garden/media/walk/001-060.jpg.
+frame, so swapping a poster for its video never jumps) and garden/media/walk/001-120.jpg (every frame of the clip).
 """
 import pathlib
 import subprocess
@@ -17,7 +17,7 @@ import sys
 
 RAW, FF = pathlib.Path(sys.argv[1]), sys.argv[2]
 OUT = pathlib.Path(__file__).resolve().parent.parent / 'garden' / 'media'
-WALK_FRAMES = 60
+WALK_FRAMES = 120
 
 
 def ff(*args):
@@ -39,8 +39,8 @@ walk = OUT / 'walk'
 walk.mkdir(exist_ok=True)
 for f in walk.glob('*.jpg'):
     f.unlink()
-ff('-i', str(RAW / 'walk_raw.mp4'), '-vf', f'fps={WALK_FRAMES}/5.04,scale=540:960:flags=lanczos',
-   '-frames:v', str(WALK_FRAMES), '-q:v', '5', str(walk / '%03d.jpg'))
+ff('-i', str(RAW / 'walk_raw.mp4'), '-vf', f'fps={WALK_FRAMES}/5.04,scale=540:960,setsar=1',
+   '-sws_flags', 'lanczos', '-frames:v', str(WALK_FRAMES), '-q:v', '7', str(walk / '%03d.jpg'))
 
 total = sum(f.stat().st_size for f in OUT.rglob('*') if f.is_file())
 print(f'{len(list(walk.glob("*.jpg")))} walk frames; media total {total / 1e6:.1f} MB')
