@@ -249,15 +249,15 @@ html[dir="rtl"] body.formed .moon{transform:rotate(20deg) scaleX(-1)}
 body.formed .hero-eyebrow{opacity:1;transform:none}
 .names{margin:.25em 0 .2em;display:flex;flex-direction:column;align-items:center;line-height:1}
 .names:focus{outline:none}
-.name{font-family:var(--script);font-size:clamp(60px,min(22vw,20vh),190px);line-height:1.15;opacity:0;transform:scale(1.06);-webkit-mask-image:var(--write-mask);mask-image:var(--write-mask);-webkit-mask-size:300% 100%;mask-size:300% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:var(--write-from);mask-position:var(--write-from);transition:opacity .5s ease,filter 2.4s ease,transform 2.6s var(--ease-out),-webkit-mask-position 2.4s var(--ease-io),mask-position 2.4s var(--ease-io)}
-body.formed .name{-webkit-mask-position:var(--write-to);mask-position:var(--write-to)}
-.names .name:last-child{transition-delay:1s}
+.name{font-family:var(--script);font-size:clamp(60px,min(22vw,20vh),190px);line-height:1.15}
+/* Each name sits in a wrapper that does the writing animation (see writeNames) */
+.name-wrap{display:block;opacity:0}
+body.formed .name-wrap{opacity:1}
 html[lang="ar"] .name{font-size:clamp(54px,min(19vw,17vh),160px);line-height:1.5}
 .amp{font-family:var(--display);font-size:clamp(26px,5vw,44px);color:var(--silver);opacity:0;transform:scale(.4) rotate(-20deg);transition:opacity 1.2s ease .3s,transform 1.6s cubic-bezier(.3,1.6,.5,1) .3s}
 html[lang="ar"] .amp{font-family:var(--script);font-size:clamp(36px,7vw,60px)}
-body.formed .name,body.formed .amp{opacity:1;transform:none}
-.name.shine-text{text-shadow:none;filter:blur(12px) drop-shadow(0 0 30px rgba(230,236,255,.95))}
-body.formed .name.shine-text{filter:blur(0) drop-shadow(0 0 18px rgba(156,199,255,.35))}
+body.formed .amp{opacity:1;transform:none}
+.name.shine-text{text-shadow:none;filter:drop-shadow(0 0 18px rgba(156,199,255,.35))}
 .lede{max-width:26ch;font-style:italic;font-size:clamp(21px,2.8vw,28px);line-height:1.45;color:var(--moon)}
 html[lang="ar"] .lede{max-width:30ch}
 .hero-date span{white-space:nowrap}
@@ -481,9 +481,9 @@ html[lang="ar"] .finale-names{letter-spacing:0;margin-right:0;font-size:clamp(20
     <div class="hero-inner">
       <p class="eyebrow hero-eyebrow" data-t="heroEyebrow"></p>
       <h1 class="names" tabindex="-1">
-        <span class="name shine-text" data-c="p1"></span>
+        <span class="name-wrap"><span class="name shine-text" data-c="p1"></span></span>
         <span class="amp" data-t="amp"></span>
-        <span class="name shine-text" data-c="p2"></span>
+        <span class="name-wrap"><span class="name shine-text" data-c="p2"></span></span>
       </h1>
       <p class="lede" data-reveal="words" style="--d:3.2s" data-t="lede"></p>
       <p class="hero-date" data-reveal style="--d:3.8s"><span data-c="weekday"></span> <b>✦</b> <span data-c="dayMonthYear"></span></p>
@@ -1283,6 +1283,7 @@ const Intro = (() => {
     html.classList.add('locked');
     document.body.classList.add('intro-on');
     document.body.classList.remove('formed');
+    $$('.name-wrap').forEach(w => w.getAnimations().forEach(a => a.cancel()));
     jumpTop();
     el.hidden = false;
     el.className = '';
@@ -1313,6 +1314,24 @@ const Intro = (() => {
     Sky.burst(innerWidth / 2, innerHeight / 2, small ? 70 : 120);
     fontsReady.then(() => { if (stage === 'story') Sky.form(namePoints(), innerWidth / 2, innerHeight / 2); });
     later(finish, 3100);
+  }
+  // Each name writes itself out of the stardust like handwriting (right to left in Arabic), sharpening
+  // out of a glow as the stroke passes; Amira starts a second after Ahmed. Driven by the Web Animations
+  // API on a plain wrapper, because Safari skips mask/blur transitions on gradient-clipped text.
+  function writeNames() {
+    if (reduce) return;
+    const rtl = html.dir === 'rtl', from = rtl ? '0% 0%' : '100% 0%', to = rtl ? '100% 0%' : '0% 0%';
+    const mask = `linear-gradient(${rtl ? 260 : 100}deg,#000 42%,transparent 58%)`;
+    $$('.names .name-wrap').forEach((w, i) => {
+      w.style.webkitMaskImage = w.style.maskImage = mask;
+      w.style.webkitMaskSize = w.style.maskSize = '300% 100%';
+      w.style.webkitMaskRepeat = w.style.maskRepeat = 'no-repeat';
+      w.animate([
+        { opacity: 0, filter: 'blur(12px) brightness(1.8)', transform: 'scale(1.06)', webkitMaskPosition: from, maskPosition: from },
+        { opacity: 1, offset: .12 },
+        { opacity: 1, filter: 'blur(0px) brightness(1)', transform: 'scale(1)', webkitMaskPosition: to, maskPosition: to }
+      ], { duration: 2600, delay: i * 1000, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'both' });
+    });
   }
   // Screen positions of the hero names, sampled from an offscreen drawing of the same text.
   function namePoints() {
@@ -1346,6 +1365,7 @@ const Intro = (() => {
     Sky.cancelCouple();
     document.body.classList.remove('intro-on');
     document.body.classList.add('formed');
+    writeNames();
     html.classList.remove('locked');
     el.classList.add('leaving');
     later(() => Sky.dissolve(), 2600);
