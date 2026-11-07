@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link preview image (lanterns)</title>
+<!-- Draws lanterns/og-image.jpg (1200×630) for the "Golden Hour" design.
+     Open it through tools/serve.py; it saves the image into lanterns/. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allura&family=Manrope:wght@600&family=Playfair+Display:ital@1&family=Rakkas&display=swap">
+<style>
+  body{margin:0;background:#222;color:#ddd;font:14px system-ui;display:grid;gap:12px;justify-items:center;padding:16px}
+  canvas{width:min(100%,1200px);height:auto;box-shadow:0 10px 40px #000}
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<p id="status">Drawing…</p>
+<script>
+(async () => {
+'use strict';
+const W = 1200, H = 630, HOR = 470;
+const cv = document.getElementById('c'), cx = cv.getContext('2d');
+const status = document.getElementById('status');
+let sd = 5;
+const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+const centered = (t, y, font, fill, spacing = 0, dir = 'ltr') => {
+  cx.font = font; cx.fillStyle = fill; cx.letterSpacing = spacing + 'px'; cx.direction = dir; cx.textAlign = 'center';
+  cx.fillText(t, W / 2, y); cx.letterSpacing = '0px';
+};
+
+await document.fonts.load('150px "Allura"');
+await document.fonts.load('600 22px "Manrope"');
+await document.fonts.load('italic 30px "Playfair Display"');
+await document.fonts.load('36px "Rakkas"', 'أحمد');
+await document.fonts.ready;
+
+// Dusk sky
+let g = cx.createLinearGradient(0, 0, 0, HOR);
+g.addColorStop(0, '#2a2152'); g.addColorStop(.45, '#8e4a7e'); g.addColorStop(.8, '#e8807f'); g.addColorStop(1, '#ffc58a');
+cx.fillStyle = g; cx.fillRect(0, 0, W, HOR);
+for (let i = 0; i < 90; i++) { cx.globalAlpha = .3 + rnd() * .6; cx.fillStyle = '#fff'; cx.beginPath(); cx.arc(rnd() * W, rnd() * HOR * .45, .5 + rnd(), 0, 6.28); cx.fill(); }
+cx.globalAlpha = 1;
+// Sun on the horizon
+const sg = cx.createRadialGradient(600, HOR, 20, 600, HOR, 420);
+sg.addColorStop(0, 'rgba(255,230,170,.75)'); sg.addColorStop(1, 'rgba(255,180,120,0)');
+cx.fillStyle = sg; cx.fillRect(0, 0, W, HOR);
+cx.fillStyle = '#ffb36b'; cx.beginPath(); cx.arc(600, HOR + 6, 54, Math.PI, 0); cx.fill();
+// Far bank with palms
+cx.fillStyle = '#5e2f52';
+cx.beginPath(); cx.moveTo(0, HOR);
+for (let x = 0; x <= W; x += 10) cx.lineTo(x, HOR - 18 - Math.sin(x / 140) * 10 - Math.sin(x / 57) * 5);
+cx.lineTo(W, HOR); cx.fill();
+function palm(x, h) {
+  const top = [x + h * .18, HOR - 16 - h];
+  cx.strokeStyle = '#4a2443'; cx.lineCap = 'round'; cx.lineWidth = 3;
+  cx.beginPath(); cx.moveTo(x, HOR - 12); cx.quadraticCurveTo(x + 2, HOR - 12 - h * .6, top[0], top[1]); cx.stroke();
+  cx.lineWidth = 2.2;
+  for (let i = 0; i < 7; i++) {
+    const a = -Math.PI / 2 + (i - 3) * .48, len = h * (.55 + (i % 2) * .15);
+    cx.beginPath(); cx.moveTo(top[0], top[1]);
+    cx.quadraticCurveTo(top[0] + Math.cos(a) * len / 2, top[1] + Math.sin(a) * len * .2 - h * .12, top[0] + Math.cos(a) * len, top[1] + Math.sin(a) * len * .7 + len * .35);
+    cx.stroke();
+  }
+}
+[[90, 40], [180, 52], [990, 46], [1080, 38], [1130, 50]].forEach(([x, h]) => palm(x, h));
+// Water with the sun's reflection
+g = cx.createLinearGradient(0, HOR, 0, H);
+g.addColorStop(0, '#d8796f'); g.addColorStop(1, '#3a1f40');
+cx.fillStyle = g; cx.fillRect(0, HOR, W, H - HOR);
+cx.fillStyle = 'rgba(255,214,150,.7)';
+for (let i = 0; i < 18; i++) { const y = HOR + 6 + i * i * .5, half = 40 + i * 4 + rnd() * 30; cx.globalAlpha = 1 - i / 18; cx.fillRect(600 - half, y, half * 2, 2); }
+cx.globalAlpha = 1;
+
+// Lanterns
+function lantern(x, y, s) {
+  const w = 20 * s, h = 28 * s;
+  const gl = cx.createRadialGradient(x, y, 0, x, y, w * 2.4);
+  gl.addColorStop(0, 'rgba(255,214,140,.7)'); gl.addColorStop(1, 'rgba(255,140,80,0)');
+  cx.fillStyle = gl; cx.fillRect(x - w * 2.4, y - w * 2.4, w * 4.8, w * 4.8);
+  const b = cx.createRadialGradient(x, y + h * .3, 1, x, y, h * .7);
+  b.addColorStop(0, '#fff3c9'); b.addColorStop(.45, '#ffc061'); b.addColorStop(1, '#e8733a');
+  cx.fillStyle = b;
+  cx.beginPath();
+  cx.moveTo(x - w / 2, y - h / 2); cx.quadraticCurveTo(x, y - h / 2 - 3 * s, x + w / 2, y - h / 2);
+  cx.lineTo(x + w * .3, y + h / 2); cx.quadraticCurveTo(x, y + h / 2 + 2 * s, x - w * .3, y + h / 2);
+  cx.closePath(); cx.fill();
+}
+const lan = Array.from({ length: 34 }, () => [rnd() * W, 30 + rnd() * 420, .5 + rnd() * 1.1]).filter(([x, y]) => !(x > 260 && x < 940 && y > 150 && y < 400));
+lan.sort((a, b) => a[2] - b[2]).forEach(([x, y, s]) => lantern(x, y, s));
+
+// Text
+centered('UNDER THE SAME SKY', 128, '600 20px "Manrope"', '#fff0c2', 7);
+cx.shadowColor = 'rgba(255,170,90,.9)'; cx.shadowBlur = 30;
+centered('Ahmed & Amira', 270, '150px "Allura"', '#ffffff');
+cx.shadowBlur = 14;
+centered('THURSDAY · 26 NOVEMBER 2026 · 7 PM', 340, '600 22px "Manrope"', '#fff7ef', 5);
+centered('4G Hall · Medical Professions Club · New Minya', 386, 'italic 28px "Playfair Display"', '#fff3e6');
+centered('خطوبة أحمد وأميرة', 590, '36px "Rakkas"', '#fff0c2', 0, 'rtl');
+cx.shadowBlur = 0;
+
+const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', .9));
+const res = await fetch('/save-og?theme=lanterns', { method: 'POST', body: blob });
+status.textContent = res.ok ? `Saved lanterns/og-image.jpg (${Math.round(blob.size / 1024)} KB)` : `Save failed: ${res.status}`;
+document.title = status.textContent;
+})();
+</script>
+</body>
+</html>

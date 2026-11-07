@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ahmed & Amira//Engagement Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:20261126T170000Z-AhmedAmira@invitation
+DTSTAMP:20261107T214726Z
+DTSTART:20261126T170000Z
+DTEND:20261126T210000Z
+SUMMARY:Ahmed & Amira — Engagement · خطوبة أحمد وأميرة
+LOCATION:4G Hall\, Medical Professions Club\, New Minya · قاعة 4G، 
+ نادي المهن الطبية، المنيا الجديدة
+DESCRIPTION:With love\, Ahmed & Amira invite you to celebrate their engage
+ ment.\nبكل الحب، يتشرف أحمد وأميرة بدعوتكم 
+ لحضور حفل خطوبتهما.
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Ahmed & Amira — Engagement · خطوبة أحمد وأمير
+ ة
+END:VALARM
+END:VEVENT
+END:VCALENDAR

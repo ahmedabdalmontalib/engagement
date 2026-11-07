@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link preview image (stars)</title>
+<!-- Draws stars/og-image.jpg (1200×630) for the "Written in the Stars" design.
+     Open it through tools/serve.py; it saves the image into stars/. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Marcellus&family=EB+Garamond:ital@1&family=Aref+Ruqaa&display=swap">
+<style>
+  body{margin:0;background:#222;color:#ddd;font:14px system-ui;display:grid;gap:12px;justify-items:center;padding:16px}
+  canvas{width:min(100%,1200px);height:auto;box-shadow:0 10px 40px #000}
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<p id="status">Drawing…</p>
+<script>
+(async () => {
+'use strict';
+const W = 1200, H = 630;
+const cx = document.getElementById('c').getContext('2d');
+const status = document.getElementById('status');
+let sd = 11;
+const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+function centered(text, y, font, fill, spacing = 0) {
+  cx.font = font;
+  cx.letterSpacing = spacing + 'px';
+  cx.fillStyle = fill;
+  cx.textAlign = 'left';
+  const w = cx.measureText(text).width - spacing;
+  cx.fillText(text, (W - w) / 2, y);
+  cx.letterSpacing = '0px';
+}
+function glow(x, y, r, color) {
+  const g = cx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.2, color); g.addColorStop(1, 'rgba(0,0,0,0)');
+  cx.fillStyle = g;
+  cx.beginPath(); cx.arc(x, y, r, 0, Math.PI * 2); cx.fill();
+}
+
+await document.fonts.load('140px "Great Vibes"');
+await document.fonts.load('22px "Marcellus"');
+await document.fonts.load('italic 30px "EB Garamond"');
+await document.fonts.load('38px "Aref Ruqaa"', 'أحمد');
+await document.fonts.ready;
+
+// Night sky with nebula light
+let g = cx.createLinearGradient(0, 0, 0, H);
+g.addColorStop(0, '#0d1440'); g.addColorStop(1, '#040714');
+cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+[[220, 120, 520, 'rgba(80,110,220,.22)'], [1000, 480, 520, 'rgba(150,80,170,.18)'], [640, 640, 420, 'rgba(255,160,190,.08)']].forEach(([x, y, r, c]) => {
+  const n = cx.createRadialGradient(x, y, 0, x, y, r);
+  n.addColorStop(0, c); n.addColorStop(1, 'rgba(0,0,0,0)');
+  cx.fillStyle = n; cx.fillRect(0, 0, W, H);
+});
+cx.globalCompositeOperation = 'lighter';
+for (let i = 0; i < 420; i++) {
+  const x = rnd() * W, y = rnd() * H, r = rnd() < .08 ? 2.2 + rnd() * 2 : .5 + rnd() * 1.1;
+  cx.globalAlpha = .3 + rnd() * .7;
+  if (r > 2) glow(x, y, r * 4, rnd() < .5 ? 'rgba(156,199,255,.6)' : 'rgba(255,230,240,.5)');
+  else { cx.fillStyle = '#e8edff'; cx.beginPath(); cx.arc(x, y, r, 0, Math.PI * 2); cx.fill(); }
+}
+cx.globalAlpha = 1;
+
+// A shooting star
+let s = cx.createLinearGradient(760, 70, 1010, 150);
+s.addColorStop(0, 'rgba(200,220,255,0)'); s.addColorStop(1, 'rgba(255,255,255,1)');
+cx.strokeStyle = s; cx.lineWidth = 2;
+cx.beginPath(); cx.moveTo(760, 70); cx.lineTo(1010, 150); cx.stroke();
+glow(1010, 150, 10, 'rgba(220,235,255,.8)');
+
+// Heart constellation on the left: a blue line and a rose line that meet at the top
+const LEFT = [[150, 262], [115, 228], [80, 194], [48, 152], [36, 108], [50, 70], [82, 52], [120, 60], [150, 92]];
+const sc = .78, ox = 18, oy = 190;
+const P = ([x, y]) => [ox + x * sc, oy + y * sc];
+[[LEFT, 'rgba(156,199,255,.95)'], [LEFT.map(([x, y]) => [300 - x, y]), 'rgba(255,183,201,.95)']].forEach(([pts, col]) => {
+  cx.strokeStyle = col; cx.lineWidth = 1.6; cx.shadowColor = col; cx.shadowBlur = 8;
+  cx.beginPath(); pts.forEach((p, i) => { const [x, y] = P(p); i ? cx.lineTo(x, y) : cx.moveTo(x, y); }); cx.stroke();
+  cx.shadowBlur = 0;
+  pts.forEach(p => { const [x, y] = P(p); glow(x, y, 7, col); });
+});
+glow(...P([150, 92]), 18, 'rgba(255,240,220,.9)');
+
+// Crescent moon top right
+// (cut on its own canvas so the cut-out does not erase the sky)
+cx.globalCompositeOperation = 'source-over';
+const moon = document.createElement('canvas');
+moon.width = moon.height = 160;
+const m = moon.getContext('2d');
+m.fillStyle = '#eef1ff';
+m.beginPath(); m.arc(80, 80, 34, 0, Math.PI * 2); m.fill();
+m.globalCompositeOperation = 'destination-out';
+m.beginPath(); m.arc(66, 70, 31, 0, Math.PI * 2); m.fill();
+cx.save();
+cx.shadowColor = 'rgba(232,237,255,.75)'; cx.shadowBlur = 30;
+cx.drawImage(moon, 1010, 12);
+cx.restore();
+
+// Text, centred in the right two thirds
+const shine = (x0, x1) => { const l = cx.createLinearGradient(x0, 0, x1, 0); [[0, '#b9c3e6'], [.25, '#ffffff'], [.45, '#e9cf98'], [.6, '#ffffff'], [.8, '#c9d6ff'], [1, '#ffe2ea']].forEach(([o, c]) => l.addColorStop(o, c)); return l; };
+cx.save();
+cx.translate(140, 0);
+const Wc = W;
+centered('WRITTEN IN THE STARS', 170, '22px "Marcellus"', '#b9c3e6', 9);
+cx.font = '128px "Great Vibes"';
+const n1 = 'Ahmed', n2 = 'Amira', w1 = cx.measureText(n1).width, w2 = cx.measureText(n2).width;
+cx.font = '44px "Marcellus"';
+const wa = cx.measureText('&').width, gap = 22, total = w1 + gap * 2 + wa + w2, x0 = (Wc - total) / 2, base = 300;
+cx.shadowColor = 'rgba(156,199,255,.55)'; cx.shadowBlur = 24;
+cx.font = '128px "Great Vibes"';
+cx.fillStyle = shine(x0, x0 + total);
+cx.fillText(n1, x0, base);
+cx.fillText(n2, x0 + w1 + gap * 2 + wa, base);
+cx.shadowBlur = 0;
+cx.font = '44px "Marcellus"'; cx.fillStyle = '#b9c3e6';
+cx.fillText('&', x0 + w1 + gap, base - 22);
+centered('THURSDAY  ✦  26 NOVEMBER 2026  ✦  7 PM', 400, '24px "Marcellus"', '#e8edff', 5);
+centered('4G Hall · Medical Professions Club · New Minya', 450, 'italic 30px "EB Garamond"', '#c3cbe8');
+cx.direction = 'rtl';
+centered('خطوبة أحمد وأميرة', 520, '38px "Aref Ruqaa"', '#ffb7c9');
+cx.restore();
+
+const blob = await new Promise(r => document.getElementById('c').toBlob(r, 'image/jpeg', .9));
+const res = await fetch('/save-og?theme=stars', { method: 'POST', body: blob });
+status.textContent = res.ok ? `Saved stars/og-image.jpg (${Math.round(blob.size / 1024)} KB)` : `Save failed: ${res.status}`;
+document.title = status.textContent;
+})();
+</script>
+</body>
+</html>

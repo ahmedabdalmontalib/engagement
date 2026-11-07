@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link preview image (issue)</title>
+<!-- Draws issue/og-image.jpg (1200×630) for "The Engagement Issue" design.
+     Open it through tools/serve.py; it saves the image into issue/. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;1,6..96,400&family=Inter+Tight:wght@600&family=El+Messiri:wght@700&display=swap">
+<style>
+  body{margin:0;background:#222;color:#ddd;font:14px system-ui;display:grid;gap:12px;justify-items:center;padding:16px}
+  canvas{width:min(100%,1200px);height:auto;box-shadow:0 10px 40px #000}
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<p id="status">Drawing…</p>
+<script>
+(async () => {
+'use strict';
+const W = 1200, H = 630, PAPER = '#f2ece2', INK = '#16130f', WINE = '#6d1a23';
+const cv = document.getElementById('c'), cx = cv.getContext('2d');
+const status = document.getElementById('status');
+const text = (t, x, y, font, fill, opts = {}) => {
+  cx.font = font; cx.fillStyle = fill;
+  cx.letterSpacing = (opts.spacing || 0) + 'px';
+  cx.textAlign = opts.align || 'left';
+  cx.direction = opts.dir || 'ltr';
+  cx.fillText(t, x, y);
+  cx.letterSpacing = '0px';
+};
+
+await document.fonts.load('500 200px "Bodoni Moda"');
+await document.fonts.load('italic 400 200px "Bodoni Moda"');
+await document.fonts.load('600 18px "Inter Tight"');
+await document.fonts.load('700 40px "El Messiri"', 'أحمد');
+await document.fonts.ready;
+
+// Paper with a little grain
+cx.fillStyle = PAPER; cx.fillRect(0, 0, W, H);
+const img = cx.getImageData(0, 0, W, H), d = img.data;
+for (let i = 0; i < d.length; i += 4) { const n = (Math.random() - .5) * 14; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
+cx.putImageData(img, 0, 0);
+
+// Masthead rules
+const M = 56;
+cx.fillStyle = INK; cx.fillRect(M, 60, W - M * 2, 1.5); cx.fillRect(M, 104, W - M * 2, 1.5);
+text('VOL. 01 — NO. 26', M, 89, '600 15px "Inter Tight"', INK, { spacing: 3 });
+text('THE ENGAGEMENT ISSUE', W / 2, 89, '600 15px "Inter Tight"', WINE, { spacing: 3, align: 'center' });
+text('NOVEMBER 2026', W - M, 89, '600 15px "Inter Tight"', INK, { spacing: 3, align: 'right' });
+
+// The names, overlapped by a big wine ampersand
+text('Ahmed', M - 6, 300, '500 200px "Bodoni Moda"', INK, { spacing: -4 });
+text('Amira', W - M + 4, 470, 'italic 400 200px "Bodoni Moda"', INK, { spacing: -4, align: 'right' });
+cx.globalAlpha = .95;
+text('&', W / 2 + 10, 420, 'italic 400 230px "Bodoni Moda"', WINE, { align: 'center' });
+cx.globalAlpha = 1;
+
+// Footer line
+cx.fillStyle = 'rgba(22,19,15,.18)'; cx.fillRect(M, 520, W - M * 2, 1);
+text('THURSDAY · 26 NOVEMBER 2026 · 7 PM · NEW MINYA', M, 565, '600 18px "Inter Tight"', INK, { spacing: 3 });
+text('خطوبة أحمد وأميرة', W - M, 568, '700 34px "El Messiri"', WINE, { align: 'right', dir: 'rtl' });
+
+const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', .9));
+const res = await fetch('/save-og?theme=issue', { method: 'POST', body: blob });
+status.textContent = res.ok ? `Saved issue/og-image.jpg (${Math.round(blob.size / 1024)} KB)` : `Save failed: ${res.status}`;
+document.title = status.textContent;
+})();
+</script>
+</body>
+</html>

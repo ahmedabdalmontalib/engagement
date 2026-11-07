@@ -9,8 +9,8 @@
 <meta name="robots" content="noindex, nofollow">
 <!-- Link preview (WhatsApp). The image address must be the full public URL of og-image.jpg. -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Ahmed &amp; Amira — Our Engagement">
-<meta property="og:description" content="Thursday · 26 November 2026 · New Minya. Tap to open your invitation.">
+<meta property="og:title" content="Ahmed &amp; Amira — Our Engagement · خطوبة أحمد وأميرة">
+<meta property="og:description" content="Thursday 26 November 2026 · 7 PM · New Minya. Tap to open your invitation.">
 <meta property="og:url" content="https://ahmedabdalmontalib.github.io/engagement/">
 <meta property="og:image" content="https://ahmedabdalmontalib.github.io/engagement/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -60,6 +60,7 @@ html[lang="ar"]{
    Base
    ========================================================================== */
 *,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;background:var(--ink);scroll-behavior:smooth}
 html.locked,html.locked body{overflow:hidden}
 body{margin:0;min-height:100vh;background:var(--ink);color:var(--text-light);font-family:var(--serif);font-size:clamp(18px,.5vw + 15px,21px);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;font-feature-settings:"lnum" 1}
@@ -67,9 +68,10 @@ html[lang="ar"] body{line-height:1.85}
 body::after{content:"";position:fixed;inset:0;background:var(--grain);opacity:.05;pointer-events:none;z-index:90}
 svg{display:block}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
 a{color:inherit;-webkit-tap-highlight-color:transparent}
 p{margin:0}
-:focus-visible{outline:1px solid var(--gold-hi);outline-offset:5px}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:5px}
 ::selection{background:rgba(212,183,122,.35);color:#fff}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 #dust{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
@@ -177,11 +179,11 @@ html[lang="ar"] .btn{font-size:14px}
 .monogram{width:clamp(118px,30vw,160px);height:auto;overflow:visible;margin-bottom:26px}
 .monogram .draw{fill:none;stroke:url(#gGold);stroke-width:1;stroke-dasharray:1;stroke-dashoffset:1}
 .monogram .fan line{stroke:var(--gold);stroke-width:.7;opacity:0}
-.monogram .mono-text{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:72px;fill:url(#gGold);fill-opacity:0;stroke:var(--gold-hi);stroke-width:.6;stroke-dasharray:420;stroke-dashoffset:420}
+.monogram .mono-text{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:72px;fill:url(#gGold);fill-opacity:0}
 .monogram .mono-amp{font-style:italic;font-size:34px}
 #intro.play .monogram .draw{animation:draw 2.4s var(--ease-io) var(--d,0s) forwards}
 #intro.play .monogram .fan line{animation:fadeIn 1.6s ease 1.6s forwards}
-#intro.play .monogram .mono-text{animation:draw 2.6s ease .9s forwards,fillIn 1.6s ease 2.6s forwards}
+#intro.play .monogram .mono-text{animation:fillIn 1.4s ease 2.7s forwards}
 .intro-eyebrow{opacity:0}
 #intro.play .intro-eyebrow{animation:track 2.2s var(--ease-out) 2.4s forwards}
 html[lang="ar"] #intro.play .intro-eyebrow{animation-name:rise}
@@ -228,7 +230,7 @@ html[lang="ar"] .intro-names{font-size:clamp(46px,12vw,96px);line-height:1.5}
 .envelope.release .env-flap{transform:translateY(85%) rotateX(180deg);opacity:0}
 .env-card.rise{transform:translateY(-62%)}
 .envelope.release .env-card{z-index:7;transform:translateY(-30%) scale(1.18)}
-#intro.flash .env-card{opacity:0;transform:translateY(-30%) scale(1.9);transition:transform 1.4s var(--ease-io),opacity 1s ease .2s}
+#intro.flash .env-card{opacity:0;transform:translateY(-24%) scale(3.4) rotateX(10deg);filter:blur(5px);transition:transform 1.5s cubic-bezier(.7,0,.2,1),opacity 1.1s ease .25s,filter 1.2s ease .2s}
 .env-shadow{position:absolute;left:8%;right:8%;bottom:-30px;height:30px;background:radial-gradient(closest-side,rgba(0,0,0,.7),transparent);filter:blur(4px);transition:opacity .8s}
 #intro.opening .env-shadow{opacity:.4}
 
@@ -269,7 +271,7 @@ html[dir="rtl"] .skip{right:auto;left:calc(var(--gutter) - 8px)}
    ========================================================================== */
 .topbar{position:fixed;z-index:20;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 10px) var(--gutter) 10px;background:linear-gradient(180deg,rgba(10,9,7,.85),rgba(10,9,7,0));transition:opacity 1s ease .4s}
 .topbar-actions{display:flex;align-items:center;gap:8px}
-body.intro-on .topbar,body.intro-on .dots{opacity:0;pointer-events:none}
+body.intro-on .topbar,body.intro-on .dots{opacity:0;pointer-events:none;visibility:hidden}
 .brand{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:400;letter-spacing:.08em;direction:ltr}
 .brand i{font-weight:300;font-size:.75em;padding:0 .12em}
 .music-btn{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);color:var(--gold);transition:border-color .4s,color .4s,background-color .4s}
@@ -387,7 +389,7 @@ html[lang="ar"] .letter-body{max-width:28ch;line-height:2}
 .letter-em{margin-top:22px;font-style:italic;font-size:clamp(19px,2.2vw,22px);color:var(--gold-ink)}
 .letter-sign{margin-top:34px;font-size:16px;font-style:italic;color:var(--text-dim)}
 .letter-sign .script{display:block;font-size:clamp(34px,7vw,44px);line-height:1.4;color:var(--text-dark);font-style:normal}
-.binary{margin-top:26px;font-family:var(--mono);font-size:11px;font-weight:300;letter-spacing:.16em;color:rgba(122,90,36,.7);cursor:help;direction:ltr}
+.binary{margin-top:26px;font-family:var(--mono);font-size:11px;font-weight:300;letter-spacing:.16em;color:#7a5a24;cursor:help;direction:ltr}
 
 /* Date (ivory card) */
 .date-card{width:min(100%,660px);padding:clamp(60px,9vw,84px) clamp(26px,6vw,60px) clamp(52px,8vw,72px)}
@@ -418,9 +420,9 @@ html[lang="ar"] .date-day .num{font-weight:400;line-height:1.1;font-size:clamp(9
 .unit:hover{border-color:rgba(246,231,191,.7);transform:translateY(-4px)}
 .digits{position:relative;height:1.04em;overflow:hidden;font-size:clamp(40px,9.5vw,78px);font-weight:300;line-height:1.04;color:var(--gold-hi);font-variant-numeric:lining-nums tabular-nums}
 html[lang="ar"] .digits{height:1.25em;line-height:1.25;font-weight:400;font-size:clamp(36px,8.5vw,70px)}
-.digits span{position:absolute;left:0;right:0;top:0;transition:transform .9s var(--ease-out),opacity .9s ease,filter .9s ease}
-.digits span.enter{transform:translateY(90%);opacity:0;filter:blur(4px)}
-.digits span.leave{transform:translateY(-90%);opacity:0;filter:blur(4px)}
+.digits span{position:absolute;left:0;right:0;top:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:transform .75s cubic-bezier(.3,1.3,.5,1),opacity .5s ease}
+.digits span.enter{transform:rotateX(-95deg);opacity:0}
+.digits span.leave{transform:rotateX(95deg);opacity:0}
 .lbl{display:block;margin-top:12px;font-family:var(--sans);font-size:clamp(10px,2.6vw,12px);letter-spacing:.26em;margin-right:-.26em;text-transform:uppercase;color:var(--text-soft)}
 html[lang="ar"] .lbl{font-size:clamp(12px,3vw,14px)}
 .count-done{max-width:26ch;margin-top:32px;font-style:italic;font-size:clamp(22px,3vw,28px);color:var(--gold-hi)}
@@ -476,6 +478,55 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
 .sec-finale.typed .finale-script.write{-webkit-mask-position:var(--write-to);mask-position:var(--write-to)}
 .finale-foot{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 22px);font-family:var(--sans);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--text-faint)}
 
+/* ==========================================================================
+   Heavier motion: aurora, seal shockwave, light beam, 3D reveals, finale rays
+   ========================================================================== */
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora i{position:absolute;width:70vmax;height:70vmax;border-radius:50%}
+.aurora i:nth-child(1){left:-30vmax;top:-20vmax;background:radial-gradient(closest-side,rgba(212,170,90,.11),transparent);animation:drift1 26s ease-in-out infinite alternate}
+.aurora i:nth-child(2){right:-35vmax;top:30vh;background:radial-gradient(closest-side,rgba(122,36,52,.2),transparent);animation:drift2 32s ease-in-out infinite alternate}
+.aurora i:nth-child(3){left:10vw;bottom:-45vmax;background:radial-gradient(closest-side,rgba(212,170,90,.08),transparent);animation:drift3 40s ease-in-out infinite alternate}
+.seal-rays,.seal-shock{position:absolute;pointer-events:none;border-radius:50%}
+.seal-rays{inset:-320%;background:repeating-conic-gradient(rgba(246,231,191,.3) 0deg 1.6deg,transparent 1.6deg 11deg);-webkit-mask-image:radial-gradient(closest-side,#000 12%,transparent 70%);mask-image:radial-gradient(closest-side,#000 12%,transparent 70%);opacity:0;transform:scale(.3)}
+.seal-shock{inset:0;border:2px solid rgba(246,231,191,.9);box-shadow:0 0 30px rgba(246,231,191,.6),inset 0 0 20px rgba(246,231,191,.4);opacity:0}
+#intro.opening .seal-rays{animation:rays 2.2s ease-out forwards}
+#intro.opening .seal-shock{animation:shock 1.1s cubic-bezier(.2,.8,.3,1) forwards}
+#intro.opening .envelope{animation:jolt .45s ease-out}
+/* A band of light sweeps across the gold letters of the names */
+.name.foil-text{background-image:linear-gradient(100deg,transparent 42%,rgba(255,250,232,.95) 50%,transparent 58%),var(--foil);background-size:300% 100%,200% 100%;background-repeat:no-repeat,repeat;background-position:130% 0,0% 50%;animation:nameSweep 8s ease-in-out 4.5s infinite}
+[data-reveal="card"]{transform:perspective(1400px) rotateX(28deg) translateY(90px) scale(.92);transform-origin:50% 100%;transition:opacity 1.4s var(--ease-out) var(--d,0s),transform 1.9s var(--ease-out) var(--d,0s),filter 1.4s ease var(--d,0s)}
+.map-frame[data-reveal="card"]{transition:opacity 1.4s var(--ease-out) var(--d,0s),transform 1.9s var(--ease-out) var(--d,0s),filter 1.4s ease var(--d,0s),border-color .6s,box-shadow .8s}
+[data-reveal="drop"]{transform:perspective(700px) rotateX(-75deg) translateY(-20px);transform-origin:50% 0}
+.unit[data-reveal="drop"]{transition:opacity 1s ease var(--d,0s),transform 1.4s cubic-bezier(.2,1.5,.4,1) var(--d,0s),filter 1s ease var(--d,0s),border-color .6s}
+.digits{perspective:320px}
+.venue-pin.in{animation:pinDrop 1.3s cubic-bezier(.3,1.6,.5,1) var(--d,0s) both}
+.finale-rays{position:absolute;left:50%;top:34%;width:130vmax;height:130vmax;margin:-65vmax 0 0 -65vmax;background:repeating-conic-gradient(rgba(212,183,122,.09) 0deg 1.2deg,transparent 1.2deg 9deg);-webkit-mask-image:radial-gradient(closest-side,#000,transparent 65%);mask-image:radial-gradient(closest-side,#000,transparent 65%);opacity:0;pointer-events:none;transition:opacity 3s ease}
+.sec-finale.seen .finale-rays{opacity:1;animation:spin 90s linear infinite}
+@keyframes drift1{to{transform:translate(30vw,25vh) scale(1.2)}}
+@keyframes drift2{to{transform:translate(-35vw,-20vh) scale(.85)}}
+@keyframes drift3{to{transform:translate(20vw,-30vh) scale(1.15)}}
+@keyframes rays{0%{opacity:0;transform:scale(.3) rotate(0)}25%{opacity:1}100%{opacity:0;transform:scale(1.1) rotate(35deg)}}
+@keyframes shock{0%{opacity:1;transform:scale(.6)}100%{opacity:0;transform:scale(7)}}
+@keyframes jolt{0%,100%{transform:none}25%{transform:translate(-3px,2px) rotate(-.6deg)}50%{transform:translate(3px,-2px) rotate(.5deg)}75%{transform:translate(-2px,1px)}}
+@keyframes nameSweep{0%{background-position:130% 0,0% 50%}40%,100%{background-position:-30% 0,100% 50%}}
+@keyframes pinDrop{0%{transform:translateY(-70px);opacity:0}100%{transform:none;opacity:1}}
+
+/* Very narrow phones: less letter-spacing so labels and buttons stay on one line */
+@media (max-width:360px){
+  .hero-date{letter-spacing:.2em;margin-right:-.2em}
+  .btn{letter-spacing:.14em;padding:0 18px}
+  .lbl{letter-spacing:.12em;margin-right:-.12em}
+}
+/* Phones held sideways: size the envelope by the screen height */
+@media (max-height:500px) and (orientation:landscape){
+  .envelope{width:min(84vw,440px,62vh)}
+  .env-stage{margin:12px 0}
+  .env-kicker .script{font-size:24px}
+  .monogram{width:90px;margin-bottom:10px}
+}
+/* Phones: no blur on reveals (cheaper to draw) */
+@media (max-width:600px){[data-reveal]{filter:none}}
+
 /* Phones: tighter vertical rhythm */
 @media (max-width:600px){
   .sec{padding-top:68px;padding-bottom:68px}
@@ -511,7 +562,7 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;animation-delay:0s!important;transition-delay:0s!important}
 }
 </style>
 </head>
@@ -555,6 +606,7 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
   </defs>
 </svg>
 
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <canvas id="dust" aria-hidden="true"></canvas>
 
 <!-- Access screen (testing only) -->
@@ -621,7 +673,7 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
             <div class="env-back"></div>
             <div class="env-card" aria-hidden="true">
               <p class="mini-k" data-t="miniKicker"></p>
-              <p class="mini-n foil-text foil-ink"><span data-c="p1"></span> <i data-t="amp">&amp;</i> <span data-c="p2"></span></p>
+              <p class="mini-n foil-text foil-ink" data-ch="coupleHtml"></p>
               <p class="mini-d" data-c="dateDots"></p>
             </div>
             <svg class="env-front" viewBox="0 0 100 66" preserveAspectRatio="none" aria-hidden="true">
@@ -649,6 +701,7 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
               <div class="flap-face flap-in"></div>
             </div>
             <button class="seal" type="button" data-ta="openSeal">
+              <span class="seal-rays"></span><span class="seal-shock"></span>
               <span class="seal-half l"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#seal"/></svg></span>
               <span class="seal-half r"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#seal"/></svg></span>
             </button>
@@ -713,7 +766,7 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
 
   <!-- Story -->
   <section id="story" class="sec sec-letter">
-    <div class="letter-wrap" data-reveal>
+    <div class="letter-wrap" data-reveal="card">
       <article class="paper letter tilt">
         <svg class="corner tr" aria-hidden="true"><use href="#corner"/></svg>
         <svg class="corner bl" aria-hidden="true"><use href="#corner"/></svg>
@@ -731,7 +784,7 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
         <div class="seam" data-reveal style="--d:.4s" aria-hidden="true"><i></i><svg viewBox="0 0 20 20"><use href="#gem"/></svg><i></i></div>
         <p class="letter-body" data-reveal="words" style="--d:.5s" data-t="body"></p>
         <p class="letter-em" data-reveal style="--d:.9s" data-t="em"></p>
-        <p class="letter-sign" data-reveal style="--d:1.1s"><span data-t="sign"></span><span class="script"><span data-c="p1"></span> <span class="amp" data-t="amp">&amp;</span> <span data-c="p2"></span></span></p>
+        <p class="letter-sign" data-reveal style="--d:1.1s"><span data-t="sign"></span><span class="script" data-ch="coupleHtml"></span></p>
         <p class="binary" data-c="binary" data-tt="binaryTitle"></p>
         <div class="sheen-layer"></div>
       </article>
@@ -740,7 +793,7 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
 
   <!-- Date -->
   <section id="date" class="sec sec-date">
-    <div class="paper date-card" data-reveal>
+    <div class="paper date-card" data-reveal="card">
       <svg class="corner tl" aria-hidden="true"><use href="#corner"/></svg>
       <svg class="corner tr" aria-hidden="true"><use href="#corner"/></svg>
       <svg class="corner bl" aria-hidden="true"><use href="#corner"/></svg>
@@ -774,10 +827,10 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
     <p class="eyebrow" data-reveal data-t="countEyebrow"></p>
     <h3 class="sec-title" data-reveal style="--d:.15s" data-t="countTitle"></h3>
     <div class="count" role="timer" aria-label="">
-      <div class="unit" data-reveal style="--d:.3s"><div class="digits" data-u="d"></div><span class="lbl" data-t="days"></span></div>
-      <div class="unit" data-reveal style="--d:.42s"><div class="digits" data-u="h"></div><span class="lbl" data-t="hours"></span></div>
-      <div class="unit" data-reveal style="--d:.54s"><div class="digits" data-u="m"></div><span class="lbl" data-t="minutes"></span></div>
-      <div class="unit" data-reveal style="--d:.66s"><div class="digits" data-u="s"></div><span class="lbl" data-t="seconds"></span></div>
+      <div class="unit" data-reveal="drop" style="--d:.3s"><div class="digits" data-u="d"></div><span class="lbl" data-t="days"></span></div>
+      <div class="unit" data-reveal="drop" style="--d:.42s"><div class="digits" data-u="h"></div><span class="lbl" data-t="hours"></span></div>
+      <div class="unit" data-reveal="drop" style="--d:.54s"><div class="digits" data-u="m"></div><span class="lbl" data-t="minutes"></span></div>
+      <div class="unit" data-reveal="drop" style="--d:.66s"><div class="digits" data-u="s"></div><span class="lbl" data-t="seconds"></span></div>
     </div>
     <p class="count-done" hidden data-t="countDone"></p>
   </section>
@@ -790,7 +843,7 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
     <p class="eyebrow" data-reveal style="--d:.1s" data-t="venueEyebrow"></p>
     <h3 class="venue-name" data-reveal style="--d:.2s"><span class="foil-text" data-c="venueName"></span></h3>
     <p class="venue-sub" data-reveal style="--d:.35s"><span data-c="venueLine1"></span><br><span data-c="venueLine2"></span></p>
-    <div class="map-frame" data-reveal style="--d:.5s">
+    <div class="map-frame" data-reveal="card" style="--d:.3s">
       <div class="map-inner">
         <div class="map-wait" data-t="mapLoading"></div>
         <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen data-tt="mapTitle"></iframe>
@@ -820,10 +873,11 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
   <!-- Finale -->
   <section id="finale" class="sec sec-finale">
     <div class="finale-light"></div>
+    <div class="finale-rays" aria-hidden="true"></div>
     <svg class="finale-seal" viewBox="0 0 100 100" aria-hidden="true"><use href="#seal"/></svg>
     <p class="code-line"><span class="sr-only">while (together) { love++; }</span><span class="typed" aria-hidden="true"></span><span class="caret" aria-hidden="true"></span></p>
     <p class="finale-script foil-text shine write" data-t="finaleScript"></p>
-    <p class="finale-names after-type" style="--d:1.2s"><span data-c="p1"></span> <i data-t="amp">&amp;</i> <span data-c="p2"></span></p>
+    <p class="finale-names after-type" style="--d:1.2s" data-ch="coupleHtml"></p>
     <p class="finale-date after-type" style="--d:1.5s" data-c="dateDots"></p>
     <div class="btn-row after-type" style="--d:1.9s">
       <button class="btn" type="button" id="replayBtn" data-t="replay"></button>
@@ -837,8 +891,22 @@ html[lang="ar"] .finale-names{font-size:clamp(20px,2.4vw,24px)}
 <noscript><p style="position:fixed;inset:auto 0 40px;z-index:200;text-align:center;color:#d4b77a">Please enable JavaScript to open this invitation.</p></noscript>
 
 <script>
+// If the main script cannot run on this phone, show the essentials instead of an endless loading screen.
+setTimeout(function () {
+  if (window.__inviteReady) return;
+  document.documentElement.className = '';
+  document.body.className = '';
+  document.body.innerHTML = '<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:32px 20px;text-align:center;background:#16130f;color:#f2ece2;font:18px/1.6 Georgia,serif">'
+    + '<p style="margin:0;font-size:34px">Ahmed &amp; Amira</p><p style="margin:0;font-size:30px" dir="rtl">أحمد وأميرة</p>'
+    + '<p style="margin:12px 0 0">Thursday 26 November 2026 · 7 PM</p><p style="margin:0" dir="rtl">الخميس ٢٦ نوفمبر ٢٠٢٦ · الساعة السابعة مساءً</p>'
+    + '<p style="margin:12px 0 0">4G Hall, Medical Professions Club, New Minya</p><p style="margin:0" dir="rtl">قاعة 4G، نادي المهن الطبية، المنيا الجديدة</p>'
+    + '<a style="margin-top:18px;color:#d4b77a" href="https://www.google.com/maps/search/?api=1&amp;query=Medical%20Professions%20Club%2C%20New%20Minya%2C%20Egypt">Directions · الاتجاهات</a></div>';
+}, 9000);
+</script>
+<script>
 (() => {
 'use strict';
+window.__inviteReady = true;
 
 /* ==========================================================================
    Your details — edit everything here
@@ -850,6 +918,7 @@ const CONFIG = {
   dateISO: '2026-11-26T19:00:00+02:00',
   timeZone: 'Africa/Cairo',
   durationHours: 4,
+  icsFile: 'engagement.ics',        // the calendar file (made by tools/make_ics.py)
   venueName: { en: '4G Hall', ar: 'قاعة 4G' },
   venueLine1: { en: 'Medical Professions Club', ar: 'نادي المهن الطبية' },
   venueLine2: { en: 'New Minya', ar: 'المنيا الجديدة' },
@@ -904,7 +973,7 @@ const TEXT = {
     promise: 'Our promise',
     scriptTitle: 'Together in every line…',
     scriptSub: 'forever in life',
-    body: 'Some stories are written slowly, one quiet line at a time, until one day they read like forever. On this evening we begin the most beautiful chapter of ours, and it would not feel complete without the people who helped us write it.',
+    body: 'Some stories are written slowly, one quiet line at a time, until one day they read like forever. On this evening we begin the most beautiful chapter of our story, and it would not feel complete without the people who helped us write it.',
     em: 'Your presence is the gift we will cherish most.',
     sign: 'With love and gratitude,',
     binaryTitle: 'Our initials, written in binary',
@@ -914,7 +983,7 @@ const TEXT = {
     countEyebrow: 'Counting the moments',
     countTitle: 'Until our forever begins',
     days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds',
-    countLeft: (d, h, m) => `${d} days, ${h} hours and ${m} minutes to go`,
+    countLeft: (d, h, m) => `${enCount(d, 'day')}, ${enCount(h, 'hour')} and ${enCount(m, 'minute')} to go`,
     countDone: 'The celebration has begun. Thank you for being part of our story.',
     venueEyebrow: 'The venue', mapLoading: 'Loading map', mapTitle: 'Map showing the venue',
     directions: 'Get directions', copyAddr: 'Copy address', addrCopied: 'Address copied',
@@ -931,7 +1000,7 @@ const TEXT = {
   ar: {
     langSwitch: 'EN', langSwitchCode: 'en', langAria: 'Read the invitation in English',
     amp: 'و',
-    loading: 'نُجهّز دعوتك',
+    loading: 'نُجهّز دعوتكم',
     introEyebrow: 'حفل خطوبة',
     introTap: 'المس للمتابعة',
     envKicker: 'وصلتك <span class="script">دعوة خاصة</span>',
@@ -944,7 +1013,7 @@ const TEXT = {
     skip: 'تخطَّ',
     playMusic: 'تشغيل الموسيقى', pauseMusic: 'إيقاف الموسيقى',
     backTop: 'العودة إلى الأعلى', sections: 'الأقسام',
-    heroEyebrow: 'بكل الحب والسعادة',
+    heroEyebrow: 'بمشاركة عائلتيهما',
     lede: 'يتشرفان بدعوتكم لحضور حفل خطوبتهما',
     scroll: 'مرّر', scrollAria: 'مرّر للمتابعة',
     promise: 'وعدنا',
@@ -960,8 +1029,8 @@ const TEXT = {
     countEyebrow: 'نعدّ اللحظات',
     countTitle: 'حتى يبدأ عمرنا معًا',
     days: 'أيام', hours: 'ساعات', minutes: 'دقائق', seconds: 'ثوانٍ',
-    countLeft: (d, h, m) => `باقٍ ${d} يومًا و${h} ساعة و${m} دقيقة`,
-    countDone: 'بدأت الاحتفالية. شكرًا لأنكم جزء من حكايتنا.',
+    countLeft: (d, h, m) => `باقٍ ${arCount(d, 'day')} و${arCount(h, 'hour')} و${arCount(m, 'minute')}`,
+    countDone: 'بدأ الحفل. شكرًا لأنكم جزء من حكايتنا.',
     venueEyebrow: 'المكان', mapLoading: 'جارٍ تحميل الخريطة', mapTitle: 'خريطة توضح مكان الحفل',
     directions: 'الاتجاهات', copyAddr: 'نسخ العنوان', addrCopied: 'تم نسخ العنوان',
     dressEyebrow: 'الزي',
@@ -987,6 +1056,8 @@ const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const small = Math.min(innerWidth, innerHeight) < 600;
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+// Jump to the top without smooth scrolling (and without the 'instant' keyword older phones reject).
+function jumpTop() { const s = html.style.scrollBehavior; html.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); html.style.scrollBehavior = s; }
 
 const params = new URLSearchParams(location.search);
 let lang = (() => {
@@ -995,7 +1066,7 @@ let lang = (() => {
   return (navigator.languages || [navigator.language || 'en']).some(l => /^ar\b/i.test(l)) ? 'ar' : 'en';
 })();
 const T = key => TEXT[lang][key];
-const pick = v => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[lang] ?? v.en) : v;
+const pick = v => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[lang] != null ? v[lang] : v.en) : v;
 
 let toastTimer;
 function toast(msg) {
@@ -1110,6 +1181,10 @@ const initials = [CONFIG.partner1.en.charAt(0).toUpperCase(), CONFIG.partner2.en
 
 let C = {};
 const num = (n, pad = 1) => n.toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-GB', { minimumIntegerDigits: pad, useGrouping: false });
+// Arabic number agreement for the countdown's spoken summary.
+const AR_FORMS = { day: ['يوم واحد', 'يومان', 'أيام', 'يومًا'], hour: ['ساعة واحدة', 'ساعتان', 'ساعات', 'ساعة'], minute: ['دقيقة واحدة', 'دقيقتان', 'دقائق', 'دقيقة'] };
+const arCount = (n, unit) => { const f = AR_FORMS[unit]; return n === 1 ? f[0] : n === 2 ? f[1] : `${num(n)} ${n >= 3 && n <= 10 ? f[2] : f[3]}`; };
+const enCount = (n, unit) => `${num(n)} ${unit}${n === 1 ? '' : 's'}`;
 function buildC() {
   const loc = lang === 'ar' ? 'ar-EG' : 'en-GB';
   const dt = o => new Intl.DateTimeFormat(loc, { timeZone: CONFIG.timeZone, ...o }).format(when);
@@ -1134,6 +1209,8 @@ function buildC() {
   };
   C.dateLong = `${C.weekday}${lang === 'ar' ? '،' : ','} ${C.dayMonthYear}`;
   C.address = [C.venueName, C.venueLine1, C.venueLine2].join(lang === 'ar' ? '، ' : ', ');
+  const esc = t => t.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
+  C.coupleHtml = lang === 'ar' ? `${esc(C.p1)} <i class="amp">و</i>${esc(C.p2)}` : `${esc(C.p1)} <i class="amp">&amp;</i> ${esc(C.p2)}`;
 }
 
 function splitWords(el) {
@@ -1172,6 +1249,7 @@ function applyLanguage() {
   html.dir = lang === 'ar' ? 'rtl' : 'ltr';
   document.title = T('title')(C.p1, C.p2);
   $$('[data-c]').forEach(el => { const v = C[el.dataset.c]; if (v != null) el.textContent = v; });
+  $$('[data-ch]').forEach(el => { el.innerHTML = C[el.dataset.ch]; });
   $$('[data-t]').forEach(el => { el.textContent = T(el.dataset.t); });
   $$('[data-th]').forEach(el => { const v = T(el.dataset.th); el.innerHTML = typeof v === 'function' ? v(C.timeText) : v; });
   $$('[data-ta]').forEach(el => el.setAttribute('aria-label', T(el.dataset.ta)));
@@ -1221,23 +1299,45 @@ function setLanguage(next) {
 }
 
 /* ==========================================================================
-   Gold dust (canvas particles)
+   Canvas effects: gold dust, the particle monogram, rose petals, fireworks
    ========================================================================== */
 const Dust = (() => {
   const cv = $('#dust'), cx = cv.getContext('2d');
-  let W = 0, H = 0, P = [], want = 0, raf = 0, t = 0;
-  const sprite = (() => {
+  let W = 0, H = 0, raf = 0, t = 0, last = 0;
+  let P = [], want = 0;                        // ambient dust and bursts
+  let F = [];                                  // particles that gather into the monogram
+  let petals = [], petalRate = 0;              // falling rose petals
+  let rockets = [], sparks = [], fireworksOn = false, nextRocket = 0;
+  const maxPetals = small ? 30 : 46;
+
+  function glow(stops) {
     const s = document.createElement('canvas');
     s.width = s.height = 64;
     const g = s.getContext('2d'), grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    grd.addColorStop(0, 'rgba(255,244,212,1)');
-    grd.addColorStop(.16, 'rgba(244,214,146,.9)');
-    grd.addColorStop(.42, 'rgba(212,170,90,.24)');
-    grd.addColorStop(1, 'rgba(212,170,90,0)');
+    stops.forEach(([o, c]) => grd.addColorStop(o, c));
     g.fillStyle = grd;
     g.fillRect(0, 0, 64, 64);
     return s;
-  })();
+  }
+  const gold = glow([[0, 'rgba(255,244,212,1)'], [.16, 'rgba(244,214,146,.9)'], [.42, 'rgba(212,170,90,.24)'], [1, 'rgba(212,170,90,0)']]);
+  const rosy = glow([[0, 'rgba(255,228,232,1)'], [.18, 'rgba(232,128,146,.85)'], [.45, 'rgba(150,40,60,.25)'], [1, 'rgba(150,40,60,0)']]);
+  function petalSprite(c1, c2) {
+    const s = document.createElement('canvas');
+    s.width = 40; s.height = 56;
+    const g = s.getContext('2d'), grd = g.createLinearGradient(0, 0, 40, 56);
+    grd.addColorStop(0, c1); grd.addColorStop(1, c2);
+    g.fillStyle = grd;
+    g.beginPath();
+    g.moveTo(20, 54);
+    g.bezierCurveTo(2, 40, 0, 14, 12, 4);
+    g.quadraticCurveTo(20, 10, 28, 4);
+    g.bezierCurveTo(40, 14, 38, 40, 20, 54);
+    g.fill();
+    g.globalAlpha = .28; g.strokeStyle = '#fff'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(20, 50); g.quadraticCurveTo(18, 28, 16, 10); g.stroke();
+    return s;
+  }
+  const PETALS = [petalSprite('#a83a4c', '#4e1220'), petalSprite('#c25a6a', '#6e1e2f'), petalSprite('#f6e7bf', '#b38e48')];
 
   function size() {
     const d = Math.min(devicePixelRatio || 1, 1.5);
@@ -1248,7 +1348,7 @@ const Dust = (() => {
   function make(x, y, burst) {
     const r = Math.random();
     return {
-      x: x ?? Math.random() * W, y: y ?? Math.random() * H,
+      x: x != null ? x : Math.random() * W, y: y != null ? y : Math.random() * H,
       s: burst ? 6 + Math.random() * 13 : 3 + r * r * 15,
       vx: burst ? (Math.random() - .5) * 5.5 : (Math.random() - .5) * .18,
       vy: burst ? -Math.random() * 5 + .6 : -(.05 + Math.random() * .3),
@@ -1256,35 +1356,155 @@ const Dust = (() => {
       ph: Math.random() * 6.28, b: !!burst
     };
   }
+  function petal(y) {
+    const w = (9 + Math.random() * 9) * (small ? .85 : 1), r = Math.random();
+    return {
+      x: Math.random() * W, y, w, h: w * 1.4,
+      vx: (Math.random() - .5) * .6, vy: .7 + Math.random() * 1.1,
+      rot: Math.random() * 6.28, vr: (Math.random() - .5) * .04,
+      fl: Math.random() * 6.28, fs: .02 + Math.random() * .05,
+      ph: Math.random() * 6.28, k: r < .36 ? 0 : r < .72 ? 1 : 2
+    };
+  }
+  function launch() {
+    rockets.push({ x: W * (.18 + Math.random() * .64), y: H + 10, vy: -(H * .0095 + Math.random() * H * .002), ty: H * (.08 + Math.random() * .2), rosy: Math.random() < .4 });
+  }
+  function explode(r) {
+    const n = small ? 44 : 64;
+    for (let i = 0; i < n; i++) {
+      const a = i / n * Math.PI * 2 + Math.random() * .1, sp = (i % 3 ? 2.4 : 1.4) + Math.random() * 2.4;
+      sparks.push({ x: r.x, y: r.y, px: r.x, py: r.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0, max: 70 + Math.random() * 45, rosy: r.rosy && i % 2 === 0 });
+    }
+  }
+  const ease = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+
   function frame() {
-    raf = 0; t++;
+    raf = 0;
+    const now = performance.now();
+    // Motion is measured in 60 fps frames, so 90/120 Hz screens move at the same speed.
+    const dt = last ? clamp((now - last) / 16.67, .25, 3) : 1;
+    last = now;
+    t += dt;
     cx.clearRect(0, 0, W, H);
+
+    // Petals: drawn normally, tumbling as they fall.
+    cx.globalCompositeOperation = 'source-over';
+    for (let i = petals.length - 1; i >= 0; i--) {
+      const p = petals[i];
+      p.y += p.vy * dt; p.x += (p.vx + Math.sin(p.y * .012 + p.ph) * .6) * dt;
+      p.rot += p.vr * dt; p.fl += p.fs * dt;
+      if (p.y > H + 40) { petals.splice(i, 1); continue; }
+      if (p.y < -60) continue;
+      cx.save();
+      cx.translate(p.x, p.y);
+      cx.rotate(p.rot);
+      cx.scale(Math.cos(p.fl), 1);
+      cx.globalAlpha = .88;
+      cx.drawImage(PETALS[p.k], -p.w / 2, -p.h / 2, p.w, p.h);
+      cx.restore();
+    }
+    if (petalRate && petals.length < maxPetals && Math.random() < petalRate * dt) petals.push(petal(-30));
+
+    // Everything that glows adds light.
     cx.globalCompositeOperation = 'lighter';
     let ambient = 0;
     for (let i = P.length - 1; i >= 0; i--) {
       const p = P[i];
-      p.life++;
-      if (p.b) { p.vx *= .965; p.vy = p.vy * .965 + .045; }
-      p.x += p.vx + Math.sin(p.life * .012 + p.ph) * .16;
-      p.y += p.vy;
+      p.life += dt;
+      if (p.b) { const d = Math.pow(.965, dt); p.vx *= d; p.vy = p.vy * d + .045 * dt; }
+      p.x += (p.vx + Math.sin(p.life * .012 + p.ph) * .16) * dt;
+      p.y += p.vy * dt;
       if (p.life >= p.max || p.y < -30 || p.y > H + 40 || p.x < -30 || p.x > W + 30) { P.splice(i, 1); continue; }
       if (!p.b) ambient++;
       const k = p.life / p.max;
       const fade = k < .15 ? k / .15 : k > .75 ? (1 - k) / .25 : 1;
       cx.globalAlpha = p.b ? fade : fade * (.45 + .4 * Math.sin(t * .045 + p.ph * 3));
-      cx.drawImage(sprite, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+      cx.drawImage(gold, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+    }
+    for (let n = 0; n < 2 && ambient < want; n++, ambient++) P.push(make());
+
+    // The monogram: particles swirl in from all sides and settle into the letters.
+    for (let i = F.length - 1; i >= 0; i--) {
+      const p = F[i];
+      let a;
+      if (p.out && now > p.out) {
+        const k = (now - p.out) / 1000;
+        if (k >= 1) { F.splice(i, 1); continue; }
+        p.x += p.vx * dt; p.y += p.vy * dt; p.vy *= Math.pow(.985, dt);
+        a = 1 - k;
+      } else {
+        const k = clamp((now - p.t0) / p.dur, 0, 1);
+        if (k <= 0) continue;
+        const e = ease(k), dx = p.tx - p.sx, dy = p.ty - p.sy, len = Math.hypot(dx, dy) || 1, sw = Math.sin(e * Math.PI) * p.sw;
+        p.x = p.sx + dx * e - dy / len * sw;
+        p.y = p.sy + dy * e + dx / len * sw;
+        a = k < 1 ? .3 + .7 * e : .7 + .3 * Math.sin(t * .12 + p.ph);
+      }
+      cx.globalAlpha = a;
+      cx.drawImage(gold, p.x - p.s, p.y - p.s, p.s * 2, p.s * 2);
+    }
+
+    // Fireworks: a rising spark that bursts into gold (and sometimes rose) light.
+    if (fireworksOn && now > nextRocket && rockets.length < 2) { launch(); nextRocket = now + 1100 + Math.random() * 1300; }
+    cx.lineCap = 'round';
+    for (let i = rockets.length - 1; i >= 0; i--) {
+      const r = rockets[i];
+      r.y += r.vy * dt; r.vy *= Math.pow(.985, dt); r.x += Math.sin(r.y * .05) * .3 * dt;
+      cx.globalAlpha = .7;
+      cx.strokeStyle = 'rgba(246,226,170,.7)';
+      cx.lineWidth = 1.4;
+      cx.beginPath(); cx.moveTo(r.x, r.y); cx.lineTo(r.x, r.y - r.vy * 5); cx.stroke();
+      cx.globalAlpha = 1;
+      cx.drawImage(gold, r.x - 6, r.y - 6, 12, 12);
+      if (r.y <= r.ty || r.vy > -1.4) { explode(r); rockets.splice(i, 1); }
+    }
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const p = sparks[i];
+      p.life += dt;
+      if (p.life >= p.max) { sparks.splice(i, 1); continue; }
+      p.px = p.x; p.py = p.y;
+      const d = Math.pow(.975, dt);
+      p.vx *= d; p.vy = p.vy * d + .04 * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      const a = 1 - p.life / p.max;
+      cx.globalAlpha = a * .6;
+      cx.strokeStyle = p.rosy ? 'rgb(232,140,156)' : 'rgb(246,226,170)';
+      cx.lineWidth = 1.2;
+      cx.beginPath(); cx.moveTo(p.px, p.py); cx.lineTo(p.x, p.y); cx.stroke();
+      cx.globalAlpha = a;
+      cx.drawImage(p.rosy ? rosy : gold, p.x - 4, p.y - 4, 8, 8);
     }
     cx.globalAlpha = 1;
-    for (let n = 0; n < 2 && ambient < want; n++, ambient++) P.push(make());
-    if (P.length || want) raf = requestAnimationFrame(frame);
+
+    if (P.length || F.length || petals.length || rockets.length || sparks.length || want || petalRate || fireworksOn) raf = requestAnimationFrame(frame);
+    else last = 0;
   }
-  function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+  function kick() { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } }
   let rt;
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(size, 150); });
+  // Ignore the small height changes from the address bar showing and hiding while scrolling.
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== W || Math.abs(innerHeight - H) > 150) size(); }, 150); });
   size();
   return {
     density(n) { want = reduce ? Math.min(n, 12) : Math.round(n * (small ? .7 : 1)); kick(); },
-    burst(x, y, n) { if (reduce) return; for (let i = 0; i < n; i++) P.push(make(x, y, true)); kick(); }
+    burst(x, y, n) { if (reduce) return; for (let i = 0; i < n; i++) P.push(make(x, y, true)); kick(); },
+    // Gather particles into the given screen points.
+    form(points) {
+      if (reduce || !points.length) return;
+      const now = performance.now(), R = Math.max(W, H);
+      F = points.map(([x, y]) => {
+        const a = Math.random() * Math.PI * 2, r = R * (.45 + Math.random() * .4);
+        return { sx: W / 2 + Math.cos(a) * r, sy: H / 2 + Math.sin(a) * r, x: -99, y: -99, tx: x, ty: y, t0: now + Math.random() * 700, dur: 1500 + Math.random() * 700, sw: (Math.random() - .5) * 160, s: 2.2 + Math.random() * 2.2, ph: Math.random() * 6.28, out: 0, vx: 0, vy: 0 };
+      });
+      kick();
+    },
+    // Let the monogram's particles drift away as dust.
+    dissolve() {
+      const now = performance.now();
+      F.forEach(p => { p.out = now + Math.random() * 500; p.vx = (Math.random() - .5) * 1.6; p.vy = -Math.random() * 1.8 - .2; });
+    },
+    petals(rate) { petalRate = reduce ? 0 : rate; if (rate) kick(); },
+    shower(n) { if (reduce) return; for (let i = 0; i < n; i++) petals.push(petal(-20 - Math.random() * H * .9)); kick(); },
+    fireworks(on) { fireworksOn = on && !reduce; if (fireworksOn) { nextRocket = performance.now() + 600; kick(); } }
   };
 })();
 
@@ -1314,7 +1534,7 @@ const Music = (() => {
     const len = ac.sampleRate * 3.4, ir = ac.createBuffer(2, len, ac.sampleRate);
     for (let ch = 0; ch < 2; ch++) {
       const d = ir.getChannelData(ch);
-      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6);
+      for (let i = 0, e = 1, k = Math.pow(.001, 1 / len); i < len; i++, e *= k) d[i] = (Math.random() * 2 - 1) * e;
     }
     const verb = ac.createConvolver(); verb.buffer = ir;
     const wet = ac.createGain(); wet.gain.value = .6;
@@ -1412,6 +1632,13 @@ const Music = (() => {
 })();
 
 let soundPref = true;
+function setSoundPref(on) {
+  soundPref = on;
+  const b = $('.sound-pref');
+  b.setAttribute('aria-pressed', on);
+  b.classList.toggle('playing', on);
+  $('.sp-label', b).textContent = T(on ? 'withMusic' : 'inSilence');
+}
 function syncMusicUI(on) {
   const b = $('.music-btn');
   b.classList.toggle('playing', on);
@@ -1432,6 +1659,8 @@ const Intro = (() => {
   function start() {
     clear();
     stage = 'announce';
+    Dust.fireworks(false);
+    Dust.petals(0);
     html.classList.add('locked');
     document.body.classList.add('intro-on');
     el.hidden = false;
@@ -1442,12 +1671,40 @@ const Intro = (() => {
     void el.offsetWidth;
     el.classList.add('play');
     Dust.density(80);
+    later(() => Dust.form(monogramPoints()), 450);
+    later(() => Dust.dissolve(), 3400);
     later(toEnvelope, reduce ? 2200 : 6600);
+  }
+  // Screen positions of the monogram letters, sampled from an offscreen drawing.
+  function monogramPoints() {
+    const svg = $('.monogram'), r = svg.getBoundingClientRect();
+    if (!r.width) return [];
+    const sc = r.width / 200, w = Math.ceil(r.width), h = Math.ceil(r.height);
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const g = c.getContext('2d');
+    const big = `300 ${72 * sc}px "Cormorant Garamond"`, amp = `italic 300 ${34 * sc}px "Cormorant Garamond"`;
+    g.font = big;
+    const wA = g.measureText(C.i1).width, wB = g.measureText(C.i2).width;
+    g.font = amp;
+    const wAmp = g.measureText('&').width;
+    let x = 100 * sc - (wA + wAmp + wB) / 2;
+    const base = 184 * sc;
+    g.fillStyle = '#fff';
+    g.font = big; g.fillText(C.i1, x, base); x += wA;
+    g.font = amp; g.fillText('&', x, base - 20 * sc); x += wAmp;
+    g.font = big; g.fillText(C.i2, x, base);
+    const data = g.getImageData(0, 0, w, h).data, pts = [], step = Math.max(2, Math.round(sc * 2.2));
+    for (let y = 0; y < h; y += step) for (let xx = 0; xx < w; xx += step) {
+      if (data[(y * w + xx) * 4 + 3] > 140) pts.push([r.left + xx, r.top + y]);
+    }
+    return pts;
   }
   function toEnvelope() {
     if (stage !== 'announce') return;
     clear();
     stage = 'envelope';
+    Dust.dissolve();
     el.classList.add('to-envelope');
   }
   function open() {
@@ -1456,12 +1713,13 @@ const Intro = (() => {
     if (soundPref) Music.play();
     try { navigator.vibrate && navigator.vibrate(14); } catch {}
     const r = seal.getBoundingClientRect();
-    Dust.burst(r.left + r.width / 2, r.top + r.height / 2, 80);
+    Dust.burst(r.left + r.width / 2, r.top + r.height / 2, small ? 110 : 150);
     el.classList.add('opening');
     later(() => flap.classList.add('open'), 420);
     later(() => flap.classList.add('behind'), 1020);
     later(() => card.classList.add('rise'), 1500);
     later(() => envelope.classList.add('release'), 3000);
+    later(() => Dust.shower(small ? 34 : 54), 2600);
     later(() => el.classList.add('flash'), 3600);
     later(finish, 4050);
   }
@@ -1470,7 +1728,7 @@ const Intro = (() => {
     stage = 'done';
     document.body.classList.remove('intro-on');
     html.classList.remove('locked');
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    jumpTop();
     el.classList.add('leaving');
     Dust.density(26);
     Page.start();
@@ -1479,6 +1737,7 @@ const Intro = (() => {
   function skip() {
     if (stage === 'done') return;
     clear();
+    Dust.dissolve();
     el.classList.add('flash');
     later(finish, 380);
   }
@@ -1486,13 +1745,7 @@ const Intro = (() => {
   seal.addEventListener('click', open);
   $('.skip').addEventListener('click', skip);
   el.addEventListener('click', e => { if (stage === 'announce' && !e.target.closest('button')) toEnvelope(); });
-  $('.sound-pref').addEventListener('click', e => {
-    soundPref = !soundPref;
-    const b = e.currentTarget;
-    b.setAttribute('aria-pressed', soundPref);
-    b.classList.toggle('playing', soundPref);
-    $('.sp-label', b).textContent = T(soundPref ? 'withMusic' : 'inSilence');
-  });
+  $('.sound-pref').addEventListener('click', () => setSoundPref(!soundPref));
 
   // The envelope leans towards the pointer (desktop) or the phone's tilt (Android).
   function lean(xn, yn) {
@@ -1520,11 +1773,34 @@ const Page = (() => {
     if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target); }
   }), { threshold: .15, rootMargin: '0px 0px -6% 0px' });
   const seen = new IntersectionObserver(entries => entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('seen'); seen.unobserve(e.target); if (e.target.id === 'finale') typeCode(); }
+    if (e.isIntersecting) {
+      e.target.classList.add('seen');
+      seen.unobserve(e.target);
+      if (e.target.id === 'finale') typeCode();
+      if (e.target.id === 'date') setTimeout(countUpDay, 500);
+    }
   }), { threshold: .25 });
 
-  // Ambient dust rises around the closing scene.
-  const finaleWatch = new IntersectionObserver(([e]) => Dust.density(e.isIntersecting ? 90 : 26), { threshold: .35 });
+  // Petals drift over the names; the closing scene adds fireworks and more dust.
+  let inHero = false, inFinale = false;
+  const ambience = () => {
+    Dust.density(inFinale ? 90 : 26);
+    Dust.petals(inFinale ? .07 : inHero ? .05 : 0);
+    Dust.fireworks(inFinale);
+  };
+  const heroWatch = new IntersectionObserver(([e]) => { inHero = e.isIntersecting; ambience(); }, { threshold: .3 });
+  const finaleWatch = new IntersectionObserver(([e]) => { inFinale = e.isIntersecting; ambience(); }, { threshold: .35 });
+
+  // The big date counts up to the day.
+  function countUpDay() {
+    if (reduce) return;
+    const el = $('.date-day .num'), t0 = performance.now(), D = 1600;
+    (function step(now) {
+      const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 4);
+      el.textContent = k < 1 ? num(Math.max(1, Math.round(e * dayNum))) : C.day;
+      if (k < 1) requestAnimationFrame(step);
+    })(t0);
+  }
 
   const px = $$('[data-parallax]');
   const bar = $('.progress span');
@@ -1552,6 +1828,7 @@ const Page = (() => {
       $$('[data-reveal]').forEach(el => reveal.observe(el));
       $$('main > section').forEach(el => seen.observe(el));
       finaleWatch.observe($('#finale'));
+      heroWatch.observe($('#hero'));
       addEventListener('scroll', onScroll, { passive: true });
       addEventListener('resize', onScroll);
     }
@@ -1623,11 +1900,12 @@ const Countdown = (() => {
     if (diff <= 0) {
       box.hidden = true;
       $('.count-done').hidden = false;
+      box.closest('section').querySelectorAll('.eyebrow,.sec-title').forEach(e => { e.hidden = true; });
       return;
     }
     const d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60, s = Math.floor(diff / 1e3) % 60;
     set(units.d, d); set(units.h, h); set(units.m, m); set(units.s, s);
-    const label = T('countLeft')(num(d), num(h), num(m));
+    const label = T('countLeft')(d, h, m);
     if (label !== lastLabel) { box.setAttribute('aria-label', label); lastLabel = label; }
     timer = setTimeout(tick, 1000 - (Date.now() % 1000) + 10);
   }
@@ -1668,27 +1946,10 @@ function setupCalendar() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   $('#gcalLink').addEventListener('click', close);
 
+  // A real file next to the page: iPhones and WhatsApp's browser then offer "Add to Calendar".
   $('#icsBtn').addEventListener('click', () => {
-    const esc = s => s.replace(/([,;\\])/g, '\\$1').replace(/\n/g, '\\n');
-    const title = T('eventTitle')(C.p1, C.p2);
-    const ics = [
-      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Engagement Invitation//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      `UID:${utc(when)}-${(CONFIG.partner1.en + CONFIG.partner2.en).replace(/\W/g, '')}@invitation`,
-      `DTSTAMP:${utc(new Date())}`,
-      `DTSTART:${utc(when)}`, `DTEND:${utc(ends)}`,
-      `SUMMARY:${esc(title)}`, `LOCATION:${esc(C.address)}`, `DESCRIPTION:${esc(T('eventText')(C.p1, C.p2))}`,
-      'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', `DESCRIPTION:${esc(title)}`, 'END:VALARM',
-      'END:VEVENT', 'END:VCALENDAR'
-    ].join('\r\n');
-    const a = document.createElement('a');
-    a.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
-    a.download = 'engagement.ics';
-    document.body.append(a);
-    a.click();
-    a.remove();
     close();
-    toast(T('calReady'));
+    location.href = new URL(CONFIG.icsFile, location.href).href;
   });
 }
 
@@ -1714,7 +1975,8 @@ function setupActions() {
     else copy(url, T('linkCopied'));
   });
   $('#replayBtn').addEventListener('click', () => Intro.start());
-  $('.music-btn').addEventListener('click', () => Music.toggle());
+  // Pausing from the top bar also means "in silence" if the opening is replayed.
+  $('.music-btn').addEventListener('click', () => { Music.toggle(); setSoundPref(Music.on); });
   $$('.lang-btn').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); setLanguage(T('langSwitchCode')); }));
 }
 
@@ -1734,7 +1996,7 @@ function unlock() {
   if (saved === A.codeHash) return Promise.resolve();
 
   const gate = $('#gate'), form = $('#gateForm'), input = $('#gateCode'), err = $('.gate-err'), card = $('.gate-card');
-  const check = async code => !!window.crypto?.subtle && code.trim() !== '' && (await sha256(code.trim().toLowerCase())) === A.codeHash;
+  const check = async code => !!(window.crypto && window.crypto.subtle) && code.trim() !== '' && (await sha256(code.trim().toLowerCase())) === A.codeHash;
   const remember = () => { try { localStorage.setItem(KEY, A.codeHash); } catch {} };
 
   return new Promise(async resolve => {
@@ -1755,7 +2017,7 @@ function unlock() {
     setTimeout(() => input.focus(), 300);
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      if (!window.crypto?.subtle) { err.textContent = 'Please open the invitation from its https:// link.'; return; }
+      if (!(window.crypto && window.crypto.subtle)) { err.textContent = 'Please open the invitation from its https:// link.'; return; }
       if (await check(input.value)) {
         remember();
         err.textContent = '';
@@ -1776,6 +2038,9 @@ function unlock() {
 /* ==========================================================================
    Boot
    ========================================================================== */
+// A small burst of gold wherever the guest touches.
+if (!reduce) addEventListener('pointerdown', e => { if (e.button === 0) Dust.burst(e.clientX, e.clientY, 14); }, { passive: true });
+
 async function boot() {
   await unlock();
   buildOnce();

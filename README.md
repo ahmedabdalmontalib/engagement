@@ -22,8 +22,27 @@ The whole invitation is available in **English and Arabic**. It opens in the lan
 | `og-image.jpg` | The picture WhatsApp shows when the link is shared (1200 × 630). |
 | `tools/serve.py` | A small local server for previewing the invitation and saving a new preview picture. |
 | `tools/og.html` | Draws `og-image.jpg`. Open it through `serve.py` and it saves the picture next to `index.html`. |
+| `stars/index.html` | The second design, "Written in the Stars" (its own complete page). |
+| `stars/og-image.jpg` | Its WhatsApp picture. |
+| `tools/og-stars.html` | Draws `stars/og-image.jpg` through `serve.py`. |
+| `issue/index.html` | The third design, "The Engagement Issue" (its own complete page). |
+| `issue/og-image.jpg` | Its WhatsApp picture. |
+| `tools/og-issue.html` | Draws `issue/og-image.jpg` through `serve.py`. |
+| `engagement.ics` | The calendar file all four designs link to for Apple and Outlook (made by `tools/make_ics.py`; run it again if the date, time or venue changes). |
+| `lanterns/index.html` | The fourth design, "Golden Hour" (its own complete page). |
+| `lanterns/og-image.jpg` | Its WhatsApp picture. |
+| `tools/og-lanterns.html` | Draws `lanterns/og-image.jpg` through `serve.py`. |
 
-Only `index.html` and `og-image.jpg` are needed for the invitation to work online.
+## The four designs
+
+| Design | Look | Address once online |
+| --- | --- | --- |
+| **The Envelope** (`index.html`) | Black and champagne gold. Gold dust forms the monogram, a burgundy wax seal breaks, the card flies out, rose petals fall, fireworks at the end. | `…/engagement/` |
+| **Written in the Stars** (`stars/index.html`) | Midnight blue, moonlight silver, pearl. Touch a star, the sky warps, a blue star and a rose star spiral together, and their stardust writes the names. Scrolling draws a heart-shaped constellation; the date orbits in a ring; the countdown is four light rings; the venue map sits in a round window; two stars orbit an infinity sign at the end under falling shooting stars. | `…/engagement/stars/` |
+| **The Engagement Issue** (`issue/index.html`) | Ivory paper, ink black, deep wine; a fashion-magazine cover. A print counter runs to 100 %, a curtain lifts, the names rise letter by letter and drift apart as you scroll. Tilted ticker bands race with your scroll speed; the story lights up word by word; you zoom through a giant "&" into the date, whose digits roll like an odometer; the countdown digits roll every second; When / Where / Who / Why cards slide sideways as you scroll down; the map is unveiled like a photo; "See you there." flies together letter by letter. | `…/engagement/issue/` |
+| **Golden Hour** (`lanterns/index.html`) | A sunset over the Nile: peach and coral sky, palm trees, a felucca, the sun's reflection on the water. The guest lights a paper lantern; it rises and a wave of lanterns follows. As the page scrolls the sun sets, the sky turns to dusk and then a starry night with a crescent moon, and more lanterns rise; touching the sky sends one up. The countdown hangs in four glowing lanterns; at the end the guest can release a lantern with a wish. Music: an oud-like melody in maqam Hijaz, made from plucked-string synthesis. | `…/engagement/lanterns/` |
+
+The four pages are independent: each has its own `CONFIG` and `TEXT` at the top of its script, so a change of details has to be made in each. They share the same access code.
 
 ## Sending personal links
 
@@ -72,7 +91,7 @@ This keeps casual visitors out while testing. It is not strong security: the pag
 python3 tools/serve.py 8791
 ```
 
-Then open <http://localhost:8791>. To redraw the WhatsApp picture after changing names or the date, open <http://localhost:8791/tools/og.html>; it replaces `og-image.jpg`. The picture's text is written inside `tools/og.html`, so update it there too.
+Then open <http://localhost:8791> (or `/stars/`, `/issue/`, `/lanterns/`). To redraw the WhatsApp picture after changing names or the date, open <http://localhost:8791/tools/og.html>; it replaces `og-image.jpg`. The picture's text is written inside `tools/og.html`, so update it there too.
 
 ## Putting it online
 
