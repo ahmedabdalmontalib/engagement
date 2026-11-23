@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>Link preview image (stars)</title>
-<!-- Draws stars/og-image.jpg (1200×630) for the "Written in the Stars" design.
-     Open it through tools/serve.py; it saves the image into stars/. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Marcellus&family=EB+Garamond:ital@1&family=Aref+Ruqaa&display=swap">
+<!-- Draws og-image.jpg (1200×630), the WhatsApp picture of the invitation.
+     Open it through tools/serve.py; it saves the image next to index.html. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Amiri+Quran&family=Marcellus&family=EB+Garamond:ital@1&family=Aref+Ruqaa&display=swap">
 <style>
   body{margin:0;background:#222;color:#ddd;font:14px system-ui;display:grid;gap:12px;justify-items:center;padding:16px}
   canvas{width:min(100%,1200px);height:auto;box-shadow:0 10px 40px #000}
@@ -42,6 +42,7 @@ await document.fonts.load('140px "Great Vibes"');
 await document.fonts.load('22px "Marcellus"');
 await document.fonts.load('italic 30px "EB Garamond"');
 await document.fonts.load('38px "Aref Ruqaa"', 'أحمد');
+await document.fonts.load('34px "Amiri Quran"', 'بسم الله');
 await document.fonts.ready;
 
 // Night sky with nebula light
@@ -101,7 +102,9 @@ const shine = (x0, x1) => { const l = cx.createLinearGradient(x0, 0, x1, 0); [[0
 cx.save();
 cx.translate(140, 0);
 const Wc = W;
-centered('WRITTEN IN THE STARS', 170, '22px "Marcellus"', '#b9c3e6', 9);
+cx.direction = 'rtl';
+centered('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', 150, '32px "Amiri Quran"', '#e9cf98');
+cx.direction = 'ltr';
 cx.font = '128px "Great Vibes"';
 const n1 = 'Ahmed', n2 = 'Amira', w1 = cx.measureText(n1).width, w2 = cx.measureText(n2).width;
 cx.font = '44px "Marcellus"';
@@ -121,8 +124,8 @@ centered('خطوبة أحمد وأميرة', 520, '38px "Aref Ruqaa"', '#ffb7c9'
 cx.restore();
 
 const blob = await new Promise(r => document.getElementById('c').toBlob(r, 'image/jpeg', .9));
-const res = await fetch('/save-og?theme=stars', { method: 'POST', body: blob });
-status.textContent = res.ok ? `Saved stars/og-image.jpg (${Math.round(blob.size / 1024)} KB)` : `Save failed: ${res.status}`;
+const res = await fetch('/save-og', { method: 'POST', body: blob });
+status.textContent = res.ok ? `Saved og-image.jpg (${Math.round(blob.size / 1024)} KB)` : `Save failed: ${res.status}`;
 document.title = status.textContent;
 })();
 </script>
