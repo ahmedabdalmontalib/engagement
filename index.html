@@ -190,6 +190,13 @@ html[dir="rtl"] .skip{right:auto;left:calc(var(--gutter) - 8px)}
    ========================================================================== */
 .topbar{position:fixed;z-index:20;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 10px) var(--gutter) 10px;background:linear-gradient(180deg,rgba(4,7,20,.85),rgba(4,7,20,0));transition:opacity 1s ease .4s}
 .topbar-actions{display:flex;align-items:center;gap:8px}
+/* Play / pause the automatic scrolling */
+.auto-btn{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(4,7,20,.5);color:var(--moon);transition:border-color .4s,box-shadow .4s}
+.auto-btn svg{width:16px;height:16px}
+.auto-btn .i-pause,.auto-btn.on .i-play{display:none}
+.auto-btn.on .i-pause{display:block}
+.auto-btn.on{border-color:var(--moon);box-shadow:0 0 16px rgba(156,199,255,.35)}
+.auto-btn:hover{border-color:var(--moon)}
 body.intro-on .topbar,body.intro-on .dots{opacity:0;pointer-events:none;visibility:hidden}
 .brand{display:inline-flex;align-items:center;gap:8px;min-height:44px;text-decoration:none;font-family:"Marcellus",serif;font-size:19px;letter-spacing:.14em;color:var(--moon);direction:ltr}
 .brand svg{width:12px;height:12px}
@@ -476,6 +483,7 @@ html.lite .intro-flash i{mix-blend-mode:normal}
 <header class="topbar">
   <a class="brand" href="#hero" data-ta="backTop"><span data-c="i1"></span><svg aria-hidden="true"><use href="#star4"/></svg><span data-c="i2"></span></a>
   <div class="topbar-actions">
+    <button class="auto-btn" type="button" aria-pressed="false"><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.5v13l10-6.5z" fill="currentColor"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg></button>
     <button class="lang-btn" type="button"></button>
   </div>
 </header>
@@ -659,6 +667,8 @@ const CONFIG = {
   // Language shown first: 'auto' follows the guest's phone, or force 'en' / 'ar'.
   // A link ending in ?lang=ar or ?lang=en also chooses it.
   defaultLanguage: 'auto',
+  // After the opening the invitation scrolls by itself, resting on each part; any touch stops it.
+  autoScroll: true,
   // Testing: visitors must enter an access code first. Set enabled to false when you go public.
   // codeHash is the SHA-256 of the code in lower case (see README); same code as the main invitation.
   testAccess: {
@@ -708,6 +718,8 @@ const TEXT = {
     finaleLine: 'Together in every line…',
     finaleScript: 'forever in life.',
     replay: 'Watch it again', share: 'Share the invitation', linkCopied: 'Invitation link copied',
+    autoPlay: 'Scroll the invitation automatically', autoPause: 'Stop scrolling automatically',
+    autoHint: 'Scrolling by itself · touch to stop', autoPaused: 'Paused · press ▶ at the top to continue',
     withLove: 'With love',
     labels: { hero: 'Welcome', verse: 'The verse', story: 'Our story', date: 'The date', countdown: 'Countdown', venue: 'Venue', finale: 'Forever' },
     title: (a, b) => `${a} & ${b} · Our Engagement`,
@@ -751,6 +763,8 @@ const TEXT = {
     finaleLine: 'معًا في كل سطر…',
     finaleScript: 'وإلى الأبد في الحياة.',
     replay: 'شاهدها من جديد', share: 'شارك الدعوة', linkCopied: 'تم نسخ رابط الدعوة',
+    autoPlay: 'تشغيل التمرير التلقائي', autoPause: 'إيقاف التمرير التلقائي',
+    autoHint: 'تتحرك الدعوة وحدها · المس الشاشة للإيقاف', autoPaused: 'توقّف التمرير · اضغط ▶ في الأعلى للمتابعة',
     withLove: 'مع الحب',
     labels: { hero: 'الترحيب', verse: 'الآية', story: 'حكايتنا', date: 'الموعد', countdown: 'العد التنازلي', venue: 'المكان', finale: 'إلى الأبد' },
     title: (a, b) => `خطوبة ${a} و${b}`,
@@ -933,6 +947,7 @@ function applyLanguage() {
   const tp = $('.ring-text textPath');
   if (lang === 'ar') tp.removeAttribute('textLength'); else tp.setAttribute('textLength', '850');
   setupCalendarLinks();
+  Auto.sync();
   Countdown.refresh();
   Page.refresh();
 }
@@ -1181,6 +1196,7 @@ const Intro = (() => {
   function start() {
     clear();
     stage = 'ready';
+    Auto.stop();
     html.classList.add('locked');
     document.body.classList.add('intro-on');
     document.body.classList.remove('formed');
@@ -1272,6 +1288,7 @@ const Intro = (() => {
     el.classList.add('leaving');
     later(() => Sky.dissolve(), 2600);
     Page.start();
+    Auto.arm();
     later(() => { el.hidden = true; el.className = ''; }, 2800);
   }
   function skip() {
@@ -1360,6 +1377,82 @@ const Page = (() => {
     setTimeout(() => $('.names').focus({ preventScroll: true }), 600);
   }
   return { start, refresh: () => { if (started) update(); } };
+})();
+
+/* ==========================================================================
+   Auto-scroll: after the opening the invitation plays by itself like a film,
+   resting on each part long enough to read it. Any touch, wheel or key gives
+   control back to the guest; the play button in the top bar resumes.
+   ========================================================================== */
+const Auto = (() => {
+  const btn = $('.auto-btn');
+  let on = false, raf = 0, timer = 0, step = 0, hinted = false, pausedOnce = false;
+  const top = el => el.getBoundingClientRect().top + scrollY;
+  const maxY = () => Math.max(0, html.scrollHeight - innerHeight);
+  const easeSine = k => .5 - Math.cos(Math.PI * k) / 2;
+  // Each stop: where to scroll, how fast (px per ms, for the long drawn ones) and how long to rest (s).
+  const STOPS = [
+    { to: () => top($('#verse')), rest: 8 },
+    { to: () => top($('#story')), rest: .8 },
+    { to: () => top($('#story')) + $('#story').offsetHeight - innerHeight, speed: .26, rest: 2.5 },
+    { to: () => top($('#date')), rest: 5.5 },
+    { to: () => top($('#countdown')), rest: 4.5 },
+    { to: () => top($('#venue')), rest: 3 },
+    { to: () => top($('.porthole')) - innerHeight * .16, rest: 4 },
+    { to: maxY, rest: 0 }
+  ];
+  function sync() {
+    btn.classList.toggle('on', on);
+    btn.setAttribute('aria-pressed', String(on));
+    btn.setAttribute('aria-label', T(on ? 'autoPause' : 'autoPlay'));
+  }
+  function halt() { on = false; cancelAnimationFrame(raf); raf = 0; clearTimeout(timer); sync(); }
+  function go() {
+    clearTimeout(timer);
+    if (!on) return;
+    while (step < STOPS.length && Math.min(maxY(), STOPS[step].to()) <= scrollY + 24) step++;
+    if (step >= STOPS.length) { halt(); return; }
+    const s = STOPS[step], from = scrollY, to = Math.min(maxY(), s.to()), dist = to - from;
+    const dur = s.speed ? dist / s.speed : clamp(dist / .45, 1400, 4800), t0 = performance.now();
+    html.style.scrollBehavior = 'auto';
+    const frame = now => {
+      if (!on) return;
+      const k = clamp((now - t0) / dur, 0, 1);
+      window.scrollTo(0, from + dist * (s.speed ? easeSine(k) : easeIO(k)));
+      if (k < 1) { raf = requestAnimationFrame(frame); return; }
+      raf = 0;
+      step++;
+      timer = setTimeout(go, s.rest * 1000);
+    };
+    raf = requestAnimationFrame(frame);
+  }
+  function play(delay) {
+    if (scrollY >= maxY() - 40) window.scrollTo(0, 0);
+    on = true;
+    step = 0;
+    sync();
+    clearTimeout(timer);
+    timer = setTimeout(go, delay || 600);
+  }
+  // A touch, the wheel or a key means the guest wants to read at their own pace.
+  const userStop = e => {
+    if (!on || (e.target && e.target.closest && e.target.closest('.auto-btn'))) return;
+    halt();
+    if (!pausedOnce) { pausedOnce = true; toast(T('autoPaused')); }
+  };
+  ['touchstart', 'wheel', 'keydown', 'pointerdown'].forEach(t => addEventListener(t, userStop, { passive: true, capture: true }));
+  btn.addEventListener('click', () => { if (on) halt(); else play(); });
+  return {
+    // Called when the opening ends: wait for the names and the first lines, then set off.
+    arm() {
+      sync();
+      if (!CONFIG.autoScroll || reduce) return;
+      play(7200);
+      if (!hinted) { hinted = true; setTimeout(() => { if (on) toast(T('autoHint')); }, 4200); }
+    },
+    stop: halt,
+    sync
+  };
 })();
 
 /* ==========================================================================

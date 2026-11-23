@@ -15,6 +15,8 @@ Online at <https://ahmedabdalmontalib.github.io/engagement/>
 4. The date in an orbiting ring with "Add to calendar", a live countdown in four light rings, and the venue with a map and directions.
 5. A closing scene: two stars orbiting an infinity sign, and buttons to replay the opening or share the invitation.
 
+After the opening, the invitation scrolls by itself like a film, resting on each part long enough to read it (about a minute in all). Any touch stops it, and the ▶ button in the top bar continues. Set `CONFIG.autoScroll` to `false` to turn this off.
+
 There is no music. The whole invitation is available in **English and Arabic**. It opens in the language of the guest's phone, and the عربي / EN button switches at any time.
 
 ## Files
