@@ -5,7 +5,7 @@
 <title>Link preview image (stars)</title>
 <!-- Draws og-image.jpg (1200×630), the WhatsApp picture of the invitation.
      Open it through tools/serve.py; it saves the image next to index.html. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Amiri+Quran&family=Marcellus&family=EB+Garamond:ital@1&family=Aref+Ruqaa&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Amiri+Quran&family=Marcellus&family=EB+Garamond:ital@1&family=Aref+Ruqaa&display=swap">
 <style>
   body{margin:0;background:#222;color:#ddd;font:14px system-ui;display:grid;gap:12px;justify-items:center;padding:16px}
   canvas{width:min(100%,1200px);height:auto;box-shadow:0 10px 40px #000}
@@ -38,7 +38,7 @@ function glow(x, y, r, color) {
   cx.beginPath(); cx.arc(x, y, r, 0, Math.PI * 2); cx.fill();
 }
 
-await document.fonts.load('140px "Great Vibes"');
+await document.fonts.load('140px "Alex Brush"');
 await document.fonts.load('22px "Marcellus"');
 await document.fonts.load('italic 30px "EB Garamond"');
 await document.fonts.load('38px "Aref Ruqaa"', 'أحمد');
@@ -105,12 +105,12 @@ const Wc = W;
 cx.direction = 'rtl';
 centered('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', 150, '32px "Amiri Quran"', '#e9cf98');
 cx.direction = 'ltr';
-cx.font = '128px "Great Vibes"';
+cx.font = '128px "Alex Brush"';
 const n1 = 'Ahmed', n2 = 'Amira', w1 = cx.measureText(n1).width, w2 = cx.measureText(n2).width;
 cx.font = '44px "Marcellus"';
 const wa = cx.measureText('&').width, gap = 22, total = w1 + gap * 2 + wa + w2, x0 = (Wc - total) / 2, base = 300;
 cx.shadowColor = 'rgba(156,199,255,.55)'; cx.shadowBlur = 24;
-cx.font = '128px "Great Vibes"';
+cx.font = '128px "Alex Brush"';
 cx.fillStyle = shine(x0, x0 + total);
 cx.fillText(n1, x0, base);
 cx.fillText(n2, x0 + w1 + gap * 2 + wa, base);
