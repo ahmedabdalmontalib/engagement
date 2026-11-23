@@ -891,7 +891,9 @@ const hour = +enDt({ hour: 'numeric', hourCycle: 'h23' });
 const minute = +enDt({ minute: 'numeric' });
 const HOURS_AR = ['', 'الواحدة', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 'السادسة', 'السابعة', 'الثامنة', 'التاسعة', 'العاشرة', 'الحادية عشرة', 'الثانية عشرة'];
 const h12 = hour % 12 || 12;
-const guestParam = (params.get('to') || '').trim().slice(0, 60);
+// The guest's name from the link (?to=...), with each word starting with a capital: mohamed → Mohamed.
+const titleCase = t => t.replace(/(^|[\s\-'’(])([a-z\u00e0-\u00fe])/g, (m, a, c) => a + c.toUpperCase());
+const guestParam = titleCase((params.get('to') || '').trim().replace(/\s+/g, ' ').slice(0, 60));
 const initials = [CONFIG.partner1.en.charAt(0).toUpperCase(), CONFIG.partner2.en.charAt(0).toUpperCase()];
 
 let C = {};
