@@ -704,6 +704,7 @@ const CONFIG = {
   defaultLanguage: 'ar',
   // The address of the online invitation (used by Share when the page is opened as a sent file).
   siteUrl: 'https://ahmedabdalmontalib.github.io/engagement/',
+  music: { src: '' },      // optional: an mp3 file or address to play instead of the built-in melody
   // After the opening the invitation scrolls by itself, resting on each part; any touch stops it.
   autoScroll: true,
   // Testing: visitors must enter an access code first. Set enabled to false when you go public.
@@ -758,7 +759,7 @@ const TEXT = {
     autoPlay: 'Scroll the invitation automatically', autoPause: 'Stop scrolling automatically',
     autoHint: 'Scrolling by itself · touch to stop', autoPaused: 'Paused · press ▶ at the top to continue',
     withLove: 'With love',
-    withSound: 'With sound', inSilence: 'In silence', soundOn: 'Turn the sound on', soundOff: 'Turn the sound off',
+    withMusic: 'With music', inSilence: 'In silence', playMusic: 'Play music', pauseMusic: 'Pause music',
     labels: { hero: 'Welcome', verse: 'The verse', story: 'Our story', date: 'The date', countdown: 'Countdown', venue: 'Venue', finale: 'Forever' },
     title: (a, b) => `${a} & ${b} · Our Engagement`,
     eventTitle: (a, b) => `${a} & ${b} — Engagement`,
@@ -804,7 +805,7 @@ const TEXT = {
     autoPlay: 'تشغيل التمرير التلقائي', autoPause: 'إيقاف التمرير التلقائي',
     autoHint: 'تتحرك الدعوة وحدها · المس الشاشة للإيقاف', autoPaused: 'توقّف التمرير · اضغط ▶ في الأعلى للمتابعة',
     withLove: 'مع الحب',
-    withSound: 'مع الصوت', inSilence: 'بدون صوت', soundOn: 'تشغيل الصوت', soundOff: 'إيقاف الصوت',
+    withMusic: 'مع الموسيقى', inSilence: 'بدون موسيقى', playMusic: 'تشغيل الموسيقى', pauseMusic: 'إيقاف الموسيقى',
     labels: { hero: 'الترحيب', verse: 'الآية', story: 'حكايتنا', date: 'الموعد', countdown: 'العد التنازلي', venue: 'المكان', finale: 'إلى الأبد' },
     title: (a, b) => `خطوبة ${a} و${b}`,
     eventTitle: (a, b) => `حفل خطوبة ${a} و${b}`,
@@ -987,7 +988,7 @@ function applyLanguage() {
   if (lang === 'ar') tp.removeAttribute('textLength'); else tp.setAttribute('textLength', '850');
   setupCalendarLinks();
   Auto.sync();
-  Ambience.sync();
+  Music.sync();
   Countdown.refresh();
   Page.refresh();
 }
@@ -1224,143 +1225,138 @@ const Sky = (() => {
 
 
 /* ==========================================================================
-   Sound: a night breeze with crickets under the stars, a whoosh when the sky
-   warps and a soft deep glow when the two stars meet. Made here with Web
-   Audio (no instruments and no sound files), so it also works offline.
+   Music: a slow, starry music-box melody over soft pads, made here with Web
+   Audio (no files, so it also plays in the offline file), or an optional mp3
+   set in CONFIG.music.src. It starts when the guest touches the star.
    ========================================================================== */
-const Ambience = (() => {
+const Music = (() => {
   const Ctx = window.AudioContext || window.webkitAudioContext;
-  let ac = null, out = null, noise = null, on = false, wanted = true, timer = 0, nextChirp = 0;
+  let ac = null, out, bus, padBus, timer = 0, next = 0, step = 0, on = false, wanted = true, el = null, fadeT;
   const pref = $('.sound-pref'), btn = $('.sound-btn');
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+  const EIGHTH = .56;
+  const CHORDS = [
+    { bass: 52, pad: [56, 59, 63, 66], tones: [64, 66, 68, 71, 75, 78] }, // Emaj9
+    { bass: 49, pad: [56, 59, 63, 64], tones: [61, 64, 68, 71, 73, 76] }, // C#m9
+    { bass: 45, pad: [57, 61, 64, 68], tones: [61, 64, 68, 69, 71, 76] }, // Amaj7
+    { bass: 47, pad: [54, 59, 63, 66], tones: [59, 63, 66, 68, 71, 75] }  // B
+  ];
+  const PATTERNS = [[0, 3, 5, 4, 2, 4, 3, 1], [1, 4, 5, 3, 2, 3, 4, 0], [0, 2, 4, 5, 4, 3, 1, 2], [5, 3, 4, 2, 3, 1, 2, 0]];
   function build() {
     ac = new Ctx();
     out = ac.createGain(); out.gain.value = 0;
-    out.connect(ac.destination);
-    // Four seconds of soft (brown) noise: looped for the breeze, reused for the whoosh.
-    const len = ac.sampleRate * 4;
-    noise = ac.createBuffer(2, len, ac.sampleRate);
+    const comp = ac.createDynamicsCompressor();
+    comp.threshold.value = -18; comp.ratio.value = 3;
+    out.connect(comp).connect(ac.destination);
+    const len = ac.sampleRate * 4.2, ir = ac.createBuffer(2, len, ac.sampleRate);
     for (let ch = 0; ch < 2; ch++) {
-      const d = noise.getChannelData(ch);
-      let last = 0;
-      for (let i = 0; i < len; i++) { last = (last + .02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3.5; }
-      const edge = Math.floor(ac.sampleRate * .08);
-      for (let i = 0; i < edge; i++) { const k = i / edge; d[i] *= k; d[len - 1 - i] *= k; }
+      const d = ir.getChannelData(ch);
+      for (let i = 0, e = 1, k = Math.pow(.001, 1 / len); i < len; i++, e *= k) d[i] = (Math.random() * 2 - 1) * e;
     }
-    // Breeze: the noise through a band that slowly wanders, rising and falling like air.
-    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
-    const band = ac.createBiquadFilter(); band.type = 'bandpass'; band.frequency.value = 520; band.Q.value = .55;
-    const lvl = ac.createGain(); lvl.gain.value = .5;
-    const lfo = ac.createOscillator(), lfoAmt = ac.createGain(); lfo.frequency.value = .07; lfoAmt.gain.value = 240;
-    const swell = ac.createOscillator(), swellAmt = ac.createGain(); swell.frequency.value = .11; swellAmt.gain.value = .22;
-    lfo.connect(lfoAmt).connect(band.frequency);
-    swell.connect(swellAmt).connect(lvl.gain);
-    src.connect(band).connect(lvl).connect(out);
-    src.start(); lfo.start(); swell.start();
+    const verb = ac.createConvolver(); verb.buffer = ir;
+    const wet = ac.createGain(); wet.gain.value = .75;
+    verb.connect(wet).connect(out);
+    bus = ac.createGain(); bus.gain.value = .75;
+    bus.connect(out); bus.connect(verb);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1300; lp.Q.value = .4;
+    padBus = ac.createGain(); padBus.gain.value = 1;
+    padBus.connect(lp).connect(bus);
   }
-  // A cricket: three or four quick high pulses, somewhere to the left or right.
-  function chirp(t) {
-    const f = 4300 + Math.random() * 600, pulses = 3 + (Math.random() < .5 ? 1 : 0), v = .035 + Math.random() * .035;
-    const pan = ac.createStereoPanner ? ac.createStereoPanner() : null;
-    if (pan) { pan.pan.value = Math.random() * 1.4 - .7; pan.connect(out); }
-    for (let k = 0; k < pulses; k++) {
-      const o = ac.createOscillator(), g = ac.createGain(), at = t + k * .045;
-      o.frequency.value = f;
-      g.gain.setValueAtTime(0, at);
-      g.gain.linearRampToValueAtTime(v, at + .004);
-      g.gain.exponentialRampToValueAtTime(.0001, at + .028);
-      o.connect(g).connect(pan || out);
-      o.start(at); o.stop(at + .035);
-    }
+  function bell(t, f, v) {
+    const g = ac.createGain();
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.exponentialRampToValueAtTime(v, t + .005);
+    g.gain.exponentialRampToValueAtTime(.0001, t + 3);
+    const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+    const o2 = ac.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 3.01;
+    const g2 = ac.createGain();
+    g2.gain.setValueAtTime(v * .18, t);
+    g2.gain.exponentialRampToValueAtTime(.0001, t + .6);
+    o.connect(g).connect(bus);
+    o2.connect(g2).connect(bus);
+    o.start(t); o2.start(t); o.stop(t + 3.1); o2.stop(t + .7);
+  }
+  function pad(t, notes, dur, type, level) {
+    notes.forEach(m => [-7, 7].forEach(det => {
+      const o = ac.createOscillator(); o.type = type; o.frequency.value = mtof(m); o.detune.value = det;
+      const g = ac.createGain();
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(level, t + 2);
+      g.gain.setValueAtTime(level, t + dur - .3);
+      g.gain.linearRampToValueAtTime(0, t + dur + 2);
+      o.connect(g).connect(padBus);
+      o.start(t); o.stop(t + dur + 2.2);
+    }));
   }
   function schedule() {
-    if (!on) return;
-    while (nextChirp < ac.currentTime + .4) {
-      chirp(nextChirp);
-      nextChirp += Math.random() < .15 ? 2.2 + Math.random() * 2.5 : .45 + Math.random() * .9;
+    while (next < ac.currentTime + .3) {
+      const bar = Math.floor(step / 8), i = step % 8, ch = CHORDS[bar % 4];
+      if (i === 0) {
+        pad(next, ch.pad, EIGHTH * 8, 'sine', .02);
+        pad(next, [ch.bass], EIGHTH * 8, 'triangle', .03);
+      }
+      const pat = PATTERNS[Math.floor(bar / 4) % PATTERNS.length];
+      if (i === 0 || Math.random() > .2) bell(next + Math.random() * .015, mtof(ch.tones[pat[i]] + 12 + (i === 5 && bar % 2 ? 12 : 0)), i % 4 === 0 ? .09 : .055);
+      next += EIGHTH; step++;
     }
   }
   function sync() {
     pref.classList.toggle('on', wanted);
     pref.setAttribute('aria-pressed', String(wanted));
-    $('.sp-label', pref).textContent = T(wanted ? 'withSound' : 'inSilence');
+    $('.sp-label', pref).textContent = T(wanted ? 'withMusic' : 'inSilence');
     btn.classList.toggle('on', on);
     btn.setAttribute('aria-pressed', String(on));
-    btn.setAttribute('aria-label', T(on ? 'soundOff' : 'soundOn'));
+    btn.setAttribute('aria-label', T(on ? 'pauseMusic' : 'playMusic'));
   }
-  function start() {
-    if (!Ctx) return;
-    try {
-      if (!ac) build();
-      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
-      ac.resume();
-      const now = ac.currentTime;
-      out.gain.cancelScheduledValues(now);
-      out.gain.setValueAtTime(out.gain.value, now);
-      out.gain.linearRampToValueAtTime(.9, now + 3);
-      on = true;
-      nextChirp = Math.max(nextChirp, now + 1.5);
-      clearInterval(timer); timer = setInterval(schedule, 120);
-    } catch (e) { on = false; }
-    sync();
-  }
-  function stop() {
-    on = false;
-    clearInterval(timer);
-    if (ac) {
-      const now = ac.currentTime;
-      out.gain.cancelScheduledValues(now);
-      out.gain.setValueAtTime(out.gain.value, now);
-      out.gain.linearRampToValueAtTime(0, now + .6);
-      setTimeout(() => { if (!on) ac.suspend(); }, 700);
+  async function play() {
+    if (on) return;
+    on = true; sync();
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
+    if (CONFIG.music.src) {
+      if (!el) { el = new Audio(CONFIG.music.src); el.loop = true; el.volume = 0; }
+      clearInterval(fadeT);
+      try { await el.play(); } catch { on = false; sync(); return; }
+      fadeT = setInterval(() => { el.volume = Math.min(.8, el.volume + .04); if (el.volume >= .8) clearInterval(fadeT); }, 80);
+      return;
     }
-    sync();
+    if (!Ctx) { on = false; sync(); return; }
+    if (!ac) build();
+    try { await ac.resume(); } catch {}
+    const now = ac.currentTime;
+    out.gain.cancelScheduledValues(now);
+    out.gain.setValueAtTime(out.gain.value, now);
+    out.gain.linearRampToValueAtTime(.85, now + 2.5);
+    if (!timer) { next = now + .12; schedule(); timer = setInterval(schedule, 60); }
   }
-  // The sky warping: air rushing past, rising then settling.
-  function whoosh(sec) {
+  function pause() {
     if (!on) return;
-    const t = ac.currentTime, src = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
-    src.buffer = noise; f.type = 'bandpass'; f.Q.value = 1.1;
-    f.frequency.setValueAtTime(260, t);
-    f.frequency.exponentialRampToValueAtTime(2600, t + sec * .55);
-    f.frequency.exponentialRampToValueAtTime(420, t + sec);
-    g.gain.setValueAtTime(0, t);
-    g.gain.linearRampToValueAtTime(.55, t + sec * .45);
-    g.gain.linearRampToValueAtTime(0, t + sec);
-    src.connect(f).connect(g).connect(out);
-    src.start(t, Math.random() * 1.5); src.stop(t + sec + .1);
-  }
-  // The two stars meeting: a deep soft thud and a breath of air that fades out.
-  function glow() {
-    if (!on) return;
-    const t = ac.currentTime;
-    const o = ac.createOscillator(), og = ac.createGain();
-    o.frequency.setValueAtTime(72, t);
-    o.frequency.exponentialRampToValueAtTime(38, t + 1.2);
-    og.gain.setValueAtTime(0, t);
-    og.gain.linearRampToValueAtTime(.5, t + .03);
-    og.gain.exponentialRampToValueAtTime(.0001, t + 1.8);
-    o.connect(og).connect(out); o.start(t); o.stop(t + 1.9);
-    const src = ac.createBufferSource(), hp = ac.createBiquadFilter(), g = ac.createGain();
-    src.buffer = noise; hp.type = 'highpass'; hp.frequency.value = 1800;
-    g.gain.setValueAtTime(0, t);
-    g.gain.linearRampToValueAtTime(.3, t + .12);
-    g.gain.exponentialRampToValueAtTime(.0001, t + 2.8);
-    src.connect(hp).connect(g).connect(out); src.start(t, Math.random() * 1.5); src.stop(t + 3);
+    on = false; sync();
+    if (el) {
+      clearInterval(fadeT);
+      fadeT = setInterval(() => { el.volume = Math.max(0, el.volume - .05); if (el.volume <= 0) { clearInterval(fadeT); if (!on) el.pause(); } }, 60);
+      return;
+    }
+    if (!ac) return;
+    const now = ac.currentTime;
+    out.gain.cancelScheduledValues(now);
+    out.gain.setValueAtTime(out.gain.value, now);
+    out.gain.linearRampToValueAtTime(0, now + .9);
+    setTimeout(() => { if (!on) { clearInterval(timer); timer = 0; ac.suspend(); } }, 1000);
   }
   pref.addEventListener('click', () => { wanted = !wanted; sync(); });
-  btn.addEventListener('click', () => { wanted = !on; if (on) stop(); else start(); });
-  let resume = false;
+  btn.addEventListener('click', () => { wanted = !on; if (on) pause(); else play(); });
+  let resumeOnShow = false;
   document.addEventListener('visibilitychange', () => {
-    if (!ac) return;
-    if (document.hidden) { resume = on; if (on) { on = false; clearInterval(timer); ac.suspend(); } }
-    else if (resume) { resume = false; start(); }
+    if (document.hidden) { resumeOnShow = on; pause(); }
+    else if (resumeOnShow) { resumeOnShow = false; play(); }
   });
-  // Set up the audio quietly before the tap, so the tap only has to start it.
+  // Setting up the synth (audio device, reverb) costs a moment on a phone: do it before the tap,
+  // so the tap only has to press play. The context waits suspended until play() resumes it.
   const idle = window.requestIdleCallback || (f => setTimeout(f, 1500));
-  const prepare = () => { if (!ac && Ctx) try { build(); } catch (e) { ac = null; } };
+  const prepare = () => { if (!ac && !CONFIG.music.src && Ctx) try { build(); } catch (e) { ac = null; } };
   if (document.readyState === 'complete') idle(prepare, { timeout: 4000 });
   else addEventListener('load', () => idle(prepare, { timeout: 4000 }));
-  return { start: () => { if (wanted) start(); }, whoosh, glow, sync };
+  return { start: () => { if (wanted) play(); }, sync };
 })();
 
 /* ==========================================================================
@@ -1390,14 +1386,13 @@ const Intro = (() => {
   function begin() {
     if (stage !== 'ready') return;
     stage = 'story';
-    Ambience.start();
+    Music.start();
     try { navigator.vibrate && navigator.vibrate(12); } catch {}
     el.classList.add('begun');
     const r = $('.begin-star').getBoundingClientRect();
     Sky.burst(r.left + r.width / 2, r.top + r.height / 2, small ? 60 : 90);
     if (reduce) { later(finish, 300); return; }
     Sky.warp(2300);
-    Ambience.whoosh(2.6);
     later(() => caption(1), 300);
     later(() => caption(0), 2100);
     later(() => { caption(2); Sky.couple(3000, meet); }, 2200);
@@ -1409,7 +1404,6 @@ const Intro = (() => {
     el.classList.add('flash');
     try { navigator.vibrate && navigator.vibrate([10, 40, 18]); } catch {}
     Sky.shock(innerWidth / 2, innerHeight / 2);
-    Ambience.glow();
     Sky.burst(innerWidth / 2, innerHeight / 2, small ? 70 : 120);
     fontsReady.then(() => { if (stage === 'story') Sky.form(namePoints(), innerWidth / 2, innerHeight / 2); });
     later(finish, 3100);
@@ -1619,7 +1613,7 @@ const Auto = (() => {
   }
   // A touch, the wheel or a key means the guest wants to read at their own pace.
   const userStop = e => {
-    if (!on || (e.target && e.target.closest && e.target.closest('.auto-btn,.sound-btn'))) return;
+    if (!on || (e.target && e.target.closest && e.target.closest('.auto-btn,.sound-btn,.sound-pref'))) return;
     halt();
     if (!pausedOnce) { pausedOnce = true; toast(T('autoPaused')); }
   };

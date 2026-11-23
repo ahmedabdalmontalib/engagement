@@ -17,7 +17,7 @@ Online at <https://ahmedabdalmontalib.github.io/engagement/>
 
 After the opening, the invitation scrolls by itself like a film, resting on each part long enough to read it (about a minute in all). Any touch stops it, and the ▶ button in the top bar continues. Set `CONFIG.autoScroll` to `false` to turn this off.
 
-There is no music. Instead there is a soft night ambience made in the page itself (a breeze and crickets, a whoosh when the sky warps, a deep soft glow when the two stars meet), with no instruments; it starts when the guest touches the star, can be turned off on the opening screen (بدون صوت) or with the speaker button in the top bar, and works in the offline file too. The whole invitation is available in **English and Arabic**. It opens in **Arabic**; the EN / عربي button switches at any time, and a link ending in `?lang=en` opens it in English.
+Music: a slow, starry music-box melody over soft pads, made in the page itself (so it also plays in the offline file). It starts when the guest touches the star; it can be turned off on the opening screen (بدون موسيقى) or with the button in the top bar. To use your own song instead, put an mp3 next to `index.html` and set `CONFIG.music.src` to its name.
 
 ## Files
 
