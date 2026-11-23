@@ -17,7 +17,7 @@ Online at <https://ahmedabdalmontalib.github.io/engagement/>
 
 After the opening, the invitation scrolls by itself like a film, resting on each part long enough to read it (about a minute in all). Any touch stops it, and the ▶ button in the top bar continues. Set `CONFIG.autoScroll` to `false` to turn this off.
 
-There is no music. The whole invitation is available in **English and Arabic**. It opens in the language of the guest's phone, and the عربي / EN button switches at any time.
+There is no music. The whole invitation is available in **English and Arabic**. It opens in **Arabic**; the EN / عربي button switches at any time, and a link ending in `?lang=en` opens it in English.
 
 ## Files
 
@@ -43,6 +43,14 @@ Add these to the end of the link:
 | `?to=Mona&lang=ar` | Both together. |
 
 Send each link as its own WhatsApp message: WhatsApp shows the picture only for the first link in a message.
+
+## Sending it as a file (works without internet)
+
+```bash
+python3 tools/make_offline.py
+```
+
+This writes `offline/Ahmed-Amira-Engagement.html`: the whole invitation in one file (about 1 MB) with its fonts and calendar entry inside, so it opens on a phone with no connection after it has been received. Only the live map and the Google Calendar / directions links need internet; without it the map says so. If a phone shows the file with scripts turned off (some previews do), it shows a still version with the Basmala, the verse, the names, the date and the venue. Run the command again after any change to `index.html`.
 
 ## Changing the details
 

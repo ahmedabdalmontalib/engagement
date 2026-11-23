@@ -354,6 +354,10 @@ html[lang="ar"] .venue-name{line-height:1.4}
 .porthole-inner::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 50px rgba(4,7,20,.9)}
 .map-wait{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--label);font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--soft)}
 .porthole-inner.loaded .map-wait{display:none}
+/* No internet: a readable note instead of the map, and no pin pulsing over it */
+.porthole-inner.offline .map-wait{padding:0 20%;font-size:13px;letter-spacing:.06em;line-height:1.7;text-transform:none;text-align:center}
+html[lang="ar"] .porthole-inner.offline .map-wait{font-family:"Amiri",serif;font-size:17px;letter-spacing:0;margin-right:0}
+.porthole-inner.offline~.ping{display:none}
 .ping{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;box-shadow:0 0 12px 4px rgba(255,183,201,.9);pointer-events:none;z-index:2}
 .ping::before,.ping::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,183,201,.85);animation:ping 2.4s ease-out infinite}
 .ping::after{animation-delay:1.2s}
@@ -628,7 +632,27 @@ html.lite .intro-flash i{mix-blend-mode:normal}
 </main>
 
 <div class="toast" role="status" aria-live="polite"></div>
-<noscript><p style="position:fixed;inset:auto 0 40px;z-index:200;text-align:center;color:#e8edff">Please enable JavaScript to open this invitation.</p></noscript>
+<noscript>
+<style>.still{position:fixed;inset:0;z-index:300;overflow:auto;padding:48px 22px 60px;background:radial-gradient(120% 80% at 50% 20%,#141b4d,#070b22 60%,#040714);color:#eef1ff;text-align:center;font:18px/1.7 "Amiri",Georgia,serif}.still p{margin:0}.still .q{font-family:"Amiri Quran","Amiri",serif}.still .g{color:#e9cf98}.still .n{font-family:"Aref Ruqaa","Amiri",serif;font-size:56px;line-height:1.5;color:#fff}.still .en{font-family:"Marcellus",Georgia,serif;letter-spacing:.06em}.still .s{font-family:"Great Vibes",cursive;font-size:46px;line-height:1.3}.still hr{width:90px;margin:26px auto;border:0;border-top:1px solid rgba(233,207,152,.5)}.still a{display:inline-block;margin-top:22px;padding:12px 26px;border:1px solid rgba(233,207,152,.6);border-radius:999px;color:#e9cf98;text-decoration:none}</style>
+<div class="still">
+  <p class="q g" dir="rtl" style="font-size:26px">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  <p class="q" dir="rtl" style="margin-top:22px;font-size:24px;line-height:2.1">﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾</p>
+  <p class="g" dir="rtl" style="font-size:16px">سورة الروم · الآية ٢١</p>
+  <hr>
+  <p dir="rtl" style="font-size:19px;color:#c3cbe8">بفضل الله</p>
+  <p class="n" dir="rtl">أحمد وأميرة</p>
+  <p dir="rtl">يحتفلان بخطوبتهما، ويسعدهما أن تكونوا بجانبهما</p>
+  <p dir="rtl" style="margin-top:14px">الخميس ٢٦ نوفمبر ٢٠٢٦ · الساعة السابعة مساءً</p>
+  <p dir="rtl">قاعة 4G · نادي المهن الطبية · المنيا الجديدة</p>
+  <hr>
+  <p class="s">Ahmed &amp; Amira</p>
+  <p class="en" style="font-size:15px">THURSDAY · 26 NOVEMBER 2026 · 7 PM</p>
+  <p class="en" style="font-size:15px">4G HALL · MEDICAL PROFESSIONS CLUB · NEW MINYA</p>
+  <hr>
+  <p class="g" dir="rtl" style="font-size:22px">اللهم بارك لهما وأتمّ لهما على خير</p>
+  <a href="https://www.google.com/maps/search/?api=1&amp;query=Medical%20Professions%20Club%2C%20New%20Minya%2C%20Egypt">الاتجاهات · Directions</a>
+</div>
+</noscript>
 
 <script>
 // If the main script cannot run on this phone, show the essentials instead of an endless loading screen.
@@ -636,7 +660,8 @@ setTimeout(function () {
   if (window.__inviteReady) return;
   document.documentElement.className = '';
   document.body.className = '';
-  document.body.innerHTML = '<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:32px 20px;text-align:center;background:#16130f;color:#f2ece2;font:18px/1.6 Georgia,serif">'
+  document.body.innerHTML = '<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:32px 20px;text-align:center;background:#070b22;color:#eef1ff;font:18px/1.6 Georgia,serif">'
+    + '<p style="margin:0 0 10px;color:#e9cf98;font-size:24px" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>'
     + '<p style="margin:0;font-size:34px">Ahmed &amp; Amira</p><p style="margin:0;font-size:30px" dir="rtl">أحمد وأميرة</p>'
     + '<p style="margin:12px 0 0">Thursday 26 November 2026 · 7 PM</p><p style="margin:0" dir="rtl">الخميس ٢٦ نوفمبر ٢٠٢٦ · الساعة السابعة مساءً</p>'
     + '<p style="margin:12px 0 0">4G Hall, Medical Professions Club, New Minya</p><p style="margin:0" dir="rtl">قاعة 4G، نادي المهن الطبية، المنيا الجديدة</p>'
@@ -666,7 +691,9 @@ const CONFIG = {
   mapsLink: '',            // optional: paste the venue's exact Google Maps share link
   // Language shown first: 'auto' follows the guest's phone, or force 'en' / 'ar'.
   // A link ending in ?lang=ar or ?lang=en also chooses it.
-  defaultLanguage: 'auto',
+  defaultLanguage: 'ar',
+  // The address of the online invitation (used by Share when the page is opened as a sent file).
+  siteUrl: 'https://ahmedabdalmontalib.github.io/engagement/',
   // After the opening the invitation scrolls by itself, resting on each part; any touch stops it.
   autoScroll: true,
   // Testing: visitors must enter an access code first. Set enabled to false when you go public.
@@ -713,7 +740,7 @@ const TEXT = {
     days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds',
     countLeft: (d, h, m) => `${enCount(d, 'day')}, ${enCount(h, 'hour')} and ${enCount(m, 'minute')} to go`,
     countDone: 'The celebration has begun. Thank you for being part of our story.',
-    venueEyebrow: 'Where our stars meet', mapLoading: 'Loading map', mapTitle: 'Map showing the venue',
+    venueEyebrow: 'Where our stars meet', mapLoading: 'Loading map', mapOffline: 'The map needs internet · tap Get directions', mapTitle: 'Map showing the venue',
     directions: 'Get directions', copyAddr: 'Copy address', addrCopied: 'Address copied',
     finaleLine: 'O Allah, bless them…',
     finaleScript: 'and complete it for them in goodness.',
@@ -758,7 +785,7 @@ const TEXT = {
     days: 'أيام', hours: 'ساعات', minutes: 'دقائق', seconds: 'ثوانٍ',
     countLeft: (d, h, m) => `باقٍ ${arCount(d, 'day')} و${arCount(h, 'hour')} و${arCount(m, 'minute')}`,
     countDone: 'بدأ الحفل. شكرًا لأنكم جزء من حكايتنا.',
-    venueEyebrow: 'حيث تلتقي نجومنا', mapLoading: 'جارٍ تحميل الخريطة', mapTitle: 'خريطة توضح مكان الحفل',
+    venueEyebrow: 'حيث تلتقي نجومنا', mapLoading: 'جارٍ تحميل الخريطة', mapOffline: 'الخريطة تحتاج إلى الإنترنت · اضغط الاتجاهات', mapTitle: 'خريطة توضح مكان الحفل',
     directions: 'الاتجاهات', copyAddr: 'نسخ العنوان', addrCopied: 'تم نسخ العنوان',
     finaleLine: 'اللهم بارك لهما…',
     finaleScript: 'وأتمّ لهما على خير.',
@@ -1526,6 +1553,15 @@ function setupCalendar() {
   // A real file next to the page: iPhones and WhatsApp's browser then offer "Add to Calendar".
   $('#icsBtn').addEventListener('click', () => {
     close();
+    // Inside the sent file (see tools/make_offline.py) the calendar entry travels with the page.
+    if (window.__ICS) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([window.__ICS], { type: 'text/calendar' }));
+      a.download = 'Ahmed-Amira-Engagement.ics';
+      document.body.append(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 60000);
+      return;
+    }
     location.href = new URL(CONFIG.icsFile, location.href).href;
   });
 }
@@ -1535,16 +1571,21 @@ function setupVenue() {
   $('#copyAddr').addEventListener('click', () => copy(C.address, T('addrCopied')));
   const frame = $('.porthole iframe'), inner = $('.porthole-inner');
   frame.addEventListener('load', () => { if (frame.src) inner.classList.add('loaded'); });
+  const wait = $('.map-wait'), load = () => { frame.src = `https://maps.google.com/maps?q=${q}&z=15&output=embed`; };
   const io = new IntersectionObserver(([e]) => {
     if (!e.isIntersecting) return;
-    frame.src = `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
     io.disconnect();
+    if (navigator.onLine !== false) { load(); return; }
+    // Opened without internet (for example the sent file): say so, and load the map once a connection is back.
+    wait.textContent = T('mapOffline');
+    inner.classList.add('offline');
+    addEventListener('online', () => { inner.classList.remove('offline'); wait.textContent = T('mapLoading'); load(); }, { once: true });
   }, { rootMargin: '600px 0px' });
   io.observe($('.porthole'));
 }
 function setupActions() {
   $('#shareBtn').addEventListener('click', async () => {
-    const url = location.href.split(/[?#]/)[0];
+    const url = /^https?:$/.test(location.protocol) ? location.href.split(/[?#]/)[0] : CONFIG.siteUrl;
     const data = { title: T('eventTitle')(C.p1, C.p2), text: T('shareText')(C.p1, C.p2, C.dateLong), url };
     if (navigator.share) { try { await navigator.share(data); } catch {} }
     else copy(url, T('linkCopied'));
